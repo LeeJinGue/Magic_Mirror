@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterDevActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/registerMainLayout">
+    <include layout="@layout/custom_appbar"></include>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_bluetooth_24"></ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/guideStyle"
+        android:text="기기를 등록해주세요."
+        android:textAlignment="center"
+        ></TextView>
+
+    <com.cookandroid.smartmirror.customEditText
+        android:id="@+id/editSerial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle"
+        android:hint="시리얼 넘버 입력"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="30dp"
+        android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.customEditText>
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:text="등록"
+        android:textAppearance="@style/btnStyle"
+        android:background="@drawable/radius"
+
+        android:id="@+id/testBtnRegister"></Button>
+</LinearLayout>

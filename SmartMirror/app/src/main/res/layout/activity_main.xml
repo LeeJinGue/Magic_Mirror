@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+    <include layout="@layout/custom_appbar"></include>
+
+<!--    <com.cookandroid.smartmirror.CustomAppbar-->
+<!--        android:id="@+id/appbar1"-->
+<!--        app:text="@string/app_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:contentInsetStart="0dp"-->
+<!--        app:contentInsetStartWithNavigation="0dp"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--    </com.cookandroid.smartmirror.CustomAppbar>-->
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/bgColor"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:id="@+id/toolbarMain"-->
+<!--        android:elevation="4dp"-->
+<!--        >-->
+<!--        <TextView-->
+<!--            android:id="@+id/tvTitle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="start"-->
+<!--            android:text="@string/app_name"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="#000"-->
+<!--            android:fontFamily="@font/notosanskr_black"-->
+<!--            ></TextView>-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="테스트용"
+        android:id="@+id/testBtnMain"></Button>
+</LinearLayout>
