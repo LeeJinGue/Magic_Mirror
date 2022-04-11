@@ -61,7 +61,7 @@ class Ui_Form(QMainWindow):
 
   def jump_to_demo1(self): 
     #self.timer.stop()        
-    self.form.hide()    
+    #self.form.hide()    
     form1 = QtWidgets.QDialog()
     ui = Layout_generator.Ui_Dialog1()
     seed = np.array([[0,0,0],[1,1,3]])
