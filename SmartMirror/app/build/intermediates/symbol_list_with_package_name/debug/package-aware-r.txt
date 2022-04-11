@@ -1809,6 +1809,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_menu_settings
 drawable ic_message
+drawable ic_mirror
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle

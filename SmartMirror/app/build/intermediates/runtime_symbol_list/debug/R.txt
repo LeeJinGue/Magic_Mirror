@@ -1808,6 +1808,7 @@ int drawable ic_launcher_background 0x7f07006f
 int drawable ic_launcher_foreground 0x7f070070
 int drawable ic_menu_settings 0x7f070071
 int drawable ic_message 0x7f070072
+int drawable ic_mirror 0x7f0700a3
 int drawable ic_mtrl_checked_circle 0x7f070073
 int drawable ic_mtrl_chip_checked_black 0x7f070074
 int drawable ic_mtrl_chip_checked_circle 0x7f070075
