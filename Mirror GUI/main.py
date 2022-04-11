@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt
 import numpy as np
-import UI_Generator
+import Layout_generator
 import sys
 
 
@@ -65,9 +65,8 @@ class Ui_Form(QMainWindow):
     ui = UI_Generator.Ui_Dialog1()
     seed = np.array([[0,0,0],[1,1,3]])
     ui.setupUi(form1, seed)
-    form1.show()
+    form1.showMaximized()
     form1.exec_()
-    self.form.showMaximized()
     #self.timer.start(100)
 
 
