@@ -31,8 +31,8 @@
 21-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-49
 22        <activity
 22-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-21:20
-23            android:name="com.cookandroid.smartmirror.MainScreenActivity"
-23-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:13-47
+23            android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
+23-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:13-58
 24            android:exported="true"
 24-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:15:13-36
 25            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
@@ -47,16 +47,16 @@
 33        </activity>
 34        <activity
 34-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:22:9-25:40
-35            android:name="com.cookandroid.smartmirror.LinkWifiActivity"
-35-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:23:13-45
+35            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
+35-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:23:13-56
 36            android:exported="false"
 36-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:25:13-37
 37            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 37-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:24:13-69
 38        <activity
 38-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:26:9-35:20
-39            android:name="com.cookandroid.smartmirror.RegisterDevActivity"
-39-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:27:13-48
+39            android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
+39-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:27:13-59
 40            android:exported="true"
 40-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:28:13-36
 41            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
@@ -74,8 +74,8 @@
 47        </activity>
 48        <activity
 48-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:36:9-47:20
-49            android:name="com.cookandroid.smartmirror.MainActivity"
-49-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:37:13-41
+49            android:name="com.cookandroid.smartmirror.activities.MainActivity"
+49-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:37:13-52
 50            android:exported="true"
 50-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:38:13-36
 51            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
