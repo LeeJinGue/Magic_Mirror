@@ -2039,6 +2039,7 @@ id easeIn
 id easeInOut
 id easeOut
 id east
+id editSendMessage
 id editSerial
 id edit_query
 id elastic
@@ -2136,6 +2137,7 @@ id material_timepicker_view
 id material_value_index
 id menu_settings
 id message
+id messageGrid
 id middle
 id mini
 id month_grid
@@ -2453,6 +2455,7 @@ layout activity_profile_select
 layout activity_register_dev
 layout custom_appbar
 layout custom_dialog
+layout custom_text_view
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -2468,6 +2471,10 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fragment_message_send
+layout fragment_schedule
+layout fragment_stock_setup
+layout fragment_window_setup
 layout material_chip_input_combo
 layout material_clock_display
 layout material_clock_display_divider
@@ -2482,7 +2489,6 @@ layout material_time_input
 layout material_timepicker
 layout material_timepicker_dialog
 layout material_timepicker_textinput_display
-layout messagesend
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title
@@ -2518,11 +2524,9 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
-layout schedule
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
-layout stock
 layout support_simple_spinner_dropdown_item
 layout test_action_chip
 layout test_chip_zero_corner_radius
@@ -2539,10 +2543,8 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
-layout title_smartmirror
 layout wift_list_view
 layout window_item
-layout windowsetup
 menu example_menu
 menu example_menu2
 menu menu_bottom
@@ -3393,7 +3395,6 @@ styleable AlertDialog android_layout buttonIconDimen buttonPanelSideLayout listI
 styleable AnimatedStateListDrawableCompat android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable AnimatedStateListDrawableItem android_id android_drawable
 styleable AnimatedStateListDrawableTransition android_drawable android_toId android_fromId android_reversible
-styleable AppBar text
 styleable AppBarLayout android_background android_touchscreenBlocksFocus android_keyboardNavigationCluster elevation expanded liftOnScroll liftOnScrollTargetViewId statusBarForeground
 styleable AppBarLayoutStates state_collapsed state_collapsible state_liftable state_lifted
 styleable AppBarLayout_Layout layout_scrollFlags layout_scrollInterpolator
@@ -3529,6 +3530,7 @@ styleable ViewBackgroundHelper android_background backgroundTint backgroundTintM
 styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
+styleable customEditText text
 styleable include constraintSet
 xml standalone_badge
 xml standalone_badge_gravity_bottom_end

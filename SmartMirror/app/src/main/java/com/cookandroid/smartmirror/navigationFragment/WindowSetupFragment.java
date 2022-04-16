@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.WindowAdapter;
 import com.cookandroid.smartmirror.dataClass.Window;
-import com.cookandroid.smartmirror.dataClass.wifiData;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.windowsetup,container,false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_window_setup,container,false);
         //initUI(rootView);
 
         //recyclerView

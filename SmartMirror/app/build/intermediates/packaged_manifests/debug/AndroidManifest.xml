@@ -18,12 +18,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.SmartMirror" >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
             android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
             android:exported="false" />
+<<<<<<< HEAD
         <activity
             android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
+=======
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
+>>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
@@ -33,6 +54,7 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -47,6 +69,8 @@
             </intent-filter>
         </activity>
         <activity
+=======
+>>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
             android:name="com.cookandroid.smartmirror.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="AppBar">
+<!--    <declare-styleable name="AppBar">-->
+<!--        <attr name="text" format="reference|string"></attr>-->
+<!--    </declare-styleable>-->
+    <declare-styleable name="customEditText">
         <attr name="text" format="reference|string"></attr>
     </declare-styleable>
 </resources>
