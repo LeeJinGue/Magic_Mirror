@@ -4,7 +4,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt
 import numpy as np
 import Layout_generator
-from window import Network_init
+from window import Network_init , default_wait
 import sys
 
 
@@ -29,7 +29,7 @@ class Ui_Form(QMainWindow):
     self.btn_d1.setGeometry(QtCore.QRect(60, 100, 150, 23))
     self.btn_d1.setObjectName("btn_d1")
     self.btn_d2 = QtWidgets.QPushButton(Form)
-    self.btn_d2.setGeometry(QtCore.QRect(180, 140, 75, 23))
+    self.btn_d2.setGeometry(QtCore.QRect(60, 140, 75, 23))
     self.btn_d2.setObjectName("btn_d2")
     self.btn_exit = QtWidgets.QPushButton(Form)
     self.btn_exit.setGeometry(QtCore.QRect(310, 140, 75, 23))
@@ -48,7 +48,8 @@ class Ui_Form(QMainWindow):
     Form.setWindowTitle(_translate("Form", "Form"))
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
-    self.btn_d2.setText(_translate("Form", "set2"))
+    self.btn_d2.setText(_translate("Form", "대기화면"))
+    self.btn_d2.clicked.connect(self.jump_to_default_wait)
     self.btn_exit.setText(_translate("Form", "Exit"))
     self.btn_exit.clicked.connect(self.exit)
 
@@ -71,11 +72,24 @@ class Ui_Form(QMainWindow):
     self.form.show()
     #self.timer.start(100)
 
-  def jump_to_Network(self): 
+  #네트워크 설정 화면 이동
+  def jump_to_Network(self):
    #self.timer.stop()        
    self.form.hide()    
    form1 = QtWidgets.QDialog()
-   ui = Network_init.Net_Widget()
+   ui = Network_init.Ui_Form()
+   ui.setupUi(form1)
+   form1.show()
+   form1.exec_()
+   self.form.show()
+   #self.timer.start(100)
+
+  #기본화면 이동
+  def jump_to_default_wait(self): 
+   #self.timer.stop()        
+   self.form.hide()    
+   form1 = QtWidgets.QDialog()
+   ui = default_wait.Ui_Form()
    ui.setupUi(form1)
    form1.show()
    form1.exec_()
