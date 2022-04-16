@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:rowCount="2"
+        android:columnCount="2"
+        android:layout_margin="10dp"
+        android:id="@+id/messageGrid"></GridLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAppearance="@style/guideStyle"
+        android:text="메세지를 입력해주세요."
+        android:textAlignment="center"
+        ></TextView>
+    <com.cookandroid.smartmirror.custom.customEditText
+        android:id="@+id/editSendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/rectangle"
+        android:hint="전송할 메세지"
+        android:paddingVertical="10dp"
+        android:paddingRight="30dp"
+        android:layout_weight="1"
+        android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:text="전송"
+        android:textAlignment="center"
+        android:textAppearance="@style/btnStyle"
+        android:background="@drawable/radius"
+
+        android:id="@+id/testBtnRegister"></Button>
+</LinearLayout>
