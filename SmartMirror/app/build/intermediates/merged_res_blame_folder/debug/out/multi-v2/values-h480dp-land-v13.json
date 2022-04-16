@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
+            "outputFile": "C:\\Users\\wjsck\\Desktop\\Git\\Magic_Mirror\\SmartMirror\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\hippo\\.gradle\\caches\\transforms-3\\df6ea8679774a514a8fa7722b490163e\\transformed\\material-1.4.0\\res\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
+                    "source": "C:\\Users\\wjsck\\.gradle\\caches\\transforms-3\\df6ea8679774a514a8fa7722b490163e\\transformed\\material-1.4.0\\res\\values-h480dp-land-v13\\values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

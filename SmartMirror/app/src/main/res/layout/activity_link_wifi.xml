@@ -4,39 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LinkWifiActivity"
+    tools:context=".activities.LinkWifiActivity"
     android:layout_weight="3"
     android:gravity="center_horizontal"
     android:orientation="vertical">
     <include layout="@layout/custom_appbar"></include>
     <ListView
+        android:layout_margin="30dp"
         android:id="@+id/wifiListView"
-
-        android:layout_weight="3"
-        android:layout_width="match_parent"
+        android:background="@color/bgColor"
+        android:layout_weight="2"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"></ListView>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAppearance="@style/guideStyle"
-        android:text="와이파이를 선택한 후\n 비밀번호를 입력해주세요."
         android:textAlignment="center"
+        android:text="와이파이를 선택한 후\n 비밀번호를 입력해주세요."
         ></TextView>
-    <com.cookandroid.smartmirror.customEditText
+    <com.cookandroid.smartmirror.custom.customEditText
         android:id="@+id/editSerial"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/rectangle"
         android:hint="시리얼 넘버 입력"
         android:paddingVertical="10dp"
         android:paddingHorizontal="30dp"
-        android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.customEditText>
+        android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>
     <Button
         android:layout_width="110dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="등록"
         android:textAppearance="@style/btnStyle"

@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    tools:context=".MainScreenActivity"
+    tools:context=".activities.MainScreenActivity"
         android:id="@+id/mainConstraint">
     <include layout="@layout/custom_appbar"
         android:id="@+id/mainAppbar"

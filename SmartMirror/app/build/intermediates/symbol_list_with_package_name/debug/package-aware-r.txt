@@ -1796,7 +1796,9 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable ic_baseline_add_photo_alternate_24
 drawable ic_baseline_bluetooth_24
+drawable ic_baseline_image_24
 drawable ic_baseline_search_24
 drawable ic_baseline_settings_24
 drawable ic_baseline_wifi_24
@@ -1809,6 +1811,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_menu_settings
 drawable ic_message
+drawable ic_mirror
 drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
@@ -2202,6 +2205,16 @@ id percent
 id pin
 id position
 id postLayout
+id profileAdd
+id profileGrid
+id profileImg1
+id profileImg2
+id profileImg3
+id profileImg4
+id profileName1
+id profileName2
+id profileName3
+id profileSetting
 id progress_circular
 id progress_horizontal
 id radio
@@ -2436,6 +2449,7 @@ layout abc_tooltip
 layout activity_link_wifi
 layout activity_main
 layout activity_mainscreen
+layout activity_profile_select
 layout activity_register_dev
 layout custom_appbar
 layout custom_dialog
