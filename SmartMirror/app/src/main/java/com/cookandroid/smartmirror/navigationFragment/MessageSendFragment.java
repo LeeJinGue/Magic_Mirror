@@ -14,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -71,6 +72,8 @@ public class MessageSendFragment extends Fragment {
                     // 선택되어 있을 때
                     if(test.isSelected){
                         Log.i("test", pData.name+"의 isSelected: "+pData.isSelected);
+                        Toast.makeText(v.getContext(), "pro1", Toast.LENGTH_LONG).show();
+
                         profile1.setBackgroundColor(getResources().getColor(R.color.white));
 
 //                        pData.isSelected = true;
@@ -78,8 +81,8 @@ public class MessageSendFragment extends Fragment {
 
                     }else{
                         Log.i("test", pData.name+"의 isSelected: "+pData.isSelected);
-                        profile1.setBackgroundColor(getResources().getColor(R.color.bgColor));
-                        pData.isSelected = false;
+                        profile1.setBackgroundColor(getResources().getColor(R.color.black));
+                        pData.isSelected = true;
                     }
 
                 }

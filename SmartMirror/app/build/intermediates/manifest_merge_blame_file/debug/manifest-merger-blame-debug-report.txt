@@ -11,11 +11,7 @@
 9-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml
 10
 11    <application
-<<<<<<< HEAD
-11-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:5:5-53:19
-=======
-11-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:5:5-53:19
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
+11-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:5:5-56:19
 12        android:allowBackup="true"
 12-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -31,9 +27,8 @@
 19        android:supportsRtl="true"
 19-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:10:9-35
 20        android:testOnly="true"
-<<<<<<< HEAD
-21        android:theme="@style/Theme.SmartMirror" >
-21-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:11:9-49
+21        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+21-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:11:9-65
 22        <activity
 22-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:12:9-14:40
 23            android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
@@ -41,183 +36,92 @@
 24            android:exported="false" />
 24-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:14:13-37
 25        <activity
-25-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:15:9-26:20
-26            android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
-26-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:16:13-58
-27            android:exported="true"
-27-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:17:13-36
-28            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-28-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:18:13-69
-29            <intent-filter>
-29-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:20:14-25:30
-30                <action android:name="android.intent.action.MAIN" />
-30-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:21:14-66
-30-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:21:22-63
-31
-32                <category android:name="android.intent.category.LAUNCHER" />
-32-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:24:14-74
-32-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:24:24-71
-33            </intent-filter>
-34        </activity>
-35        <activity
-35-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:27:9-30:72
-36            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
-36-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:28:13-56
-37            android:exported="false"
-37-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:29:13-37
-38            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-38-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:30:13-69
-39        <activity
-39-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:31:9-40:20
-40            android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
-40-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:32:13-59
-41            android:exported="true"
-41-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:33:13-36
-42            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-42-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:34:13-69
-43            <intent-filter>
-43-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:20:14-25:30
-44                <action android:name="android.intent.action.MAIN" />
-44-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:21:14-66
-44-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:21:22-63
-45
-46                <category android:name="android.intent.category.LAUNCHER" />
-46-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:24:14-74
-46-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:24:24-71
-47            </intent-filter>
-48        </activity>
-49        <activity
-49-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:41:9-52:20
-50            android:name="com.cookandroid.smartmirror.activities.MainActivity"
-50-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:42:13-52
-51            android:exported="true"
-51-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:43:13-36
-52            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-52-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:44:13-69
-53
-54            <!-- <intent-filter> -->
-55            <!-- <action android:name="android.intent.action.MAIN" /> -->
-56
-57
-58            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-59            <!-- </intent-filter> -->
-60        </activity>
-61
-62        <provider
-62-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-63            android:name="androidx.startup.InitializationProvider"
-63-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-64            android:authorities="com.cookandroid.smartmirror.androidx-startup"
-64-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-65            android:exported="false" >
-65-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-66            <meta-data
-66-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-67                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-67-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-68                android:value="androidx.startup" />
-68-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
-69            <meta-data
-69-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
-70                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-70-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
-71                android:value="androidx.startup" />
-71-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
-72        </provider>
-73    </application>
-74
-75</manifest>
-=======
-21        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-21-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-65
-22        <activity
-22-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-14:40
-23            android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
-23-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:13-61
-24            android:exported="false" />
-24-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:14:13-37
-25        <activity
-25-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:15:9-26:20
-26            android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
-26-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:16:13-58
-27            android:exported="true"
-27-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:17:13-36
-28            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-28-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:18:13-69
-29
-30            <!-- <intent-filter> -->
-31            <!-- <action android:name="android.intent.action.MAIN" /> -->
+25-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:15:9-17:40
+26            android:name="com.cookandroid.smartmirror.activities.ProfileSettingActivity"
+26-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:16:13-62
+27            android:exported="false" />
+27-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:17:13-37
+28        <activity
+28-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:18:9-29:20
+29            android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
+29-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:19:13-58
+30            android:exported="true"
+30-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:20:13-36
+31            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+31-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:21:13-69
 32
-33
-34            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-35            <!-- </intent-filter> -->
-36        </activity>
-37        <activity
-37-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:27:9-30:72
-38            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
-38-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:28:13-56
-39            android:exported="false"
-39-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:29:13-37
-40            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-40-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:30:13-69
-41        <activity
-41-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:31:9-40:20
-42            android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
-42-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:32:13-59
-43            android:exported="true"
-43-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:33:13-36
-44            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-44-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:34:13-69
-45            <intent-filter>
-45-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:35:13-39:29
-46                <action android:name="android.intent.action.MAIN" />
-46-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:36:17-69
-46-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:36:25-66
-47
-48                <category android:name="android.intent.category.LAUNCHER" />
-48-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:38:17-77
-48-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:38:27-74
-49            </intent-filter>
-50        </activity>
-51        <activity
-51-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:41:9-52:20
-52            android:name="com.cookandroid.smartmirror.activities.MainActivity"
-52-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:42:13-52
-53            android:exported="true"
-53-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:43:13-36
-54            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-54-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:44:13-69
-55
-56            <!-- <intent-filter> -->
-57            <!-- <action android:name="android.intent.action.MAIN" /> -->
+33            <!-- <intent-filter> -->
+34            <!-- <action android:name="android.intent.action.MAIN" /> -->
+35
+36
+37            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+38            <!-- </intent-filter> -->
+39        </activity>
+40        <activity
+40-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:30:9-33:72
+41            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
+41-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:31:13-56
+42            android:exported="false"
+42-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:32:13-37
+43            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+43-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:33:13-69
+44        <activity
+44-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:34:9-43:20
+45            android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
+45-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:35:13-59
+46            android:exported="true"
+46-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:36:13-36
+47            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+47-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:37:13-69
+48            <intent-filter>
+48-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:38:13-42:29
+49                <action android:name="android.intent.action.MAIN" />
+49-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:39:17-69
+49-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:39:25-66
+50
+51                <category android:name="android.intent.category.LAUNCHER" />
+51-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:41:17-77
+51-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:41:27-74
+52            </intent-filter>
+53        </activity>
+54        <activity
+54-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:44:9-55:20
+55            android:name="com.cookandroid.smartmirror.activities.MainActivity"
+55-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:45:13-52
+56            android:exported="true"
+56-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:46:13-36
+57            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+57-->C:\Users\wjsck\Desktop\Git\Magic_Mirror\SmartMirror\app\src\main\AndroidManifest.xml:47:13-69
 58
-59
-60            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-61            <!-- </intent-filter> -->
-62        </activity>
-63
-64        <provider
-64-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-65            android:name="androidx.startup.InitializationProvider"
-65-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-66            android:authorities="com.cookandroid.smartmirror.androidx-startup"
-66-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-67            android:exported="false" >
-67-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-68            <meta-data
-68-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-69                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-69-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-70                android:value="androidx.startup" />
-70-->[androidx.emoji2:emoji2:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+59            <!-- <intent-filter> -->
+60            <!-- <action android:name="android.intent.action.MAIN" /> -->
+61
+62
+63            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+64            <!-- </intent-filter> -->
+65        </activity>
+66
+67        <provider
+67-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+68            android:name="androidx.startup.InitializationProvider"
+68-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+69            android:authorities="com.cookandroid.smartmirror.androidx-startup"
+69-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+70            android:exported="false" >
+70-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
 71            <meta-data
-71-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\hippo\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
-72                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-72-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\hippo\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+71-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+72                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+72-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
 73                android:value="androidx.startup" />
-73-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\hippo\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
-74        </provider>
-75    </application>
-76
-77</manifest>
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
+73-->[androidx.emoji2:emoji2:1.0.0] C:\Users\wjsck\.gradle\caches\transforms-3\4d40ec21232b611dd716b892ede208d6\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+74            <meta-data
+74-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+75                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+75-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+76                android:value="androidx.startup" />
+76-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\wjsck\.gradle\caches\transforms-3\b5a10263a72c0b80aefb6f8f76c83ace\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+77        </provider>
+78    </application>
+79
+80</manifest>
