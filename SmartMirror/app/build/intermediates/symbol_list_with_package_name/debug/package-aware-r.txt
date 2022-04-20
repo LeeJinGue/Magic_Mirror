@@ -1799,6 +1799,7 @@ drawable design_snackbar_background
 drawable ic_baseline_add_photo_alternate_24
 drawable ic_baseline_bluetooth_24
 drawable ic_baseline_image_24
+drawable ic_baseline_offline_pin_24
 drawable ic_baseline_search_24
 drawable ic_baseline_settings_24
 drawable ic_baseline_wifi_24
@@ -1806,6 +1807,7 @@ drawable ic_baseline_wifi_lock_24
 drawable ic_bus
 drawable ic_calendar
 drawable ic_clock_black_24dp
+drawable ic_enroll
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -1816,6 +1818,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_pictureadd
 drawable ic_stock
 drawable ic_weather
 drawable ic_windowsetup
@@ -2041,6 +2044,7 @@ id easeOut
 id east
 id editSendMessage
 id editSerial
+id editSerial2
 id edit_query
 id elastic
 id end
@@ -2204,15 +2208,17 @@ id path
 id pathRelative
 id peekHeight
 id percent
+id pictureAdd
 id pin
 id position
 id postLayout
 id profileAdd
+id profileAddText
+id profileEnroll
 id profileGrid
 id profileImg1
 id profileImg2
 id profileImg3
-id profileImg4
 id profileName1
 id profileName2
 id profileName3
@@ -2452,6 +2458,7 @@ layout activity_link_wifi
 layout activity_main
 layout activity_mainscreen
 layout activity_profile_select
+layout activity_profile_setting
 layout activity_register_dev
 layout custom_appbar
 layout custom_dialog

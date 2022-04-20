@@ -86,13 +86,13 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/profileImg4"
+                android:id="@+id/profileAdd"
                 android:src="@drawable/ic_baseline_add_photo_alternate_24"></ImageView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profileAdd"
                 android:textAlignment="center"
+                android:id="@+id/profileAddText"
                 android:text="추가하기"></TextView>
 
         </LinearLayout>
