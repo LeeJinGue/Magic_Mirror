@@ -13,6 +13,9 @@
             android:name=".activities.ProfileSelectActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.ProfileSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MainScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

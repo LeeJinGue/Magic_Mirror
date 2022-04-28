@@ -60,7 +60,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
         adapter.addItem(new Window("메시지확인", R.drawable.ic_message));
         adapter.addItem(new Window("관심 주식 확인", R.drawable.ic_stock));
         adapter.addItem(new Window("날씨", R.drawable.ic_weather));
-        adapter.addItem(new Window("버스 도착시간 확인", R.drawable.ic_bus));
+        //adapter.addItem(new Window("버스 도착시간 확인", R.drawable.ic_bus));
 
         recyclerView.setAdapter(adapter);
 

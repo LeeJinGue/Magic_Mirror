@@ -23,6 +23,9 @@
             android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
             android:exported="false" />
         <activity
+            android:name="com.cookandroid.smartmirror.activities.ProfileSettingActivity"
+            android:exported="false" />
+        <activity
             android:name="com.cookandroid.smartmirror.activities.MainScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
