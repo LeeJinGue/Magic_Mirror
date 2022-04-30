@@ -40,7 +40,7 @@ public class ProfileSelectActivity extends AppCompatActivity {
         MyApplication app = (MyApplication) getApplicationContext();
         nameList = app.getProfileNameList();
     }
-    void drawProfileList(ArrayList<String> nameList2){
+    public void drawProfileList(ArrayList<String> nameList2){
         // 변수들
         imgViewWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
         imgViewHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());

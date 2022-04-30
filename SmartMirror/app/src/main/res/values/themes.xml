@@ -22,7 +22,7 @@
 
     <!--    어떤 정보를 입력하기 위한 힌트 텍스트 스타일-->
     <style name="hintStyle">
-        <item name="android:textAlignment">textStart</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">12pt</item>
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style>
