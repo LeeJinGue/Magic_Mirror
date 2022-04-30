@@ -7724,7 +7724,7 @@
         <item name="android:textSize">10pt</item>
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="hintStyle">
-        <item name="android:textAlignment">textStart</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textSize">12pt</item>
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="colorMainBg">#0D1AE9E3</style><style name="Theme.SmartMirror" parent="Theme.MaterialComponents.DayNight.NoActionBar">
