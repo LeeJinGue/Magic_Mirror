@@ -1,6 +1,7 @@
 package com.cookandroid.smartmirror.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.navigationFragment.MessageSendFragment;
 import com.cookandroid.smartmirror.navigationFragment.ScheduleFragment;
 import com.cookandroid.smartmirror.navigationFragment.StockSetupFragment;
@@ -31,9 +33,11 @@ public class MainScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
-
+        MyApplication app = (MyApplication)getApplicationContext();
+        Log.i("메인스크린", app.getSelectedProfileName()+"의 프로필이 선택되었습니다.");
         // Add Coustom AppBar & Set Title Color Gradient\
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         tvTitle = (TextView) findViewById(R.id.toolbarTv);
         Methods methods = new Methods();
         methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);

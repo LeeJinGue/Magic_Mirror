@@ -2214,15 +2214,11 @@ id position
 id postLayout
 id profileAdd
 id profileAddText
-id profileEnroll
 id profileGrid
 id profileImg1
-id profileImg2
-id profileImg3
-id profileName1
-id profileName2
-id profileName3
+id profileRegisterBtn
 id profileSetting
+id profileSettingTextView
 id progress_circular
 id progress_horizontal
 id radio
