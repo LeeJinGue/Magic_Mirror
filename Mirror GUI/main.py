@@ -31,6 +31,11 @@ class Ui_Form(QMainWindow):
     self.btn_d2 = QtWidgets.QPushButton(Form)
     self.btn_d2.setGeometry(QtCore.QRect(60, 140, 75, 23))
     self.btn_d2.setObjectName("btn_d2")
+
+    self.btn_d3 = QtWidgets.QPushButton(Form)
+    self.btn_d3.setGeometry(QtCore.QRect(60, 180, 75, 23))
+    self.btn_d3.setObjectName("btn_d3")
+
     self.btn_exit = QtWidgets.QPushButton(Form)
     self.btn_exit.setGeometry(QtCore.QRect(310, 140, 75, 23))
     self.btn_exit.setObjectName("btn_exit")
@@ -48,8 +53,13 @@ class Ui_Form(QMainWindow):
     Form.setWindowTitle(_translate("Form", "Form"))
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
+
     self.btn_d2.setText(_translate("Form", "대기화면"))
     self.btn_d2.clicked.connect(self.jump_to_default_wait)
+
+    self.btn_d3.setText(_translate("Form", "사용자 UI"))
+    self.btn_d3.clicked.connect(self.jump_to_user_UI)
+
     self.btn_exit.setText(_translate("Form", "Exit"))
     self.btn_exit.clicked.connect(self.exit)
 
@@ -90,6 +100,17 @@ class Ui_Form(QMainWindow):
    self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = default_wait.Ui_Form()
+   ui.setupUi(form1)
+   form1.show()
+   form1.exec_()
+   self.form.show()
+   #self.timer.start(100)
+
+  def jump_to_user_UI(self): 
+   #self.timer.stop()        
+   self.form.hide()    
+   form1 = QtWidgets.QDialog()
+   ui = Layout_generator.Ui_Form()
    ui.setupUi(form1)
    form1.show()
    form1.exec_()
