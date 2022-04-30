@@ -42,6 +42,7 @@
         android:layout_weight="0.3"
         android:gravity="center"
         android:text="프로필을 등록합니다."
+        android:id="@+id/profileSettingTextView"
         android:textSize="20sp"></TextView>
 
     <com.cookandroid.smartmirror.custom.customEditText
@@ -71,15 +72,15 @@
         android:layout_weight="0.4"
         app:srcCompat="@drawable/ic_pictureadd" />
 
-    <ImageView
-        android:id="@+id/profileEnroll"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="30dp"
-        android:layout_weight="0.4"
-        app:srcCompat="@drawable/ic_enroll" />
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="등록"
+        android:textAppearance="@style/btnStyle"
+        android:background="@drawable/radius"
+
+        android:id="@+id/profileRegisterBtn"></Button>
 
 </LinearLayout>

@@ -9,6 +9,7 @@
         android:targetSdkVersion="31" />
 
     <application
+        android:name="com.cookandroid.smartmirror.dataClass.MyApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
