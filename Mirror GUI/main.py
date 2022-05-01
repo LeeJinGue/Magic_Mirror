@@ -4,10 +4,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt
 import numpy as np
 import Layout_generator
-<<<<<<< HEAD
-=======
 from window import Network_init , default_wait
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
 import sys
 
 
@@ -25,16 +22,6 @@ class Ui_Form(QMainWindow):
 
   def setupUi(self, Form):
     Form.setObjectName("Form")
-<<<<<<< HEAD
-    Form.resize(800, 500)
-    Form.setWindowFlags(Qt.FramelessWindowHint)
-    self.form = Form
-    self.btn_d1 = QtWidgets.QPushButton(Form)
-    self.btn_d1.setGeometry(QtCore.QRect(60, 140, 75, 23))
-    self.btn_d1.setObjectName("btn_d1")
-    self.btn_d2 = QtWidgets.QPushButton(Form)
-    self.btn_d2.setGeometry(QtCore.QRect(180, 140, 75, 23))
-=======
     Form.resize(1024, 600)
     Form.setWindowFlags(Qt.FramelessWindowHint)
     self.form = Form
@@ -43,8 +30,12 @@ class Ui_Form(QMainWindow):
     self.btn_d1.setObjectName("btn_d1")
     self.btn_d2 = QtWidgets.QPushButton(Form)
     self.btn_d2.setGeometry(QtCore.QRect(60, 140, 75, 23))
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
     self.btn_d2.setObjectName("btn_d2")
+
+    self.btn_d3 = QtWidgets.QPushButton(Form)
+    self.btn_d3.setGeometry(QtCore.QRect(60, 180, 75, 23))
+    self.btn_d3.setObjectName("btn_d3")
+
     self.btn_exit = QtWidgets.QPushButton(Form)
     self.btn_exit.setGeometry(QtCore.QRect(310, 140, 75, 23))
     self.btn_exit.setObjectName("btn_exit")
@@ -60,16 +51,20 @@ class Ui_Form(QMainWindow):
   def retranslateUi(self, Form):
     _translate = QtCore.QCoreApplication.translate
     Form.setWindowTitle(_translate("Form", "Form"))
-<<<<<<< HEAD
+
     self.btn_d1.setText(_translate("Form", "set1"))
     self.btn_d1.clicked.connect(self.jump_to_demo1)
     self.btn_d2.setText(_translate("Form", "set2"))
-=======
+
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
+
     self.btn_d2.setText(_translate("Form", "대기화면"))
     self.btn_d2.clicked.connect(self.jump_to_default_wait)
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
+
+    self.btn_d3.setText(_translate("Form", "사용자 UI"))
+    self.btn_d3.clicked.connect(self.jump_to_user_UI)
+
     self.btn_exit.setText(_translate("Form", "Exit"))
     self.btn_exit.clicked.connect(self.exit)
 
@@ -87,12 +82,10 @@ class Ui_Form(QMainWindow):
     ui = Layout_generator.Ui_Dialog1()
     seed = np.array([[0,0,0],[1,1,3]])
     ui.setupUi(form1, seed)
-<<<<<<< HEAD
     form1.showMaximized()
     form1.exec_()
     #self.timer.start(100)
 
-=======
     form1.show()
     form1.exec_()
     self.form.show()
@@ -122,7 +115,16 @@ class Ui_Form(QMainWindow):
    self.form.show()
    #self.timer.start(100)
 
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
+  def jump_to_user_UI(self): 
+   #self.timer.stop()        
+   self.form.hide()    
+   form1 = QtWidgets.QDialog()
+   ui = Layout_generator.Ui_Form()
+   ui.setupUi(form1)
+   form1.show()
+   form1.exec_()
+   self.form.show()
+   #self.timer.start(100)
 
   def exit(self):
     self.form.close()
@@ -133,9 +135,6 @@ if __name__ == "__main__":
   form = QtWidgets.QWidget()
   window = Ui_Form()
   window.setupUi(form)
-<<<<<<< HEAD
   form.showMaximized()
-=======
   form.show()
->>>>>>> 9f89017f0b0ba6bbbabf32f7ee06c414bdf946c5
   sys.exit(app.exec_())
