@@ -18,5 +18,9 @@
         app:selectedDayTextColor="#FFFFFF"
         app:selectionType="single"
         app:weekendDayTextColor="#ef4550" />
-
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scheduleListView"
+        android:background="@color/white"></ListView>
 </LinearLayout>

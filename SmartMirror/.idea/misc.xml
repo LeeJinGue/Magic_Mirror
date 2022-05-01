@@ -17,8 +17,13 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_bluetooth_24.xml" value="0.1335" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.129" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_offline_pin_24.xml" value="0.129" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_schedule_24.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.129" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_wifi_lock_24.xml" value="0.1335" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_black.xml" value="0.2765" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_blue.xml" value="0.2765" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_orange.xml" value="0.2765" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_purple.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/radius.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/rectangle.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/selector.xml" value="0.1" />
@@ -32,9 +37,10 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/custom_appbar.xml" value="0.1421875" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/custom_text_view.xml" value="0.13134057971014493" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_message_send.xml" value="0.1" />
-        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_schedule.xml" value="0.33" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_schedule.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_window_setup.xml" value="0.13134057971014493" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/messagesend.xml" value="0.1522289766970618" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/schedule_item.xml" value="0.33" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/title_smartmirror.xml" value="0.13134057971014493" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/wift_list_view.xml" value="0.223731884057971" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/window_item.xml" value="0.1522289766970618" />
