@@ -153,19 +153,12 @@ class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
+
+        #위젯 배치
         widget_time.clock.setupUi(self,Form,504,0)
         widget_weather.weather.setupUi(self,Form,0,0)
         widget_camera.camera.setupUi(self, Form, 504, 270)
 
-        #widget_tmp1 = widget_weather.Ui_Form()
-        #widget_tmp1.setupUi(Form,0,0)
-        #widget_tmp2 = widget_time.Ui_Form()
-        #widget_tmp2.setupUi(Form,504,0)
-        #widget_tmp2.timer_init(Form)
-        #widget_tmp3 = widget_camera.Ui_Form()
-        #widget_tmp3.setupUi(Form,504,270)
-
-        #self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

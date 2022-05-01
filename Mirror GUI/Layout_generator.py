@@ -11,13 +11,14 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import (QApplication, QWidget
 , QLineEdit, QTextBrowser, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
-from widget import widget_weather , widget_time, widget_camera
+from widget import widget_weather , widget_time, widget_camera , widget_schedule
 
 
-class Ui_Form(object):
+class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, widget_schedule.schedule):
 
   loc_xy = [[0,0],[504,0],[504,270],[0,270]]
   def __init__(self):
+    self.userSetting = [0,1,2,3]
     super().__init__()
 
 
@@ -166,18 +167,18 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
-        QtCore.QMetaObject.connectSlotsByName(Form)
-        
-  def setupUi(self, Dialog1, seed):
-    Dialog1.setObjectName("Dialog1")
-    Dialog1.resize(1024, 600)
-    Dialog1.setWindowFlags(Qt.FramelessWindowHint)
-    self.timer = QTimer(Dialog1)
-    self.timer.start(100)
-    self.timer.timeout.connect(self.timeout_fun)
-    self.time_cnt = 0
-    self.seed = seed
+        #위젯 작동 테스트
+        widget_schedule.schedule.setupUi(self,Form,0,0)
 
+
+
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+  def get_user_ui_set(self, Form):
+    pass
+        
+
+  
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
 
