@@ -16,9 +16,7 @@ from widget import widget_weather , widget_time, widget_camera
 
 class Ui_Form(object):
 
-
-  loc_start = [[0,0],[400,0],[0,250],[400,250]]
-  loc_end = [[400,250],[800,250],[400,500],[800,500]]
+  loc_xy = [[0,0],[504,0],[504,270],[0,270]]
   def __init__(self):
     super().__init__()
 
@@ -168,8 +166,15 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
+
+
+
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+  def get_user_ui_set(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+
+  
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
 
