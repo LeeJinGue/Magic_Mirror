@@ -51,6 +51,11 @@ class Ui_Form(QMainWindow):
   def retranslateUi(self, Form):
     _translate = QtCore.QCoreApplication.translate
     Form.setWindowTitle(_translate("Form", "Form"))
+
+    self.btn_d1.setText(_translate("Form", "set1"))
+    self.btn_d1.clicked.connect(self.jump_to_demo1)
+    self.btn_d2.setText(_translate("Form", "set2"))
+
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
 
@@ -77,6 +82,10 @@ class Ui_Form(QMainWindow):
     ui = Layout_generator.Ui_Dialog1()
     seed = np.array([[0,0,0],[1,1,3]])
     ui.setupUi(form1, seed)
+    form1.showMaximized()
+    form1.exec_()
+    #self.timer.start(100)
+
     form1.show()
     form1.exec_()
     self.form.show()
@@ -117,7 +126,6 @@ class Ui_Form(QMainWindow):
    self.form.show()
    #self.timer.start(100)
 
-
   def exit(self):
     self.form.close()
 
@@ -127,5 +135,6 @@ if __name__ == "__main__":
   form = QtWidgets.QWidget()
   window = Ui_Form()
   window.setupUi(form)
+  form.showMaximized()
   form.show()
   sys.exit(app.exec_())

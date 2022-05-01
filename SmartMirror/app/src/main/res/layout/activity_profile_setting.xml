@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="5"
+    tools:context=".activities.ProfileSettingActivity">
+
+    <include layout="@layout/custom_appbar"></include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="30dp">
+
+        <ImageView
+            android:id="@+id/profileImg1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_image_24"></ImageView>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:text="프로필을 등록합니다."
+        android:id="@+id/profileSettingTextView"
+        android:textSize="20sp"></TextView>
+
+    <com.cookandroid.smartmirror.custom.customEditText
+        android:id="@+id/editSerial2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="60dp"
+        android:layout_weight="0.5"
+        android:background="@drawable/rectangle"
+        android:gravity="start"
+        android:hint="사용자 이름"
+        android:paddingHorizontal="10dp"
+        android:paddingStart="30dp"
+        android:paddingTop="10dp"
+        android:textAppearance="@style/hintStyle"
+        android:textSize="9pt"></com.cookandroid.smartmirror.custom.customEditText>
+
+    <ImageView
+        android:id="@+id/pictureAdd"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="90dp"
+        android:layout_weight="0.4"
+        app:srcCompat="@drawable/ic_pictureadd" />
+
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="등록"
+        android:textAppearance="@style/btnStyle"
+        android:background="@drawable/radius"
+
+        android:id="@+id/profileRegisterBtn"></Button>
+
+</LinearLayout>

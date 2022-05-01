@@ -2,6 +2,7 @@ package com.cookandroid.smartmirror;
 
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.view.View;
 import android.widget.TextView;
 
 public class Methods {
@@ -13,4 +14,7 @@ public class Methods {
                 new float[]{0,1}, Shader.TileMode.CLAMP);
         tv.getPaint().setShader(textShader);
     }
+    // onclickListner에서 index를 전달하기 위한 함수
+
+
 }

@@ -167,6 +167,16 @@ class Ui_Form(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        
+  def setupUi(self, Dialog1, seed):
+    Dialog1.setObjectName("Dialog1")
+    Dialog1.resize(1024, 600)
+    Dialog1.setWindowFlags(Qt.FramelessWindowHint)
+    self.timer = QTimer(Dialog1)
+    self.timer.start(100)
+    self.timer.timeout.connect(self.timeout_fun)
+    self.time_cnt = 0
+    self.seed = seed
 
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
