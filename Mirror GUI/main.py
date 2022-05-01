@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5.QtCore import QTimer
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QTimer ,Qt
 import numpy as np
 import Layout_generator
 from window import Network_init , default_wait
@@ -13,13 +12,6 @@ class Ui_Form(QMainWindow):
   def __init__(self):
     super().__init__()
     
-    # self.timer = QTimer(self)
-    # self.timer.start(1)
-    # self.timer.timeout.connect(self.timeout_fun)
-    # self.time_cnt =0
-
-
-
   def setupUi(self, Form):
     Form.setObjectName("Form")
     Form.resize(1024, 600)
@@ -40,22 +32,12 @@ class Ui_Form(QMainWindow):
     self.btn_exit.setGeometry(QtCore.QRect(310, 140, 75, 23))
     self.btn_exit.setObjectName("btn_exit")
 
-    # self.mylabel = QtWidgets.QLabel(Form)
-    # self.mylabel.setGeometry(QtCore.QRect(60, 160, 75, 23))
-    # self.mylabel.setObjectName("label1")
-    # self.mylabel.setText("hello")
-
     self.retranslateUi(Form)
     QtCore.QMetaObject.connectSlotsByName(Form)
 
   def retranslateUi(self, Form):
     _translate = QtCore.QCoreApplication.translate
     Form.setWindowTitle(_translate("Form", "Form"))
-
-    self.btn_d1.setText(_translate("Form", "set1"))
-    self.btn_d1.clicked.connect(self.jump_to_demo1)
-    self.btn_d2.setText(_translate("Form", "set2"))
-
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
 
@@ -68,32 +50,18 @@ class Ui_Form(QMainWindow):
     self.btn_exit.setText(_translate("Form", "Exit"))
     self.btn_exit.clicked.connect(self.exit)
 
-    
-#   def timeout_fun(self):
-    # self.time_cnt += 1
-    # temp = str(self.time_cnt)
-    # self.mylabel.setText(temp)
-    # print("time cnt is %d" %self.time_cnt)
 
-  def jump_to_demo1(self): 
-    #self.timer.stop()        
-    #self.form.hide()    
+  def jump_to_demo1(self):    
     form1 = QtWidgets.QDialog()
     ui = Layout_generator.Ui_Dialog1()
     seed = np.array([[0,0,0],[1,1,3]])
     ui.setupUi(form1, seed)
-    form1.showMaximized()
-    form1.exec_()
-    #self.timer.start(100)
-
     form1.show()
     form1.exec_()
     self.form.show()
-    #self.timer.start(100)
 
   #네트워크 설정 화면 이동
-  def jump_to_Network(self):
-   #self.timer.stop()        
+  def jump_to_Network(self):        
    self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = Network_init.Ui_Form()
@@ -101,11 +69,9 @@ class Ui_Form(QMainWindow):
    form1.show()
    form1.exec_()
    self.form.show()
-   #self.timer.start(100)
 
   #기본화면 이동
-  def jump_to_default_wait(self): 
-   #self.timer.stop()        
+  def jump_to_default_wait(self):         
    self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = default_wait.Ui_Form()
@@ -113,10 +79,9 @@ class Ui_Form(QMainWindow):
    form1.show()
    form1.exec_()
    self.form.show()
-   #self.timer.start(100)
 
-  def jump_to_user_UI(self): 
-   #self.timer.stop()        
+  #유저 설정 UI 이동
+  def jump_to_user_UI(self):        
    self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = Layout_generator.Ui_Form()
@@ -124,7 +89,6 @@ class Ui_Form(QMainWindow):
    form1.show()
    form1.exec_()
    self.form.show()
-   #self.timer.start(100)
 
   def exit(self):
     self.form.close()
@@ -135,6 +99,5 @@ if __name__ == "__main__":
   form = QtWidgets.QWidget()
   window = Ui_Form()
   window.setupUi(form)
-  form.showMaximized()
   form.show()
   sys.exit(app.exec_())
