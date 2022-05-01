@@ -166,15 +166,8 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
-
-
-
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-  def get_user_ui_set(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-
-  
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
 
