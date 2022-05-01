@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
 MERGED from [com.google.android.material:material:1.4.0] C:\Users\hippo\.gradle\caches\transforms-3\df6ea8679774a514a8fa7722b490163e\transformed\material-1.4.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.2] C:\Users\hippo\.gradle\caches\transforms-3\8ea50d54a8c787bccdd8aab4569838df\transformed\constraintlayout-2.1.2\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat:1.4.0] C:\Users\hippo\.gradle\caches\transforms-3\991f2d2c7654afd1ed85cd9ebd2894ef\transformed\appcompat-1.4.0\AndroidManifest.xml:17:1-24:12
@@ -43,25 +43,25 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\hippo\.gradle\ca
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\23bc2eaa3d335b525ba2ecfef837b657\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\hippo\.gradle\caches\transforms-3\58d3fb1b78397bc15eea1568e0b97297\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\hippo\.gradle\caches\transforms-3\56b1aaac53fce27f3a58c0d828bab898\transformed\jetified-annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
-INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
 	package
 		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:3:5-42
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-50:12
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:1-61:12
 		INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:5:5-48:19
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:6:5-59:19
 MERGED from [com.google.android.material:material:1.4.0] C:\Users\hippo\.gradle\caches\transforms-3\df6ea8679774a514a8fa7722b490163e\transformed\material-1.4.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.4.0] C:\Users\hippo\.gradle\caches\transforms-3\df6ea8679774a514a8fa7722b490163e\transformed\material-1.4.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.2] C:\Users\hippo\.gradle\caches\transforms-3\8ea50d54a8c787bccdd8aab4569838df\transformed\constraintlayout-2.1.2\AndroidManifest.xml:9:5-20
@@ -79,59 +79,73 @@ MERGED from [androidx.startup:startup-runtime:1.0.0] C:\Users\hippo\.gradle\cach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.7.0] C:\Users\hippo\.gradle\caches\transforms-3\b9e4376e452ce4f1a2bbb1fc4b534124\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:10:9-35
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:9-35
 	android:label
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:8:9-41
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-41
 	android:roundIcon
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:9:9-54
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-54
 	android:icon
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:7:9-43
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:10:9-43
 	android:allowBackup
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:9:9-35
 	android:theme
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-49
-activity#com.cookandroid.smartmirror.MainScreenActivity
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-21:20
-	android:exported
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:15:13-36
-	android:theme
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:14:13-69
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:14:9-65
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:13-47
-activity#com.cookandroid.smartmirror.LinkWifiActivity
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:22:9-25:40
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:7:9-48
+activity#com.cookandroid.smartmirror.activities.ProfileSelectActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:15:9-17:40
 	android:exported
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:25:13-37
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:17:13-37
+	android:name
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:16:13-61
+activity#com.cookandroid.smartmirror.activities.ProfileSettingActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:18:9-20:40
+	android:exported
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:20:13-37
+	android:name
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:19:13-62
+activity#com.cookandroid.smartmirror.activities.MainScreenActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:21:9-32:20
+	android:exported
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:23:13-36
 	android:theme
 		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:24:13-69
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:23:13-45
-activity#com.cookandroid.smartmirror.RegisterDevActivity
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:26:9-35:20
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:22:13-58
+activity#com.cookandroid.smartmirror.activities.LinkWifiActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:33:9-36:72
 	android:exported
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:28:13-36
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:35:13-37
 	android:theme
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:29:13-69
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:36:13-69
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:27:13-48
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:34:13-56
+activity#com.cookandroid.smartmirror.activities.RegisterDevActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:37:9-46:20
+	android:exported
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:39:13-36
+	android:theme
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:40:13-69
+	android:name
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:38:13-59
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:30:13-34:29
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:41:13-45:29
 action#android.intent.action.MAIN
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:31:17-69
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:42:17-69
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:31:25-66
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:42:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:33:17-77
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:44:17-77
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:33:27-74
-activity#com.cookandroid.smartmirror.MainActivity
-ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:36:9-47:20
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:44:27-74
+activity#com.cookandroid.smartmirror.activities.MainActivity
+ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:47:9-58:20
 	android:exported
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:38:13-36
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:49:13-36
 	android:theme
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:39:13-69
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:50:13-69
 	android:name
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:37:13-41
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:48:13-52
 uses-sdk
 INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml
