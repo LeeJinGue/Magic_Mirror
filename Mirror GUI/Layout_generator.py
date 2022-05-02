@@ -11,10 +11,11 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import (QApplication, QWidget
 , QLineEdit, QTextBrowser, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
-from widget import widget_weather , widget_time, widget_camera , widget_schedule
+from widget import widget_weather , widget_time, widget_camera , widget_schedule , widget_stock, widget_message
 
 
-class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, widget_schedule.schedule):
+class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, 
+widget_schedule.schedule, widget_stock.stock, widget_message.message):
 
   loc_xy = [[0,0],[504,0],[504,270],[0,270]]
   def __init__(self):
@@ -168,7 +169,9 @@ class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, wi
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
         #위젯 작동 테스트
-        widget_schedule.schedule.setupUi(self,Form,0,0)
+        #widget_schedule.schedule.setupUi(self,Form,0,0)
+        #widget_stock.stock.setupUi(self,Form,0,0)
+        widget_message.message.setupUi(self,Form,0,0)
 
 
 
