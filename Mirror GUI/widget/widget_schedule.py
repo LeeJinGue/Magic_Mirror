@@ -54,7 +54,6 @@ class schedule(QWidget):
       self.pushButton.setText(_translate("Form", "PushButton"))
     
   def addSchedule(self):
-   print("1")
    def get_item_wight():
     #     
     #ship_name = "park"
