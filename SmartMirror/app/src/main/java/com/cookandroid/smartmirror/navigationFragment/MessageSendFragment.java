@@ -171,17 +171,5 @@ public class MessageSendFragment extends Fragment {
             this.index = index;
         }
     }
-    public class Profile{
-        String imgSrc;
-        String name;
-        boolean isSelected;
-        Profile(String imgSrc, String name, boolean isSelected){
-            this.imgSrc = imgSrc;
-            this.name = name;
-            this.isSelected = isSelected;
-        }
-        void setSelected(boolean bool){
-            this.isSelected = bool;
-        }
-    }
+
 }

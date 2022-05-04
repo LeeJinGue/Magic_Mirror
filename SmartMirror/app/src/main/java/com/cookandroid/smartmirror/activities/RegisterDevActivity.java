@@ -68,7 +68,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LinkWifiActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
                 startActivity(intent);
                 finish();
             }

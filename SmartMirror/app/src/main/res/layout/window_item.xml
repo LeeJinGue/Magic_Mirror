@@ -26,6 +26,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:src="@drawable/ic_bus"
                 android:padding="5dp" />
 
             <LinearLayout
@@ -39,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:text="테스트"
                     android:textSize="15sp" />
 
             </LinearLayout>
