@@ -27,7 +27,7 @@ public class ScheduleAdapter extends BaseAdapter {
     }
     public void loadDataWithDay(){
         scheduleDataList.clear();
-        scheduleData sData = new scheduleData("테스트", R.drawable.ic_schedule_orange, "11시", "12시");
+        scheduleData sData = new scheduleData("테스트", R.drawable.ic_schedule_orange, 11, 00, 12, 00);
         scheduleDataList.add(sData);
 
         notifyDataSetChanged();
@@ -47,8 +47,8 @@ public class ScheduleAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-    public void addItem(String title, String startTime, String endTime, int iconRes){
-        scheduleData sData = new scheduleData(title, iconRes, startTime, endTime);
+    public void addItem(String title, int startHour, int startMinute, int endHour, int endMinute,int iconRes){
+        scheduleData sData = new scheduleData(title, iconRes, startHour, startMinute, endHour, endMinute);
         scheduleDataList.add(sData);
     }
     @Override

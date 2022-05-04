@@ -23,9 +23,9 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     public ScheduleRecyclerAdapter(ArrayList<scheduleData> mList){
         mData = mList;
     }
-    public void addItem(String title, String startTime, String endTime, int iconRes){
-        scheduleData item = new scheduleData(title, iconRes, startTime, endTime);
-        mData.add(item);
+    public void addItem(String title, int startHour, int startMinute, int endHour, int endMinute,int iconRes){
+        scheduleData sData = new scheduleData(title, iconRes, startHour, startMinute, endHour, endMinute);
+        mData.add(sData);
     }
     // 아이템 뷰를 위한 뷰홀더 객체를 생성하여 리턴한다.
     @NonNull
@@ -44,8 +44,9 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         scheduleData item = mData.get(position);
         holder.scheduleTitle.setText(item.getTitle());
-        holder.scheduleTime.setText(item.getStartTime() + " - "+item.getEndTiem());
+        holder.scheduleTime.setText(item.getStartHour()+"시 "+item.getStartMinute()+"분" + " - "+item.getEndHour()+"시 "+item.getEndMinute()+"분");
         holder.scheduleIcon.setImageResource(item.getIconRes());
+        holder.data = mData.get(position);
     }
 
     @Override
@@ -58,6 +59,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         ImageView scheduleIcon;
         TextView scheduleTime, scheduleTitle;
         Context context;
+        scheduleData data;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             scheduleIconAndTime = itemView.findViewById(R.id.scheduleIconAndTime);
@@ -70,7 +72,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
                 @Override
                 public void onClick(View v) {
                     Log.i("뷰홀더","선택된 제목: "+scheduleTitle.getText().toString()+", 시간: "+scheduleTime.getText().toString());
-                    ScheduleTypeDialog dialog = new ScheduleTypeDialog(context);
+                    ScheduleTypeDialog dialog = new ScheduleTypeDialog(context, data);
                     dialog.show();
                 }
             });
