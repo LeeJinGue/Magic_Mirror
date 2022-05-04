@@ -156,6 +156,10 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
     },
     {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_fragment_check_belongings.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\fragment_check_belongings.xml"
+    },
+    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_schedule_blue.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_schedule_blue.xml"
     },
@@ -244,24 +248,24 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\activity_register_dev.xml"
     },
     {
-        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.webp"
-    },
-    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\font_notosanskr_black.otf.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\font\\notosanskr_black.otf"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_custom_appbar.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\custom_appbar.xml"
     },
     {
-        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bluetooth_24.xml.flat",
-        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_baseline_bluetooth_24.xml"
-    },
-    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_schedule_orange.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_schedule_orange.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_bluetooth_24.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_baseline_bluetooth_24.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_search_24.xml.flat",

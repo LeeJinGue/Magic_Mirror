@@ -1287,6 +1287,7 @@ int color mtrl_textinput_focused_box_stroke_color 0x7f0500c8
 int color mtrl_textinput_hovered_box_stroke_color 0x7f0500c9
 int color notification_action_color_filter 0x7f0500ca
 int color notification_icon_bg_color 0x7f0500cb
+int color notification_material_background_media_default_color 0x7f0500ed
 int color primary_dark_material_dark 0x7f0500cc
 int color primary_dark_material_light 0x7f0500cd
 int color primary_material_dark 0x7f0500ce
@@ -1735,6 +1736,10 @@ int dimen space_5x 0x7f06019b
 int dimen space_6x 0x7f06019c
 int dimen space_7x 0x7f06019d
 int dimen space_8x 0x7f06019e
+int dimen subtitle_corner_radius 0x7f0601b7
+int dimen subtitle_outline_width 0x7f0601b8
+int dimen subtitle_shadow_offset 0x7f0601b9
+int dimen subtitle_shadow_radius 0x7f0601ba
 int dimen test_mtrl_calendar_day_cornerSize 0x7f06019f
 int dimen test_navigation_bar_active_item_max_width 0x7f0601a0
 int dimen test_navigation_bar_active_item_min_width 0x7f0601a1
@@ -1991,6 +1996,7 @@ int id accessibility_custom_action_6 0x7f09002c
 int id accessibility_custom_action_7 0x7f09002d
 int id accessibility_custom_action_8 0x7f09002e
 int id accessibility_custom_action_9 0x7f09002f
+int id action0 0x7f090235
 int id actionDown 0x7f090030
 int id actionDownUp 0x7f090031
 int id actionUp 0x7f090032
@@ -2048,6 +2054,7 @@ int id buttonPanel 0x7f090065
 int id cache_measures 0x7f090066
 int id calendar_view 0x7f090067
 int id callMeasure 0x7f090068
+int id cancel_action 0x7f090236
 int id cancel_button 0x7f090069
 int id carryVelocity 0x7f09006a
 int id catv_day 0x7f09006b
@@ -2128,6 +2135,7 @@ int id edit_query 0x7f0900b5
 int id elastic 0x7f0900b6
 int id end 0x7f0900b7
 int id endToStart 0x7f0900b8
+int id end_padder 0x7f090237
 int id enterAlways 0x7f0900b9
 int id enterAlwaysCollapsed 0x7f0900ba
 int id exitUntilCollapsed 0x7f0900bb
@@ -2226,6 +2234,7 @@ int id material_timepicker_mode_button 0x7f090117
 int id material_timepicker_ok_button 0x7f090118
 int id material_timepicker_view 0x7f090119
 int id material_value_index 0x7f09011a
+int id media_actions 0x7f090238
 int id menu_settings 0x7f09011b
 int id message 0x7f09011c
 int id messageGrid 0x7f09011d
@@ -2395,6 +2404,7 @@ int id startToEnd 0x7f0901bc
 int id startVertical 0x7f0901bd
 int id staticLayout 0x7f0901be
 int id staticPostLayout 0x7f0901bf
+int id status_bar_latest_event_content 0x7f090239
 int id stop 0x7f0901c0
 int id stretch 0x7f0901c1
 int id submenuarrow 0x7f0901c2
@@ -2405,6 +2415,7 @@ int id tab1 0x7f0901c6
 int id tab2 0x7f0901c7
 int id tab3 0x7f0901c8
 int id tab4 0x7f0901c9
+int id tab5 0x7f09023a
 int id tabMode 0x7f0901ca
 int id tag_accessibility_actions 0x7f0901cb
 int id tag_accessibility_clickable_spans 0x7f0901cc
@@ -2597,6 +2608,7 @@ int layout design_text_input_end_icon 0x7f0c0033
 int layout design_text_input_start_icon 0x7f0c0034
 int layout dialog_calendar 0x7f0c0035
 int layout dialog_schedule_edit 0x7f0c0088
+int layout fragment_check_belongings 0x7f0c0089
 int layout fragment_message_send 0x7f0c0036
 int layout fragment_schedule 0x7f0c0037
 int layout fragment_stock_setup 0x7f0c0038
@@ -2648,8 +2660,17 @@ int layout mtrl_picker_text_input_date 0x7f0c0065
 int layout mtrl_picker_text_input_date_range 0x7f0c0066
 int layout notification_action 0x7f0c0067
 int layout notification_action_tombstone 0x7f0c0068
+int layout notification_media_action 0x7f0c008a
+int layout notification_media_cancel_action 0x7f0c008b
+int layout notification_template_big_media 0x7f0c008c
+int layout notification_template_big_media_custom 0x7f0c008d
+int layout notification_template_big_media_narrow 0x7f0c008e
+int layout notification_template_big_media_narrow_custom 0x7f0c008f
 int layout notification_template_custom_big 0x7f0c0069
 int layout notification_template_icon_group 0x7f0c006a
+int layout notification_template_lines_media 0x7f0c0090
+int layout notification_template_media 0x7f0c0091
+int layout notification_template_media_custom 0x7f0c0092
 int layout notification_template_part_chronometer 0x7f0c006b
 int layout notification_template_part_time 0x7f0c006c
 int layout schedule_item 0x7f0c006d
@@ -2727,6 +2748,7 @@ int string error_icon_content_description 0x7f100025
 int string exposed_dropdown_menu_content_description 0x7f100026
 int string fab_transformation_scrim_behavior 0x7f100027
 int string fab_transformation_sheet_behavior 0x7f100028
+int string hello_blank_fragment 0x7f10006a
 int string hide_bottom_view_on_scroll_behavior 0x7f100029
 int string icon_content_description 0x7f10002a
 int string item_view_role_description 0x7f10002b
@@ -3147,9 +3169,14 @@ int style TextAppearance_AppCompat_Widget_Switch 0x7f11015f
 int style TextAppearance_AppCompat_Widget_TextView_SpinnerItem 0x7f110160
 int style TextAppearance_Compat_Notification 0x7f110161
 int style TextAppearance_Compat_Notification_Info 0x7f110162
+int style TextAppearance_Compat_Notification_Info_Media 0x7f1102da
 int style TextAppearance_Compat_Notification_Line2 0x7f110163
+int style TextAppearance_Compat_Notification_Line2_Media 0x7f1102db
+int style TextAppearance_Compat_Notification_Media 0x7f1102dc
 int style TextAppearance_Compat_Notification_Time 0x7f110164
+int style TextAppearance_Compat_Notification_Time_Media 0x7f1102dd
 int style TextAppearance_Compat_Notification_Title 0x7f110165
+int style TextAppearance_Compat_Notification_Title_Media 0x7f1102de
 int style TextAppearance_Design_CollapsingToolbar_Expanded 0x7f110166
 int style TextAppearance_Design_Counter 0x7f110167
 int style TextAppearance_Design_Counter_Overflow 0x7f110168
