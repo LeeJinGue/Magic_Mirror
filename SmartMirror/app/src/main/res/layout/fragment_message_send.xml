@@ -26,13 +26,15 @@
         ></TextView>
     <com.cookandroid.smartmirror.custom.customEditText
         android:id="@+id/editSendMessage"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@drawable/rectangle"
         android:hint="전송할 메세지"
         android:paddingVertical="10dp"
-        android:paddingRight="30dp"
         android:layout_weight="1"
+        android:paddingHorizontal="30dp"
         android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>
     <Button
         android:layout_width="110dp"
@@ -43,5 +45,5 @@
         android:textAppearance="@style/btnStyle"
         android:background="@drawable/radius"
 
-        android:id="@+id/testBtnRegister"></Button>
+        android:id="@+id/messageSendBtn"></Button>
 </LinearLayout>

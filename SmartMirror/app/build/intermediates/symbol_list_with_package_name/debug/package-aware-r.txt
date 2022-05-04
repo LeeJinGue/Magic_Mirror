@@ -184,6 +184,7 @@ attr buttonStyle
 attr buttonStyleSmall
 attr buttonTint
 attr buttonTintMode
+attr calendarBackgroundColor
 attr cardBackgroundColor
 attr cardCornerRadius
 attr cardElevation
@@ -286,6 +287,9 @@ attr colorSecondaryVariant
 attr colorSurface
 attr colorSwitchThumbNormal
 attr commitIcon
+attr connectedDayIconPosition
+attr connectedDayIconRes
+attr connectedDaySelectedIconRes
 attr constraintRotate
 attr constraintSet
 attr constraintSetEnd
@@ -330,6 +334,9 @@ attr counterOverflowTextColor
 attr counterTextAppearance
 attr counterTextColor
 attr crossfade
+attr currentDayIconRes
+attr currentDaySelectedIconRes
+attr currentDayTextColor
 attr currentState
 attr curveFit
 attr customBoolean
@@ -345,6 +352,7 @@ attr customStringValue
 attr dayInvalidStyle
 attr daySelectedStyle
 attr dayStyle
+attr dayTextColor
 attr dayTodayStyle
 attr defaultDuration
 attr defaultQueryHint
@@ -355,6 +363,7 @@ attr deriveConstraintsFrom
 attr dialogCornerRadius
 attr dialogPreferredPadding
 attr dialogTheme
+attr disabledDayTextColor
 attr displayOptions
 attr divider
 attr dividerHorizontal
@@ -427,6 +436,7 @@ attr fastScrollHorizontalTrackDrawable
 attr fastScrollVerticalThumbDrawable
 attr fastScrollVerticalTrackDrawable
 attr firstBaselineToTopHeight
+attr firstDayOfTheWeek
 attr floatingActionButtonStyle
 attr flow_firstHorizontalBias
 attr flow_firstHorizontalStyle
@@ -691,6 +701,7 @@ attr mock_labelBackgroundColor
 attr mock_labelColor
 attr mock_showDiagonals
 attr mock_showLabel
+attr monthTextColor
 attr motionDebug
 attr motionDurationLong1
 attr motionDurationLong2
@@ -730,6 +741,7 @@ attr navigationViewStyle
 attr nestedScrollFlags
 attr nestedScrollViewStyle
 attr nestedScrollable
+attr nextMonthIconRes
 attr number
 attr numericModifiers
 attr onCross
@@ -739,6 +751,8 @@ attr onPositiveCross
 attr onShow
 attr onStateTransition
 attr onTouchUp
+attr orientation
+attr otherDayTextColor
 attr overlapAnchor
 attr overlay
 attr paddingBottomNoButtons
@@ -779,6 +793,7 @@ attr prefixTextAppearance
 attr prefixTextColor
 attr preserveIconSpacing
 attr pressedTranslationZ
+attr previousMonthIconRes
 attr progressBarPadding
 attr progressBarStyle
 attr quantizeMotionInterpolator
@@ -817,7 +832,13 @@ attr searchViewStyle
 attr seekBarStyle
 attr selectableItemBackground
 attr selectableItemBackgroundBorderless
+attr selectedDayBackgroundColor
+attr selectedDayBackgroundEndColor
+attr selectedDayBackgroundStartColor
+attr selectedDayTextColor
+attr selectionBarMonthTextColor
 attr selectionRequired
+attr selectionType
 attr selectorSize
 attr setsTag
 attr shapeAppearance
@@ -1044,6 +1065,9 @@ attr wavePeriod
 attr wavePhase
 attr waveShape
 attr waveVariesBy
+attr weekDayTitleTextColor
+attr weekendDayTextColor
+attr weekendDays
 attr windowActionBar
 attr windowActionBarOverlay
 attr windowActionModeOverlay
@@ -1110,6 +1134,24 @@ color cardview_light_background
 color cardview_shadow_end_color
 color cardview_shadow_start_color
 color checkbox_themeable_attribute_color
+color colorAccent
+color colorPrimary
+color colorPrimaryDark
+color default_border_color
+color default_calendar_background_color
+color default_connected_day_selected_text_color
+color default_connected_day_text_color
+color default_day_text_color
+color default_disabled_day_text_color
+color default_month_text_color
+color default_other_day_text_color
+color default_selected_day_background_color
+color default_selected_day_background_end_color
+color default_selected_day_background_start_color
+color default_selected_day_text_color
+color default_selection_bar_month_title_text_color
+color default_week_day_title_text_color
+color default_weekend_day_text_color
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background
@@ -1373,6 +1415,10 @@ dimen compat_button_padding_vertical_material
 dimen compat_control_corner_material
 dimen compat_notification_large_icon_max_height
 dimen compat_notification_large_icon_max_width
+dimen day_of_week_padding_vertical
+dimen day_padding_vertical
+dimen day_text_padding
+dimen day_text_size
 dimen default_dimension
 dimen design_appbar_elevation
 dimen design_bottom_navigation_active_item_max_width
@@ -1471,6 +1517,7 @@ dimen material_textinput_min_width
 dimen material_time_picker_minimum_screen_height
 dimen material_time_picker_minimum_screen_width
 dimen material_timepicker_dialog_buttons_margin_top
+dimen month_name_padding
 dimen mtrl_alert_dialog_background_inset_bottom
 dimen mtrl_alert_dialog_background_inset_end
 dimen mtrl_alert_dialog_background_inset_start
@@ -1681,6 +1728,14 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen space_1x
+dimen space_2x
+dimen space_3x
+dimen space_4x
+dimen space_5x
+dimen space_6x
+dimen space_7x
+dimen space_8x
 dimen test_mtrl_calendar_day_cornerSize
 dimen test_navigation_bar_active_item_max_width
 dimen test_navigation_bar_active_item_min_width
@@ -1693,6 +1748,10 @@ dimen test_navigation_bar_item_min_width
 dimen test_navigation_bar_label_padding
 dimen test_navigation_bar_shadow_height
 dimen test_navigation_bar_text_size
+dimen text_big
+dimen text_large
+dimen text_medium
+dimen text_small
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -1783,6 +1842,7 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable border
+drawable border_top_bottom
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1804,9 +1864,14 @@ drawable ic_baseline_search_24
 drawable ic_baseline_settings_24
 drawable ic_baseline_wifi_24
 drawable ic_baseline_wifi_lock_24
+drawable ic_belonging
 drawable ic_bus
 drawable ic_calendar
+drawable ic_chevron_left_gray
+drawable ic_chevron_right_gray
 drawable ic_clock_black_24dp
+drawable ic_close_gray
+drawable ic_done_gray
 drawable ic_enroll
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_background
@@ -1819,7 +1884,14 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_pictureadd
+drawable ic_schedule_black
+drawable ic_schedule_blue
+drawable ic_schedule_green
+drawable ic_schedule_orange
+drawable ic_schedule_purple
 drawable ic_stock
+drawable ic_triangle_green
+drawable ic_triangle_white
 drawable ic_weather
 drawable ic_windowsetup
 drawable material_cursor_drawable
@@ -1857,6 +1929,7 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable radius
 drawable rectangle
+drawable selected_bg
 drawable selector
 drawable test_custom_background
 drawable test_level_drawable
@@ -1874,6 +1947,8 @@ id BOTTOM_END
 id BOTTOM_START
 id CTRL
 id FUNCTION
+id LinearScheduleDialogEndTime
+id LinearScheduleDialogStartTime
 id META
 id NO_DEBUG
 id SHIFT
@@ -1962,9 +2037,9 @@ id beginOnFirstDraw
 id beginning
 id bestChoice
 id blocking
-id bottmleft
 id bottom
 id bottom_navigation
+id bottomleft
 id bottomright
 id bounce
 id bounceBoth
@@ -1972,9 +2047,14 @@ id bounceEnd
 id bounceStart
 id buttonPanel
 id cache_measures
+id calendar_view
 id callMeasure
 id cancel_button
 id carryVelocity
+id catv_day
+id catv_end
+id catv_middle
+id catv_start
 id center
 id center_horizontal
 id center_vertical
@@ -2061,10 +2141,12 @@ id fill_vertical
 id filled
 id fitToContents
 id fixed
+id fl_navigation_buttons_bar
 id flip
 id floating
 id forever
 id fragment_container_view_tag
+id friday
 id frost
 id ghost_view
 id ghost_view_holder
@@ -2080,6 +2162,7 @@ id hideable
 id home
 id homeAsUp
 id honorRequest
+id horizontal
 id horizontal_only
 id icon
 id icon_group
@@ -2103,6 +2186,10 @@ id item2
 id item3
 id item4
 id item_touch_helper_previous_elevation
+id iv_cancel
+id iv_done
+id iv_next_month
+id iv_previous_month
 id jumpToEnd
 id jumpToStart
 id labeled
@@ -2115,6 +2202,7 @@ id line3
 id linear
 id listMode
 id list_item
+id ll_month_header
 id mainAppbar
 id mainConstraint
 id masked
@@ -2142,14 +2230,17 @@ id material_value_index
 id menu_settings
 id message
 id messageGrid
+id messageSendBtn
 id middle
 id mini
+id monday
 id month_grid
 id month_navigation_bar
 id month_navigation_fragment_toggle
 id month_navigation_next
 id month_navigation_previous
 id month_title
+id month_view
 id motion_base
 id mtrl_anchor_parent
 id mtrl_calendar_day_selector_frame
@@ -2174,6 +2265,7 @@ id mtrl_picker_text_input_range_end
 id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
+id multiple
 id multiply
 id navigation_bar_item_icon_view
 id navigation_bar_item_labels_group
@@ -2222,6 +2314,7 @@ id profileSettingTextView
 id progress_circular
 id progress_horizontal
 id radio
+id range
 id ratio
 id rectangles
 id recyclerView
@@ -2233,10 +2326,23 @@ id right_icon
 id right_side
 id rounded
 id row_index_key
+id saturday
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
+id scheduleAddBtn
+id scheduleDialogEndTime
+id scheduleDialogNegativeBtn
+id scheduleDialogPositiveBtn
+id scheduleDialogStartTime
+id scheduleDialogTitle
+id scheduleIcon
+id scheduleIconAndTime
+id scheduleItemLayout
+id scheduleRecyclerView
+id scheduleTime
+id scheduleTitle
 id screen
 id scroll
 id scrollIndicatorDown
@@ -2263,6 +2369,7 @@ id showCustom
 id showHome
 id showTitle
 id sin
+id single
 id skipCollapsed
 id skipped
 id slide
@@ -2293,6 +2400,7 @@ id stop
 id stretch
 id submenuarrow
 id submit_area
+id sunday
 id supportScrollUp
 id tab1
 id tab2
@@ -2312,6 +2420,7 @@ id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id tag_window_insets_animation_callback
+id test1
 id testBtnLinkWifi
 id testBtnMain
 id testBtnRegister
@@ -2336,6 +2445,7 @@ id textinput_helper_text
 id textinput_placeholder
 id textinput_prefix_text
 id textinput_suffix_text
+id thursday
 id time
 id title
 id titleDividerNoCustom
@@ -2356,19 +2466,30 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tuesday
+id tv_day_name
+id tv_day_number
+id tv_month_name
+id tv_range_end_date
+id tv_range_start_date
+id tv_title
 id unchecked
 id uniform
 id unlabeled
 id up
 id useLogo
+id vertical
 id vertical_only
+id view_left_line
 id view_offset_helper
+id view_right_line
 id view_transition
 id view_tree_lifecycle_owner
 id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
+id wednesday
 id west
 id wifiImg
 id wifiListView
@@ -2456,6 +2577,7 @@ layout activity_mainscreen
 layout activity_profile_select
 layout activity_profile_setting
 layout activity_register_dev
+layout calendar_navigation_buttons
 layout custom_appbar
 layout custom_dialog
 layout custom_text_view
@@ -2474,10 +2596,14 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_calendar
+layout dialog_schedule_edit
 layout fragment_message_send
 layout fragment_schedule
 layout fragment_stock_setup
 layout fragment_window_setup
+layout item_multiple_selection_bar_content
+layout item_multiple_selection_bar_title
 layout material_chip_input_combo
 layout material_clock_display
 layout material_clock_display_divider
@@ -2527,6 +2653,7 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout schedule_item
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
@@ -2546,6 +2673,11 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
+layout view_day
+layout view_day_of_week
+layout view_month
+layout view_other_day
+layout view_selection_bar_range
 layout wift_list_view
 layout window_item
 menu example_menu
@@ -3388,6 +3520,9 @@ style btnStyle
 style colorMainBg
 style guideStyle
 style hintStyle
+style scheduleDetail
+style scheduleTime
+style scheduleTitle
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -3413,6 +3548,7 @@ styleable BottomAppBar backgroundTint elevation fabAlignmentMode fabAnimationMod
 styleable BottomNavigationView itemHorizontalTranslationEnabled
 styleable BottomSheetBehavior_Layout android_maxWidth android_elevation backgroundTint behavior_draggable behavior_expandedOffset behavior_fitToContents behavior_halfExpandedRatio behavior_hideable behavior_peekHeight behavior_saveFlags behavior_skipCollapsed gestureInsetBottomIgnored paddingBottomSystemWindowInsets paddingLeftSystemWindowInsets paddingRightSystemWindowInsets paddingTopSystemWindowInsets shapeAppearance shapeAppearanceOverlay
 styleable ButtonBarLayout allowStacking
+styleable CalendarView calendarBackgroundColor connectedDayIconPosition connectedDayIconRes connectedDaySelectedIconRes currentDayIconRes currentDaySelectedIconRes currentDayTextColor dayTextColor disabledDayTextColor firstDayOfTheWeek monthTextColor nextMonthIconRes orientation otherDayTextColor previousMonthIconRes selectedDayBackgroundColor selectedDayBackgroundEndColor selectedDayBackgroundStartColor selectedDayTextColor selectionBarMonthTextColor selectionType weekDayTitleTextColor weekendDayTextColor weekendDays
 styleable Capability queryPatterns shortcutMatchRequired
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Carousel carousel_backwardTransition carousel_emptyViewsBehavior carousel_firstView carousel_forwardTransition carousel_infinite carousel_nextState carousel_previousState carousel_touchUpMode carousel_touchUp_dampeningFactor carousel_touchUp_velocityThreshold

@@ -70,7 +70,7 @@ public class MainScreenActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.tab2:
-                                Toast.makeText(getApplicationContext(), "메시지전송", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), "메시지전송", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, messageSendFragment_frag).commit();
 
                                 return true;

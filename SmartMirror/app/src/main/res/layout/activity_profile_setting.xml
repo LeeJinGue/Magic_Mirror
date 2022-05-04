@@ -47,6 +47,8 @@
 
     <com.cookandroid.smartmirror.custom.customEditText
         android:id="@+id/editSerial2"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="60dp"

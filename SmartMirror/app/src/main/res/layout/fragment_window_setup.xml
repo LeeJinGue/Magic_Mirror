@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/test1"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
                 <LinearLayout
@@ -44,6 +45,30 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/bottomleft"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageView_bottomleft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!-- app:srcCompat="@drawable/ic_message" -->
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <LinearLayout
                     android:id="@+id/topright"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -52,33 +77,9 @@
                     android:orientation="vertical"
                     android:padding="5dp">
 
+
                     <ImageView
                         android:id="@+id/imageView_topright"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <!-- app:srcCompat="@drawable/ic_message" -->
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:id="@+id/bottmleft"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/border"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-
-                    <ImageView
-                        android:id="@+id/imageView_bottomleft"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_weather" -->

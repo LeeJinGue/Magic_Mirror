@@ -44,7 +44,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
         //recyclerView.setOnLongClickListener(new LongClickListener());
         rootView.findViewById(R.id.topleft).setOnDragListener(new DragListener());
         rootView.findViewById(R.id.topright).setOnDragListener(new DragListener());
-        rootView.findViewById(R.id.bottmleft).setOnDragListener(new DragListener());
+        rootView.findViewById(R.id.bottomleft).setOnDragListener(new DragListener());
         rootView.findViewById(R.id.bottomright).setOnDragListener(new DragListener());
 
         recyclerView.setHasFixedSize(true);
@@ -60,6 +60,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
         adapter.addItem(new Window("메시지확인", R.drawable.ic_message));
         adapter.addItem(new Window("관심 주식 확인", R.drawable.ic_stock));
         adapter.addItem(new Window("날씨", R.drawable.ic_weather));
+        adapter.addItem(new Window("소지품 확인", R.drawable.ic_belonging));
         //adapter.addItem(new Window("버스 도착시간 확인", R.drawable.ic_bus));
 
         recyclerView.setAdapter(adapter);
@@ -102,6 +103,8 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 
     static class DragListener implements View.OnDragListener {
         static int res_id = 0;
+        // 선택된 위젯이 1칸짜리인지 2칸짜리인지
+        static int square_cnt = 0;
         @SuppressLint("ResourceType")
         @Override
         public boolean onDrag(View v, DragEvent e) {
@@ -118,20 +121,29 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 
                     if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_calendar)).getBitmap().equals(tempbitmap)) {
                         res_id = R.drawable.ic_calendar;
+                        square_cnt = 2;
                         return true;
                     } else if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_message)).getBitmap().equals(tempbitmap)) {
                         res_id = R.drawable.ic_message;
+                        square_cnt = 1;
                         return true;
                     } else if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_stock)).getBitmap().equals(tempbitmap)) {
                         res_id = R.drawable.ic_stock;
+                        square_cnt = 1;
                         return true;
                     } else if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_weather)).getBitmap().equals(tempbitmap)) {
                         res_id = R.drawable.ic_weather;
+                        square_cnt = 2;
                         return true;
                     } else if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_bus)).getBitmap().equals(tempbitmap)) {
                         res_id = R.drawable.ic_bus;
+                        square_cnt = 1;
                         return true;
-                    } else {
+                    } else if (((BitmapDrawable) v.getResources().getDrawable(R.drawable.ic_belonging)).getBitmap().equals(tempbitmap)) {
+                        res_id = R.drawable.ic_belonging;
+                        square_cnt = 1;
+                        return true;
+                    }else {
                         //bug
                         return true;
                     }
@@ -151,55 +163,76 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
                 case DragEvent.ACTION_DROP:
                     //View view = (View) e.getLocalState();
                     Log.d("DragClickListener", "ACTION_DROP");
-                    if (v == v.findViewById(R.id.topleft)) {
+                    int viewId = 0;
+                    int viewId2 = 0;
+                    if(square_cnt == 1){
+                        if (v == v.findViewById(R.id.topleft)) {
+                            viewId = R.id.imageView_topleft;
+                            //Toast.makeText(v.getContext(), "topleft", Toast.LENGTH_LONG).show();
+                        } else if (v == v.findViewById(R.id.topright)) {
+                            viewId = R.id.imageView_topright;
+                            //Toast.makeText(v.getContext(), "topright", Toast.LENGTH_LONG).show();
+                        } else if (v == v.findViewById(R.id.bottomleft)) {
+                            viewId = R.id.imageView_bottomleft;
+                        } else if (v == v.findViewById(R.id.bottomright)) {
+                            viewId = R.id.imageView_bottomright;
+                        } else {
+                            View view = (View) e.getLocalState();
+                            view.setVisibility(View.VISIBLE);
+                            Toast.makeText(view.getContext(),
+                                    "이미지를 다른 지역에 드랍할수 없습니다.",
+                                    Toast.LENGTH_LONG).show();
+                            return true;
+                        }
+                        View view = (View) e.getLocalState();
+                        ViewGroup viewgroup = (ViewGroup) view
+                                .getParent();
+                        Log.i("아이디체크","현재 뷰의 아이디: "+viewgroup.getClass());
+                        viewgroup.removeView(view);
+
+                        ImageView containView = (ImageView) v.findViewById(viewId);
+
+                        containView.setImageResource(res_id);
+                        view.setVisibility(View.VISIBLE);
+                    }else if(square_cnt == 2){
+                        // 2칸짜리일 때(세로 2칸임)
+                        View parentV = (View)v.getParent();
+
+                        if(v == v.findViewById(R.id.bottomright)){
+                            viewId = R.id.imageView_bottomright;
+                            viewId2 = R.id.imageView_topright;
+
+                        }else if(v == v.findViewById(R.id.topright)){
+                            viewId = R.id.imageView_topright;
+                            viewId2 = R.id.imageView_bottomright;
+
+                        }else if(v == v.findViewById(R.id.bottomleft)){
+                            viewId = R.id.imageView_bottomleft;
+                            viewId2 = R.id.imageView_topleft;
+                        } else if(v == v.findViewById(R.id.topleft)){
+                            viewId = R.id.imageView_topleft;
+                            viewId2 = R.id.imageView_bottomleft;
+                        }else{
+                            View view = (View) e.getLocalState();
+                            view.setVisibility(View.VISIBLE);
+                            Toast.makeText(view.getContext(),
+                                    "이미지를 다른 지역에 드랍할수 없습니다.",
+                                    Toast.LENGTH_LONG).show();
+                            return true;
+                        }
                         View view = (View) e.getLocalState();
                         ViewGroup viewgroup = (ViewGroup) view
                                 .getParent();
                         viewgroup.removeView(view);
-
-                        ImageView containView = (ImageView) v.findViewById(R.id.imageView_topleft);
-
-                        containView.setImageResource(res_id);
-                        view.setVisibility(View.VISIBLE);
-                        //Toast.makeText(v.getContext(), "topleft", Toast.LENGTH_LONG).show();
-                    } else if (v == v.findViewById(R.id.topright)) {
-                        View view = (View) e.getLocalState();
-                        ViewGroup viewgroup = (ViewGroup) view
-                                .getParent();
-                        viewgroup.removeView(view);
-
-                        ImageView containView = (ImageView) v.findViewById(R.id.imageView_topright);
+                        ImageView containView = (ImageView) parentV.findViewById(viewId);
+                        ImageView containView2 = (ImageView) parentV.findViewById(viewId2);
 
                         containView.setImageResource(res_id);
+                        containView2.setImageResource(res_id);
                         view.setVisibility(View.VISIBLE);
-                        //Toast.makeText(v.getContext(), "topright", Toast.LENGTH_LONG).show();
-                    } else if (v == v.findViewById(R.id.bottmleft)) {
-                        View view = (View) e.getLocalState();
-                        ViewGroup viewgroup = (ViewGroup) view
-                                .getParent();
-                        viewgroup.removeView(view);
 
-                        ImageView containView = (ImageView) v.findViewById(R.id.imageView_bottomleft);
-
-                        containView.setImageResource(res_id);
-                        view.setVisibility(View.VISIBLE);
-                    } else if (v == v.findViewById(R.id.bottomright)) {
-                        View view = (View) e.getLocalState();
-                        ViewGroup viewgroup = (ViewGroup) view
-                                .getParent();
-                        viewgroup.removeView(view);
-
-                        ImageView containView = (ImageView) v.findViewById(R.id.imageView_bottomright);
-
-                        containView.setImageResource(res_id);
-                        view.setVisibility(View.VISIBLE);
-                    } else {
-                        View view = (View) e.getLocalState();
-                        view.setVisibility(View.VISIBLE);
-                        Toast.makeText(view.getContext(),
-                                "이미지를 다른 지역에 드랍할수 없습니다.",
-                                Toast.LENGTH_LONG).show();
                     }
+
                     /*
                     //Drag&Drop기능이 가능한 ItemView를 옮기는 기능
                     if (v == v.findViewById(R.id.topleft)) {
