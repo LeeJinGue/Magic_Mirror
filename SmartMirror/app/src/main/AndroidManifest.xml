@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".activities.MessageCheckActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ProfileSelectActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />

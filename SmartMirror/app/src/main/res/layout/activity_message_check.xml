@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="8"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="30dp"
+    tools:context=".activities.MessageCheckActivity">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="5월 4일 수요일"
+            android:id="@+id/messageDay"></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="10dp"
+            >
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:background="@drawable/rectangle"
+                android:padding="5dp"
+                android:text="안녕하세요."
+                android:id="@+id/messageContent1"
+                android:layout_gravity="left"
+                android:layout_marginRight="10dp"
+                ></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오전 11:00"
+                android:id="@+id/messageTime"
+                android:layout_gravity="bottom"
+                ></TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:hint="텍스트를 입력해주세요."
+            ></EditText>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_send_24"></ImageView>
+    </LinearLayout>
+
+
+
+</LinearLayout>
