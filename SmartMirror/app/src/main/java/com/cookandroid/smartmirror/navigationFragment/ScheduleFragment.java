@@ -12,9 +12,11 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +29,7 @@ import com.cookandroid.smartmirror.dataClass.scheduleData;
 
 import java.util.ArrayList;
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.EditScheduleDialogListener {
 //    private ScheduleAdapter mAdapter;
     Context context;
     CalendarView calendarView;
@@ -65,6 +67,7 @@ public class ScheduleFragment extends Fragment {
         mRecyclerView = rootView.findViewById(R.id.scheduleRecyclerView);
         mList = new ArrayList<>();
         mAdapter = new ScheduleRecyclerAdapter(mList);
+        mAdapter.setFragmentManager(getChildFragmentManager());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), LinearLayoutManager.VERTICAL));
@@ -76,8 +79,9 @@ public class ScheduleFragment extends Fragment {
         scheduleAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScheduleTypeDialog dialog = new ScheduleTypeDialog(context);
-                dialog.show();
+                FragmentManager fm = getChildFragmentManager();
+                ScheduleTypeDialog dialog = ScheduleTypeDialog.newInstance(null, -1);
+                dialog.show(fm, "일정추가");
             }
         });
 
@@ -85,5 +89,18 @@ public class ScheduleFragment extends Fragment {
         return rootView;
     }
 
+
+    @Override
+    public void onFinishedEditDialog(int index, scheduleData data) {
+        mAdapter.editItem(index, data);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFinishedAddDialog(scheduleData data) {
+        Toast.makeText(getContext(), "일정이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+        mAdapter.addItem(data.getTitle(), data.getStartHour(), data.getStartMinute(), data.getEndHour(), data.getEndMinute(), R.drawable.ic_schedule_green);
+        mAdapter.notifyDataSetChanged();
+    }
 
 }

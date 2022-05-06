@@ -1878,6 +1878,7 @@ int drawable ic_chevron_left_gray 0x7f070071
 int drawable ic_chevron_right_gray 0x7f070072
 int drawable ic_clock_black_24dp 0x7f070073
 int drawable ic_close_gray 0x7f070074
+int drawable ic_delete 0x7f0700bb
 int drawable ic_done_gray 0x7f070075
 int drawable ic_enroll 0x7f070076
 int drawable ic_keyboard_black_24dp 0x7f070077
@@ -2342,13 +2343,10 @@ int id save_overlay_view 0x7f090180
 int id sawtooth 0x7f090181
 int id scale 0x7f090182
 int id scheduleAddBtn 0x7f090183
-int id scheduleDialogAddOrEdit 0x7f090242
-int id scheduleDialogDeleteBtn 0x7f09023b
+int id scheduleDelBtn 0x7f090243
 int id scheduleDialogEndHourEditText 0x7f09023c
 int id scheduleDialogEndMinuteEditText 0x7f09023d
 int id scheduleDialogEndTime 0x7f09022f
-int id scheduleDialogNegativeBtn 0x7f090230
-int id scheduleDialogPositiveBtn 0x7f090231
 int id scheduleDialogStartHourEditText 0x7f09023e
 int id scheduleDialogStartMinuteEditText 0x7f09023f
 int id scheduleDialogStartTime 0x7f090232
@@ -2360,6 +2358,7 @@ int id scheduleItemLayout 0x7f090187
 int id scheduleRecyclerView 0x7f09022b
 int id scheduleTime 0x7f090189
 int id scheduleTitle 0x7f09018a
+int id scheduleTitleAndCheckBox 0x7f090244
 int id screen 0x7f09018b
 int id scroll 0x7f09018c
 int id scrollIndicatorDown 0x7f09018d

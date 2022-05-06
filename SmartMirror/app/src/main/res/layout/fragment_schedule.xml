@@ -14,26 +14,31 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         ></CalendarView>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scheduleRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
         android:layout_below="@+id/calendar_view"
         android:layout_centerHorizontal="true"
-        android:id="@+id/scheduleRecyclerView"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
         android:background="@color/white">
         ></androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/scheduleAddBtn"
         android:layout_width="110dp"
         android:layout_height="60dp"
         android:layout_marginVertical="10dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/radius"
         android:text="일정 추가"
         android:textAlignment="center"
         android:textAppearance="@style/btnStyle"></Button>
+
+
 </RelativeLayout>

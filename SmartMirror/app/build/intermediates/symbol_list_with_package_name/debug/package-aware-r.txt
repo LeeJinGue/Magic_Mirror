@@ -1879,6 +1879,7 @@ drawable ic_chevron_left_gray
 drawable ic_chevron_right_gray
 drawable ic_clock_black_24dp
 drawable ic_close_gray
+drawable ic_delete
 drawable ic_done_gray
 drawable ic_enroll
 drawable ic_keyboard_black_24dp
@@ -2343,13 +2344,10 @@ id save_overlay_view
 id sawtooth
 id scale
 id scheduleAddBtn
-id scheduleDialogAddOrEdit
-id scheduleDialogDeleteBtn
+id scheduleDelBtn
 id scheduleDialogEndHourEditText
 id scheduleDialogEndMinuteEditText
 id scheduleDialogEndTime
-id scheduleDialogNegativeBtn
-id scheduleDialogPositiveBtn
 id scheduleDialogStartHourEditText
 id scheduleDialogStartMinuteEditText
 id scheduleDialogStartTime
@@ -2361,6 +2359,7 @@ id scheduleItemLayout
 id scheduleRecyclerView
 id scheduleTime
 id scheduleTitle
+id scheduleTitleAndCheckBox
 id screen
 id scroll
 id scrollIndicatorDown
