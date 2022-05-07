@@ -21,6 +21,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
+            android:name="com.cookandroid.smartmirror.activities.MessageCheckActivity"
+            android:exported="false" />
+        <activity
             android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />

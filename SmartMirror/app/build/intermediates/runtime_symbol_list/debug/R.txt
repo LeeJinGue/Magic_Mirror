@@ -1897,6 +1897,7 @@ int drawable ic_schedule_blue 0x7f070083
 int drawable ic_schedule_green 0x7f070084
 int drawable ic_schedule_orange 0x7f070085
 int drawable ic_schedule_purple 0x7f070086
+int drawable ic_send_24 0x7f0700bc
 int drawable ic_stock 0x7f070087
 int drawable ic_triangle_green 0x7f070088
 int drawable ic_triangle_white 0x7f070089
@@ -2240,8 +2241,15 @@ int id material_value_index 0x7f09011a
 int id media_actions 0x7f090238
 int id menu_settings 0x7f09011b
 int id message 0x7f09011c
+int id messageChecksendMessage 0x7f09024b
+int id messageContent1 0x7f090246
+int id messageContent2 0x7f090247
+int id messageDay 0x7f090248
 int id messageGrid 0x7f09011d
+int id messageListLayout 0x7f09024c
 int id messageSendBtn 0x7f09011e
+int id messageTime1 0x7f090249
+int id messageTime2 0x7f09024a
 int id middle 0x7f09011f
 int id mini 0x7f090120
 int id monday 0x7f090121
@@ -2592,6 +2600,7 @@ int layout abc_tooltip 0x7f0c001b
 int layout activity_link_wifi 0x7f0c001c
 int layout activity_main 0x7f0c001d
 int layout activity_mainscreen 0x7f0c001e
+int layout activity_message_check 0x7f0c0093
 int layout activity_profile_select 0x7f0c001f
 int layout activity_profile_setting 0x7f0c0020
 int layout activity_register_dev 0x7f0c0021
