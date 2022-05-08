@@ -69,23 +69,23 @@ public class MessageSendFragment extends Fragment {
         selectedProfileIndex = -1;
         sendProfileName = "";
         drawProfileList(nameList);
-        editSendMessage = rootView.findViewById(R.id.editSendMessage);
-        messageSendBtn = rootView.findViewById(R.id.messageSendBtn);
-        messageSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = editSendMessage.getText().toString();
-                if(!isProfileSelected){
-                    Toast.makeText(context, "메세지를 보낼 상대를 선택해주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                if(msg.isEmpty()) {
-                    Toast.makeText(context, "메세지를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                        Toast.makeText(context, sendProfileName+"에게 "+msg+"를 보냅니다", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+//        editSendMessage = rootView.findViewById(R.id.editSendMessage);
+//        messageSendBtn = rootView.findViewById(R.id.messageSendBtn);
+//        messageSendBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String msg = editSendMessage.getText().toString();
+//                if(!isProfileSelected){
+//                    Toast.makeText(context, "메세지를 보낼 상대를 선택해주세요.", Toast.LENGTH_SHORT).show();
+//                }else{
+//                if(msg.isEmpty()) {
+//                    Toast.makeText(context, "메세지를 입력해주세요.", Toast.LENGTH_SHORT).show();
+//                }else{
+//                        Toast.makeText(context, sendProfileName+"에게 "+msg+"를 보냅니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
         return rootView;
     }
     public void drawProfileList(ArrayList<String> nameList2){

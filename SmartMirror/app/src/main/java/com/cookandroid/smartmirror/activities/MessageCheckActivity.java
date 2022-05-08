@@ -1,5 +1,6 @@
 package com.cookandroid.smartmirror.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,10 +36,22 @@ public class MessageCheckActivity extends AppCompatActivity {
     public static int ConvertDPtoPX(Context context, int dp) { float density = context.getResources().getDisplayMetrics().density; return Math.round((float) dp * density); }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_check);
         context = getApplicationContext();
+        selectedProfile = getIntent().getStringExtra("selectedProfile");
 
         // width/padding값 설정
         dp=ConvertDPtoPX(context, 1);
@@ -58,14 +72,13 @@ public class MessageCheckActivity extends AppCompatActivity {
         // Add Coustom AppBar & Set Title Color Gradient
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
-        tvTitle.setText("이진규");
-        tvTitle.setTextColor(getColor(R.color.black));
-//        Methods methods = new Methods();
-//        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        tvTitle.setText(selectedProfile+"님의 메시지");
+        Methods methods = new Methods();
+        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         messageListLayout = findViewById(R.id.messageListLayout);
         sendMessageBtn = findViewById(R.id.messageChecksendMessage);
@@ -75,7 +88,6 @@ public class MessageCheckActivity extends AppCompatActivity {
                 Log.i("MessageCheckActivity", "메시지 전송");
             }
         });
-        selectedProfile = getIntent().getStringExtra("selectedProfile");
         Log.i("MessageCheckActivity", "선택된 프로필 명: "+selectedProfile);
         addReceivedMessage("상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 ", "오전 11:00");
         addSendedMessage("내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 ", "오전 12:00");
