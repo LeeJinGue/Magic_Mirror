@@ -1,5 +1,7 @@
 package com.cookandroid.smartmirror.activities;
 
+import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +35,6 @@ public class MessageCheckActivity extends AppCompatActivity {
     int messagePadding, messageWidth, dp;
 
 
-    public static int ConvertDPtoPX(Context context, int dp) { float density = context.getResources().getDisplayMetrics().density; return Math.round((float) dp * density); }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

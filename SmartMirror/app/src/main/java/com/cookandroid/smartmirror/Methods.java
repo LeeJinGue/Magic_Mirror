@@ -1,5 +1,6 @@
 package com.cookandroid.smartmirror;
 
+import android.content.Context;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.view.View;
@@ -16,5 +17,6 @@ public class Methods {
     }
     // onclickListner에서 index를 전달하기 위한 함수
 
+    public static int ConvertDPtoPX(Context context, int dp) { float density = context.getResources().getDisplayMetrics().density; return Math.round((float) dp * density); }
 
 }

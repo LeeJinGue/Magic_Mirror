@@ -32,6 +32,7 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/savebtnshape.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/selector.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/text_gradient.xml" value="0.1" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_belonging_add.xml" value="0.17806484295845998" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_link_wifi.xml" value="0.2" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_main.xml" value="0.1421875" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_mainscreen.xml" value="0.22" />
@@ -40,10 +41,12 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_profile_setting.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_register_dev.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_item.xml" value="0.25" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_list_item.xml" value="0.23867753623188406" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_preset_item.xml" value="0.3918722786647315" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/custom_appbar.xml" value="0.1421875" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/custom_text_view.xml" value="0.13134057971014493" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/dialog_schedule_edit.xml" value="0.25" />
-        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_check_belongings.xml" value="0.14285714285714285" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_check_belongings.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_message_send.xml" value="0.15" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_schedule.xml" value="0.2" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_stock_setup.xml" value="0.2140625" />

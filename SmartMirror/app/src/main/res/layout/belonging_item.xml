@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scheduleTitleAndCheckBox"
+        android:id="@+id/belongingNameAndBtns"
         >
 
 
@@ -22,31 +22,25 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:textAppearance="@style/scheduleTitle"
-            android:id="@+id/belongingListTitle"
-            android:text="제목"></TextView>
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/belongingListDelBtn"
-            android:layout_centerVertical="true"
-            android:id="@+id/belongingListSwitch"></Switch>
+            android:id="@+id/belongingName"
+            android:text="소지품명"></TextView>
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_delete"
-            android:id="@+id/belongingListDelBtn"
+            android:layout_toLeftOf="@+id/belongingDelBtn"
+            android:src="@drawable/ic_add_24"
+            android:layout_centerVertical="true"
+            android:id="@+id/belongingAddBtn"></ImageView>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_remove_24"
+            android:id="@+id/belongingDelBtn"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             ></ImageView>
 
     </RelativeLayout>
-
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="top"-->
-<!--        android:textAppearance="@style/scheduleDetail"-->
-<!--        android:id="@+id/scheduleDetail"-->
-<!--        android:text="세부내용"></TextView>-->
 
 </LinearLayout>

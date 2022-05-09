@@ -1864,6 +1864,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable dialogbtnshape
+drawable ic_add_24
 drawable ic_baseline_add_photo_alternate_24
 drawable ic_baseline_bluetooth_24
 drawable ic_baseline_image_24
@@ -1879,7 +1880,6 @@ drawable ic_chevron_left_gray
 drawable ic_chevron_right_gray
 drawable ic_clock_black_24dp
 drawable ic_close_gray
-drawable ic_delete
 drawable ic_done_gray
 drawable ic_enroll
 drawable ic_keyboard_black_24dp
@@ -1893,6 +1893,8 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_pictureadd
+drawable ic_remove_24
+drawable ic_save_24
 drawable ic_schedule_black
 drawable ic_schedule_blue
 drawable ic_schedule_green
@@ -1900,6 +1902,7 @@ drawable ic_schedule_orange
 drawable ic_schedule_purple
 drawable ic_send_24
 drawable ic_stock
+drawable ic_trash_can
 drawable ic_triangle_green
 drawable ic_triangle_white
 drawable ic_weather
@@ -2045,7 +2048,19 @@ id barrier
 id baseline
 id beginOnFirstDraw
 id beginning
-id belongingrecyclerview
+id belongingAddBtn
+id belongingDelBtn
+id belongingItemIcon
+id belongingItemLayout
+id belongingItemRecyclerView
+id belongingName
+id belongingNameAndBtns
+id belongingPresetItemDetail
+id belongingPresetItemLayout
+id belongingPresetItemName
+id belongingPresetItemSwitch
+id belongingSetAddLayout
+id belongingSetRecyclerView
 id bestChoice
 id blocking
 id bottom
@@ -2593,6 +2608,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_belonging_set_add
 layout activity_link_wifi
 layout activity_main
 layout activity_mainscreen
@@ -2600,6 +2616,8 @@ layout activity_message_check
 layout activity_profile_select
 layout activity_profile_setting
 layout activity_register_dev
+layout belonging_item
+layout belonging_set_item
 layout calendar_navigation_buttons
 layout custom_appbar
 layout custom_dialog
