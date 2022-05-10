@@ -6,16 +6,88 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/belongingSetAddLayout"
+    android:weightSum="12"
     tools:context=".activities.BelongingSetAddActivity">
-    <include layout="@layout/custom_appbar"></include>
-    <androidx.recyclerview.widget.RecyclerView
+
+    <include layout="@layout/custom_appbar"
+        android:id="@+id/belongingSetAddAppBar"></include>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="2"
         android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="10dp"
+        android:id="@+id/belongingSetNameLayout"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/belongingItemRecyclerView"></androidx.recyclerview.widget.RecyclerView>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름: "
+            android:layout_marginHorizontal="10dp"
+            ></TextView>
 
+        <EditText
+            android:id="@+id/belongingSetNameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:hint="소지품세트 이름"></EditText>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginVertical="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/belongingSetDetailLayout"
+        android:layout_below="@+id/belongingSetNameLayout"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="상세설명: "
+            android:layout_marginHorizontal="10dp"
+            ></TextView>
+
+        <EditText
+            android:id="@+id/belongingSetDetailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:hint="소지품세트 설명"></EditText>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/belongingItemRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5.5"
+        android:scrollbars="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="10dp"
+        android:layout_below="@+id/belongingSetDetailLayout"
+        android:layout_marginVertical="10dp"></androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_gravity="fill_vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/belongingSetAddBtn"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/radius"
+            android:text="저장"
+            android:paddingHorizontal="10dp"
+            android:layout_gravity="center_horizontal"
+
+            android:textAppearance="@style/btnStyle"></Button>
+
+    </LinearLayout>
 
 </LinearLayout>

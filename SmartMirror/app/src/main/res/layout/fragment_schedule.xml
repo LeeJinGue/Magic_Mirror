@@ -28,13 +28,14 @@
 
     <Button
         android:id="@+id/scheduleAddBtn"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
         android:background="@drawable/radius"
         android:text="일정 추가"
         android:textAlignment="center"

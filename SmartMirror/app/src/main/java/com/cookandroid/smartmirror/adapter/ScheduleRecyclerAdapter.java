@@ -84,6 +84,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         int index;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
 
             scheduleIconAndTime = itemView.findViewById(R.id.scheduleIconAndTime);
             scheduleIcon = itemView.findViewById(R.id.scheduleIcon);
@@ -115,7 +116,6 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
                     alertDialog.show();
                 }
             });
-            context = itemView.getContext();
             // 일정 클릭시 수정 화면으로 이동
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

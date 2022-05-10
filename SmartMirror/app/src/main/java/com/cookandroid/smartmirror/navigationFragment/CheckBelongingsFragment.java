@@ -16,7 +16,7 @@ import android.widget.Button;
 
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.BelongingSetAddActivity;
-import com.cookandroid.smartmirror.adapter.BelongingListRecyclerAdapter;
+import com.cookandroid.smartmirror.adapter.BelongingSetRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class CheckBelongingsFragment extends Fragment {
     Context context;
     Button belongingAddBtn;
     ArrayList<belongingSetData> mList;
-    BelongingListRecyclerAdapter mAdapter;
+    BelongingSetRecyclerAdapter mAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class CheckBelongingsFragment extends Fragment {
             }
         });
         mList = new ArrayList<>();
-        mAdapter = new BelongingListRecyclerAdapter(mList);
+        mAdapter = new BelongingSetRecyclerAdapter(mList);
         belongingSetRecyclerView.setAdapter(mAdapter);
         belongingSetRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
         belongingSetRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), LinearLayoutManager.VERTICAL));
