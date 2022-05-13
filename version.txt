@@ -1,4 +1,5 @@
 안드로이드8.1(API 27 level)
 Python 3.7~
 opencv 4.5.5
+
 Raspbian 최신버전 
