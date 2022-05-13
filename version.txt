@@ -2,3 +2,4 @@
 Python 3.7~
 Raspbian 최신버전 
 opencv 4.5.5
+pymysql - mariadb
