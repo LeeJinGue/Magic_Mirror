@@ -1,5 +1,7 @@
 package com.cookandroid.smartmirror.adapter;
 
+import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,10 +72,10 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
         // 소지품 아이템 한 줄 한줄과 매칭시켜주는?
         private Context context;
         private String name;
+        private int index;
         private TextView belongingItemNameTextView;
         private ImageView belongingItemAddBtn, belongingItemDelBtn;
         private EditText nameEditText;
-        private int index;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -86,6 +88,8 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                     alertDialog.create();
                     nameEditText = new EditText(alertDialog.getContext());
+                    int dp10 = ConvertDPtoPX(alertDialog.getContext(), 10);
+                    nameEditText.setPadding(dp10, 0, dp10, 0);
                     alertDialog
                             .setTitle("소지품 명을 입력해주세요.")
                             .setPositiveButton("추가", new DialogInterface.OnClickListener() {

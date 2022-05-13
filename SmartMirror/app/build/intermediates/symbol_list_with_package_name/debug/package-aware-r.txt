@@ -1865,6 +1865,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable dialogbtnshape
 drawable ic_add_24
+drawable ic_add_circle_24
 drawable ic_baseline_add_photo_alternate_24
 drawable ic_baseline_bluetooth_24
 drawable ic_baseline_image_24
@@ -2337,7 +2338,6 @@ id path
 id pathRelative
 id peekHeight
 id percent
-id pictureAdd
 id pin
 id position
 id postLayout
@@ -2439,6 +2439,13 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id status_bar_latest_event_content
+id stockAddBtn
+id stockAddEndBtn
+id stockItemDelBtn
+id stockItemLayout
+id stockItemNameTextView
+id stockItemRecyclerView
+id stockNameAndBtns
 id stop
 id stretch
 id submenuarrow
@@ -2465,6 +2472,7 @@ id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id tag_window_insets_animation_callback
 id test1
+id test2
 id testBtnLinkWifi
 id testBtnMain
 id testBtnRegister
@@ -2615,6 +2623,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_and_search_stock
 layout activity_belonging_set_add
 layout activity_link_wifi
 layout activity_main
@@ -2715,8 +2724,8 @@ layout schedule_item
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
+layout stock_item
 layout support_simple_spinner_dropdown_item
-layout test
 layout test_action_chip
 layout test_chip_zero_corner_radius
 layout test_design_checkbox
