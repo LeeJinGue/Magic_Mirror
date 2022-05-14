@@ -161,7 +161,7 @@ class Ui_Form(object):
         Form.setPalette(palette)
 
 
-        self.NetListView = QtWidgets.QListWidget(Form) #네트워크 목록 리스트 뷰
+        self.NetListView = QtWidgets.QListWidget(Form)
         self.NetListView.setGeometry(QtCore.QRect(20, 80, 600, 500))
         self.NetListView.setStyleSheet("color: #FFFFFF; border-style: solid; border-width: 3px; border-color: #FFFFFF; border-radius: 0px; ")
 
@@ -510,39 +510,16 @@ class Ui_Form(object):
 "</style></head><body style=\" font-family:\'Gulim\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">연결 가능 네트워크</span></p></body></html>"))
-        self.TopBar.setStyleSheet("""color: #FFFFFF; 
-                                background-color: #000000;
-                                border-style: solid; 
-                                border-width: 3px; 
-                                border-color: #FFFFFF; 
-                                border-radius: 0px; """)        
-        
-        
         self.Text1.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Gulim\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">앱을 이용해</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">네트워크 설정을</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">해주세요</span></p></body></html>"))
-        self.Text1.setStyleSheet("""color: #FFFFFF; 
-                                background-color: #000000;
-                                border-style: solid; 
-                                border-width: 0px; 
-                                border-color: #FFFFFF; 
-                                border-radius: 0px; """)
-        #self.Text1.setText("네트워크 설정을\n해주세요")
-        
         self.SerialNo.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Gulim\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">S/N: XXXX-XXXX-XXXX</span></p></body></html>"))
-        self.SerialNo.setStyleSheet("""color: #FFFFFF; 
-                        background-color: #000000;
-                        border-style: solid; 
-                        border-width: 0px; 
-                        border-color: #FFFFFF; 
-                        border-radius: 0px; """)
-        
-        
         self.icon1.setText(_translate("Form", ""))

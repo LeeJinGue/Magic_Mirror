@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap,QIcon,QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QSize
+from widget import weather_module
 import os
 
 
@@ -38,7 +39,7 @@ class weather(object):
         self.main_temperature.setAlignment(QtCore.Qt.AlignCenter)
         self.main_temperature.setObjectName("main_temperature")
         self.weather_text = QtWidgets.QLabel(Form)
-        self.weather_text.setGeometry(QtCore.QRect(x+60, y+250, 111, 41))
+        self.weather_text.setGeometry(QtCore.QRect(x+60, y+250, 151, 51))
         font = QtGui.QFont()
         font.setPointSize(15)
         self.weather_text.setFont(font)
@@ -106,6 +107,7 @@ class weather(object):
 
 
         icon_path= os.path.dirname(os.path.abspath(__file__)) #리소스 폴더 경로 추적
+        print(icon_path)
         #icon_path+="\\resource\weather_icon\weather_icon_001.png"
         pixmap = QPixmap(icon_path+"\\resource\weather_icon\weather_icon_001.png")
         print(icon_path)
@@ -133,14 +135,61 @@ class weather(object):
         self.icon5.setPixmap(pixmap)
         self.retranslateweather(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.set_weather()
+
+    def set_weather(self):
+
+        _translate = QtCore.QCoreApplication.translate
+        current , hour = weather_module.get_weather()
+
+        icon_path= os.path.dirname(os.path.abspath(__file__)) #리소스 폴더 경로 추적
+        icon_path +="/resource/weather_icon/"
+        print(icon_path)
+        #icon_path+="\\resource\weather_icon\weather_icon_001.png"
+        pixmap = QPixmap(icon_path+ str(current['icon']) + ".png") #매일 날씨 아이콘
+        print(icon_path)
+        pixmap = pixmap.scaled(161, 151, Qt.IgnoreAspectRatio) #아이콘 크기 설정
+        self.weather_icon.setPixmap(pixmap)
+        #예보 날씨 아이콘 설정
+        pixmap = QPixmap(icon_path+ str(hour[0]['icon']) + ".png") #1시간뒤
+        pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
+        self.icon1.setPixmap(pixmap)
+
+        pixmap = QPixmap(icon_path+ str(hour[1]['icon']) + ".png") #2시간뒤
+        pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
+        self.icon2.setPixmap(pixmap)
+
+        pixmap = QPixmap(icon_path+ str(hour[2]['icon']) + ".png") #3시간뒤
+        pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
+        self.icon3.setPixmap(pixmap)
+
+        pixmap = QPixmap(icon_path+ str(hour[3]['icon']) + ".png") #4시간뒤
+        pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
+        self.icon4.setPixmap(pixmap)
+
+        pixmap = QPixmap(icon_path+ str(hour[4]['icon']) + ".png") #5시간뒤
+        pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
+        self.icon5.setPixmap(pixmap)
+
+        #온도 텍스트 설정
+        self.main_temperature.setText(_translate("Form", str(current['temp'])+'도'))
+        self.weather_text.setText(_translate("Form", current['weather'])) # 온도
+
+        #예보 시간 설정
+        self.time1.setText(_translate("Form", str(hour[0]['time'])+"시"))
+        self.time2.setText(_translate("Form", str(hour[1]['time'])+"시"))
+        self.time3.setText(_translate("Form", str(hour[2]['time'])+"시"))
+        self.time4.setText(_translate("Form", str(hour[3]['time'])+"시"))
+        self.time5.setText(_translate("Form", str(hour[4]['time'])+"시"))
+    
 
     def retranslateweather(self, Form):
         _translate = QtCore.QCoreApplication.translate
         #self.weather_icon.setText(_translate("Form", "image box"))
-        self.main_temperature.setText(_translate("Form", "25도"))
-        self.weather_text.setText(_translate("Form", "맑음"))
-        self.dust_text.setText(_translate("Form", "미세먼지 좋음"))
-        self.location.setText(_translate("Form", "수원시 장안구"))
+        self.main_temperature.setText(_translate("Form", "25도")) # 온도
+        self.weather_text.setText(_translate("Form", "맑음")) #현재 날씨
+        self.dust_text.setText(_translate("Form", ""))
+        self.location.setText(_translate("Form", ""))
         #self.icon1.setText(_translate("Form", "TextLabel"))
         #self.icon2.setText(_translate("Form", "TextLabel"))
         #self.icon3.setText(_translate("Form", "TextLabel"))

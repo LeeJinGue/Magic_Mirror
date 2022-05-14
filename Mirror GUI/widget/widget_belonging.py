@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import *
 
-class message(QWidget):
+class belonging(QWidget):
   def __init__(self):
     super().__init__()
   def setupUi(self, Form, x, y):
@@ -23,49 +23,41 @@ class message(QWidget):
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
         self.frame.setText("")
         self.frame.setObjectName("frame")
-        self.message_label = QtWidgets.QLabel(Form)
-        self.message_label.setGeometry(QtCore.QRect(x+30, y+65, 121, 31))
+        self.belonging_label = QtWidgets.QLabel(Form)
+        self.belonging_label.setGeometry(QtCore.QRect(x+30, y+65, 121, 31))
         font = QtGui.QFont()
         font.setFamily("Adobe 고딕 Std B")
         font.setPointSize(15)
-        self.message_label.setFont(font)
-        self.message_label.setObjectName("message_label")
-        self.message_view = QtWidgets.QListWidget(Form)
-        self.message_view.setGeometry(QtCore.QRect(x+30, y+100, 460, 201))
+        self.belonging_label.setFont(font)
+        self.belonging_label.setObjectName("belonging_label")
+        self.belonging_view = QtWidgets.QListWidget(Form)
+        self.belonging_view.setGeometry(QtCore.QRect(x+30, y+100, 460, 201))
         font = QtGui.QFont()
         font.setPointSize(20)
-        self.message_view.setFont(font)
-        self.message_view.setObjectName("message_view")
+        self.belonging_view.setFont(font)
+        self.belonging_view.setObjectName("belonging_view")
         
-        self.retranslatesMessage(Form)
+        self.retranslatesBelonging(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        self.addMessage()
+        self.addBelonging()
 
 
-  def retranslatesMessage(self, Form):
+  def retranslatesBelonging(self, Form):
       _translate = QtCore.QCoreApplication.translate
       Form.setWindowTitle(_translate("Form", "Form"))
-      self.message_label.setText(_translate("Form", "메시지"))
+      self.belonging_label.setText(_translate("Form", "소지품 확인"))
 
-  def addMessage(self):
+  def addBelonging(self):
    def get_item_wight():
 
     layout_main = QHBoxLayout()
     map1 = QLabel()
     map1.setStyleSheet( "QLabel{color: white;}")
-    map1.setFixedWidth(60)
+    map1.setFixedWidth(430)
     map1.setFixedHeight(60)
     map1.setFrameShape(QtWidgets.QFrame.Box)
     map1.setText("BBBB")
     layout_main.addWidget(map1)
-    
-    map2 = QLabel()
-    map2.setStyleSheet( "QLabel{color: white;}")
-    map2.setFixedWidth(370)
-    map2.setFixedHeight(60)
-    map2.setFrameShape(QtWidgets.QFrame.Box)
-    map2.setText("15000")
-    layout_main.addWidget(map2)
 
     wight = QWidget()
     wight.setLayout(layout_main)
@@ -77,5 +69,5 @@ class message(QWidget):
    item.setBackground(brush)
    
    widget = get_item_wight() #            
-   self.message_view.addItem(item) #   item
-   self.message_view.setItemWidget(item, widget) #  item  widget
+   self.belonging_view.addItem(item) #   item
+   self.belonging_view.setItemWidget(item, widget) #  item  widget

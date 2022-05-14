@@ -11,17 +11,17 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import (QApplication, QWidget
 , QLineEdit, QTextBrowser, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
-from widget import widget_weather , widget_time, widget_camera , widget_schedule , widget_stock, widget_message
+from widget import widget_weather , widget_time, widget_camera , widget_schedule , widget_stock, widget_message, widget_belonging
+import Layout_module
 
 
 class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, 
-widget_schedule.schedule, widget_stock.stock, widget_message.message):
+widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_belonging.belonging):
 
-  loc_xy = [[0,0],[504,0],[504,270],[0,270]]
+  loc_xy = [[0,0],[504,0],[504,270],[0,270]] # 1좌상, 2우상, 3우하, 4좌하
+  user_id = 1
   def __init__(self):
-    self.userSetting = [0,1,2,3]
     super().__init__()
-
 
   def timeout_fun(self):
     self.time_cnt += 1
@@ -29,8 +29,10 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message):
     #print("time cnt is %d" %self.time_cnt)
 
   def setupUi(self, Form):
+        self.Form = Form
         Form.setObjectName("Form")
         Form.resize(1024, 600)
+        Form.setWindowFlags(Qt.FramelessWindowHint)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -169,32 +171,43 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
         #위젯 작동 테스트
-        #widget_schedule.schedule.setupUi(self,Form,0,0)
-        #widget_stock.stock.setupUi(self,Form,0,0)
-        widget_message.message.setupUi(self,Form,0,0)
+        #
+        
+        ##위치 1
+        #widget_schedule.schedule.setupUi(self,Form,self.loc_xy[1][0],self.loc_xy[1][1])
+        ##widget_stock.stock.setupUi(self,Form,0,0)
+        ##위치 0
+        #widget_message.message.setupUi(self,Form,self.loc_xy[0][0],self.loc_xy[0][1])
+        ##위치 3
+        #widget_belonging.belonging.setupUi(self,Form,self.loc_xy[3][0],self.loc_xy[3][1])
+        self.drawWidget()
 
 
 
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-  def get_user_ui_set(self, Form):
-    pass
-        
+  def drawWidget(self):
+    print("위젯 그림")
+    setting = Layout_module.get_user_layoutsetting(self.user_id)
+    print(setting)
+    functions = ['날씨', '시간', '카메라', self.draw_schedule, '주식', self.draw_message, self.draw_belongings]
+  
+    for set in setting:
+      print(set[2])
+      functions[set[2]](set[3])
+
+
+  def draw_schedule(self,loc):
+    widget_schedule.schedule.setupUi(self,self.Form,self.loc_xy[loc][0],self.loc_xy[loc][1])
+ 
+
+  def draw_message(self,loc):
+    widget_message.message.setupUi(self,self.Form,self.loc_xy[loc][0],self.loc_xy[loc][1])
+   
+
+  def draw_belongings(self,loc):
+    widget_belonging.belonging.setupUi(self,self.Form,self.loc_xy[loc][0],self.loc_xy[loc][1])
 
   
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-
-  def tb_maker(self):
-    for i in range(0,2):
-     
-      if self.seed[i][0] == 0:
-        tempstr = "hello 날씨"
-      else:
-        tempstr = "hello 뉴스"
-      
-      self.tb = QtWidgets.QTextBrowser(self.dialog)
-      self.tb.setAcceptRichText(True)
-      self.tb.setOpenExternalLinks(True)
-      self.tb.setGeometry(QtCore.QRect(Ui_Dialog1.loc_start[self.seed[i][1]][0], Ui_Dialog1.loc_start[self.seed[i][1]][1], Ui_Dialog1.loc_end[self.seed[i][2]][0], Ui_Dialog1.loc_end[self.seed[i][2]][1]))
-      self.tb.append(tempstr)
