@@ -25,12 +25,16 @@
         <activity
             android:name=".activities.AddAndSearchStockActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"
+            ></activity>
         <activity
             android:name=".activities.BelongingSetAddActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".activities.MessageCheckActivity"
+            android:windowSoftInputMode="adjustPan"
+
             android:exported="false" />
         <activity
             android:name=".activities.ProfileSelectActivity"

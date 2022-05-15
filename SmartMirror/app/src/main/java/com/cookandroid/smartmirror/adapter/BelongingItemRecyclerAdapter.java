@@ -25,6 +25,10 @@ import java.util.ArrayList;
 public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<BelongingItemRecyclerAdapter.ViewHolder> {
     ArrayList<String> belongingItemList = new ArrayList<>();
 
+    public ArrayList<String> getBelongingItemList() {
+        return belongingItemList;
+    }
+
     // 아이템 뷰를 위한뷰홀더 객체를 생성하여 리턴
     @NonNull
     @Override
@@ -74,44 +78,14 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
         private String name;
         private int index;
         private TextView belongingItemNameTextView;
-        private ImageView belongingItemAddBtn, belongingItemDelBtn;
-        private EditText nameEditText;
+        private ImageView belongingItemDelBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
 
             belongingItemNameTextView = (TextView) itemView.findViewById(R.id.belongingItemNameTextView);
-            belongingItemAddBtn = (ImageView) itemView.findViewById(R.id.belongingItemAddBtn);
-            belongingItemAddBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                    alertDialog.create();
-                    nameEditText = new EditText(alertDialog.getContext());
-                    int dp10 = ConvertDPtoPX(alertDialog.getContext(), 10);
-                    nameEditText.setPadding(dp10, 0, dp10, 0);
-                    alertDialog
-                            .setTitle("소지품 명을 입력해주세요.")
-                            .setPositiveButton("추가", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String belongingItemName = nameEditText.getText().toString();
-                                    Log.i("belongingItemAddDialog", "소지품 리스트에 '"+belongingItemName+"' 추가");
-                                    addItem(belongingItemName);
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Log.i("belongingItemAddDialog", "취소");
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setView(nameEditText);
-                    alertDialog.show();
-                }
-            });
+
             belongingItemDelBtn = (ImageView) itemView.findViewById(R.id.belongingItemDelBtn);
             belongingItemDelBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

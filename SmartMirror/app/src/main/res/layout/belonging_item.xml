@@ -24,13 +24,13 @@
             android:textAppearance="@style/scheduleTitle"
             android:id="@+id/belongingItemNameTextView"
             android:text="소지품명"></TextView>
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_toLeftOf="@+id/belongingItemDelBtn"
-            android:src="@drawable/ic_add_24"
-            android:layout_centerVertical="true"
-            android:id="@+id/belongingItemAddBtn"></ImageView>
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_toLeftOf="@+id/belongingItemDelBtn"-->
+<!--            android:src="@drawable/ic_add_24"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:id="@+id/belongingItemAddBtn"></ImageView>-->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"

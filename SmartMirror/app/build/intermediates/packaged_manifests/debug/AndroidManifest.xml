@@ -37,10 +37,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.BelongingSetAddActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.MessageCheckActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
             android:exported="false"
