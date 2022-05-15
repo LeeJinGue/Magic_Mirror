@@ -31,13 +31,33 @@
             android:text="시간"
             android:textAppearance="@style/scheduleTime"></TextView>
     </RelativeLayout>
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/scheduleTitleAndCheckBox"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textAppearance="@style/scheduleTitle"
         android:id="@+id/scheduleTitle"
         android:text="제목"></TextView>
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_trash_can"
+        android:id="@+id/scheduleDelBtn"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        ></ImageView>
+
+    </RelativeLayout>
+
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

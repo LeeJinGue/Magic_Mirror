@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.navigationFragment.CheckBelongingsFragment;
 import com.cookandroid.smartmirror.navigationFragment.MessageSendFragment;
 import com.cookandroid.smartmirror.navigationFragment.ScheduleFragment;
 import com.cookandroid.smartmirror.navigationFragment.StockSetupFragment;
@@ -26,6 +27,7 @@ public class MainScreenActivity extends AppCompatActivity {
     MessageSendFragment messageSendFragment_frag;
     ScheduleFragment scheduleFragment_frag;
     StockSetupFragment stockSetupFragment_frag;
+    CheckBelongingsFragment checkBelongingsFragment_frag;
     Toolbar toolbar;
     TextView tvTitle;
 
@@ -54,6 +56,7 @@ public class MainScreenActivity extends AppCompatActivity {
         messageSendFragment_frag = new MessageSendFragment();
         scheduleFragment_frag = new ScheduleFragment();
         stockSetupFragment_frag = new StockSetupFragment();
+        checkBelongingsFragment_frag = new CheckBelongingsFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, windowSetupFragment_frag).commit();
 
@@ -86,6 +89,11 @@ public class MainScreenActivity extends AppCompatActivity {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, stockSetupFragment_frag).commit();
 
                                 return true;
+                            case R.id.tab5:
+                                Toast.makeText(getApplicationContext(), "소지품확인", Toast.LENGTH_LONG).show();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.container, checkBelongingsFragment_frag).commit();
+
+                                return true;
                         }
 
                         return false;
@@ -103,7 +111,7 @@ public class MainScreenActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_profile_select,menu);
         return true;
     }
 

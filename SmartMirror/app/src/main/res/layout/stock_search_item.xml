@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="@color/bgColor"
+    android:paddingHorizontal="5dp"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_search_24"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dp"
+        android:id="@+id/stockSearchIcon"
+        ></ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/stockSearchIcon"
+        android:id="@+id/stockSearchItemTextView"
+        android:text="주식이름"></TextView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_send_24"
+        android:layout_alignParentRight="true"
+        android:id="@+id/stockSearchBtn"></ImageView>
+
+</RelativeLayout>

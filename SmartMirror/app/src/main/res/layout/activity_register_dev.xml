@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:id="@+id/editTest"
         android:textAppearance="@style/guideStyle"
         android:text="기기를 등록해주세요."
         android:textAlignment="center"

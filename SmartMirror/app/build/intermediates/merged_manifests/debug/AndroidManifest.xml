@@ -8,6 +8,8 @@
         android:minSdkVersion="27"
         android:targetSdkVersion="31" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.cookandroid.smartmirror.dataClass.MyApplication"
         android:allowBackup="true"
@@ -20,6 +22,27 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.PutDevWifiAddress"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.AddAndSearchStockActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.BelongingSetAddActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.cookandroid.smartmirror.activities.MessageCheckActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.ProfileSelectActivity"
             android:exported="false"
@@ -44,18 +67,11 @@
         <activity
             android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"
             android:windowSoftInputMode="adjustPan" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.cookandroid.smartmirror.activities.MainActivity"

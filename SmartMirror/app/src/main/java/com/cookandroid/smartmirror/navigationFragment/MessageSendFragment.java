@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
+import com.cookandroid.smartmirror.activities.MessageCheckActivity;
 import com.cookandroid.smartmirror.activities.ProfileSelectActivity;
 import com.cookandroid.smartmirror.activities.ProfileSettingActivity;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -68,23 +69,23 @@ public class MessageSendFragment extends Fragment {
         selectedProfileIndex = -1;
         sendProfileName = "";
         drawProfileList(nameList);
-        editSendMessage = rootView.findViewById(R.id.editSendMessage);
-        messageSendBtn = rootView.findViewById(R.id.messageSendBtn);
-        messageSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = editSendMessage.getText().toString();
-                if(!isProfileSelected){
-                    Toast.makeText(context, "메세지를 보낼 상대를 선택해주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                if(msg.isEmpty()) {
-                    Toast.makeText(context, "메세지를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                }else{
-                        Toast.makeText(context, sendProfileName+"에게 "+msg+"를 보냅니다", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+//        editSendMessage = rootView.findViewById(R.id.editSendMessage);
+//        messageSendBtn = rootView.findViewById(R.id.messageSendBtn);
+//        messageSendBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String msg = editSendMessage.getText().toString();
+//                if(!isProfileSelected){
+//                    Toast.makeText(context, "메세지를 보낼 상대를 선택해주세요.", Toast.LENGTH_SHORT).show();
+//                }else{
+//                if(msg.isEmpty()) {
+//                    Toast.makeText(context, "메세지를 입력해주세요.", Toast.LENGTH_SHORT).show();
+//                }else{
+//                        Toast.makeText(context, sendProfileName+"에게 "+msg+"를 보냅니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
         return rootView;
     }
     public void drawProfileList(ArrayList<String> nameList2){
@@ -111,39 +112,43 @@ public class MessageSendFragment extends Fragment {
             profileImg.setOnClickListener(new OnClickListenerPutIndex(i) {
                 @Override
                 public void onClick(View v) {
-                    // 중복 선택이 안된다고 가정한다.
-                    MyApplication app = (MyApplication) context.getApplicationContext();
-                    app.setSelectedProfileName(nameList.get(index));
-                    Log.i("메시지전송", "프로필이 선택되어있는가?:"+isProfileSelected+", 선택된 프로필 인덱스:"+selectedProfileIndex);
-                    if(isProfileSelected){
-                        // 어떤 프로필이 선택되어있는 경우,
-                        if(selectedProfileIndex == index){
-                            // 선택된거랑 지금고른거랑 같으면 선택을 해제한다.
-                            plsList.get(selectedProfileIndex).setBackgroundColor(getResources().getColor(R.color.white));
-                            isProfileSelected = false;
-                            selectedProfileIndex = -1;
-                            sendProfileName = "";
-                        }else {
-                            // 그 프로필의 선택을 해제하고 지금 고른거를 선택한다.
-                            // 1. 선택되어있는거 해제
-                            plsList.get(selectedProfileIndex).setBackgroundColor(getResources().getColor(R.color.white));
-                            // 2. 지금 누른거 선택
-                            plsList.get(index).setBackgroundColor(getResources().getColor(R.color.bgColor));
-                            isProfileSelected = true;
-                            selectedProfileIndex = index;
-                            sendProfileName = app.getProfileName(index);
-                        }
-                    }else{
-                        // 선택 안되어있으면 그냥 지금 누른거를 선택한다.
-                        plsList.get(index).setBackgroundColor(getResources().getColor(R.color.bgColor));
-                        isProfileSelected = true;
-                        selectedProfileIndex = index;
-                        sendProfileName = app.getProfileName(index);
-                    }
-                    System.out.println(nameList.get(index)+"의 프로필이 선택되었습니다.");
-//                    plsList.get(index).setBackgroundColor(getResources().getColor(R.color.white));
-//                    profile1.setBackgroundColor(getResources().getColor(R.color.white));
-                    Log.i("메시지전송", "바뀐내용:\n프로필이 선택되어있는가?:"+isProfileSelected+", 선택된 프로필 인덱스:"+selectedProfileIndex);
+                    Intent intent = new Intent(getContext(), MessageCheckActivity.class);
+                    intent.putExtra("selectedProfile", nameList.get(index));
+                    startActivity(intent);
+
+//                    // 중복 선택이 안된다고 가정한다.
+//                    MyApplication app = (MyApplication) context.getApplicationContext();
+//                    app.setSelectedProfileName(nameList.get(index));
+//                    Log.i("메시지전송", "프로필이 선택되어있는가?:"+isProfileSelected+", 선택된 프로필 인덱스:"+selectedProfileIndex);
+//                    if(isProfileSelected){
+//                        // 어떤 프로필이 선택되어있는 경우,
+//                        if(selectedProfileIndex == index){
+//                            // 선택된거랑 지금고른거랑 같으면 선택을 해제한다.
+//                            plsList.get(selectedProfileIndex).setBackgroundColor(getResources().getColor(R.color.white));
+//                            isProfileSelected = false;
+//                            selectedProfileIndex = -1;
+//                            sendProfileName = "";
+//                        }else {
+//                            // 그 프로필의 선택을 해제하고 지금 고른거를 선택한다.
+//                            // 1. 선택되어있는거 해제
+//                            plsList.get(selectedProfileIndex).setBackgroundColor(getResources().getColor(R.color.white));
+//                            // 2. 지금 누른거 선택
+//                            plsList.get(index).setBackgroundColor(getResources().getColor(R.color.bgColor));
+//                            isProfileSelected = true;
+//                            selectedProfileIndex = index;
+//                            sendProfileName = app.getProfileName(index);
+//                        }
+//                    }else{
+//                        // 선택 안되어있으면 그냥 지금 누른거를 선택한다.
+//                        plsList.get(index).setBackgroundColor(getResources().getColor(R.color.bgColor));
+//                        isProfileSelected = true;
+//                        selectedProfileIndex = index;
+//                        sendProfileName = app.getProfileName(index);
+//                    }
+//                    System.out.println(nameList.get(index)+"의 프로필이 선택되었습니다.");
+////                    plsList.get(index).setBackgroundColor(getResources().getColor(R.color.white));
+////                    profile1.setBackgroundColor(getResources().getColor(R.color.white));
+//                    Log.i("메시지전송", "바뀐내용:\n프로필이 선택되어있는가?:"+isProfileSelected+", 선택된 프로필 인덱스:"+selectedProfileIndex);
 
                 }
             });
