@@ -32,6 +32,8 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     public void addItem(String title, int startHour, int startMinute, int endHour, int endMinute,int iconRes){
         scheduleData sData = new scheduleData(title, iconRes, startHour, startMinute, endHour, endMinute);
         mData.add(sData);
+        notifyItemInserted(mData.size()-1);
+
     }
     public void editItem(int index, scheduleData data){
         mData.set(index, data);

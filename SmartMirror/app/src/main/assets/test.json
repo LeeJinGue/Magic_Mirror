@@ -1,0 +1,7 @@
+{
+  "table": "Message",
+  "type": "delete",
+  "user_num": 1111,
+  "sender_num": 2222,
+  "text": "안녕"
+}

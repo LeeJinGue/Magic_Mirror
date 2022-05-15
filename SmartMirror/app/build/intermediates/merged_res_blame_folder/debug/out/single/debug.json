@@ -32,6 +32,10 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\activity_link_wifi.xml"
     },
     {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_put_dev_wifi_address.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\activity_put_dev_wifi_address.xml"
+    },
+    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_fragment_window_setup.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\fragment_window_setup.xml"
     },
@@ -62,6 +66,10 @@
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\font_inter.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\font\\inter.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_stock_search_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\stock_search_item.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
@@ -314,6 +322,10 @@
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\xml_searchable.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\xml\\searchable.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_custom_appbar.xml.flat",
