@@ -6,10 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -24,11 +21,8 @@ import android.widget.Toast;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
-import com.cookandroid.smartmirror.myDBHelper;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -42,7 +36,7 @@ public class PutDevWifiAddress extends AppCompatActivity {
 
     LinearLayout mainLayout;
     InputMethodManager manager;
-    myDBHelper sqlDB;
+    MirrorDBHelper sqlDB;
 
     private static final int port = 8080;
     private static final String dongIp = "192.168.43.180";
@@ -83,13 +77,14 @@ public class PutDevWifiAddress extends AppCompatActivity {
         mainLayout = findViewById(R.id.registerMainLayout);
         manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         editIpAddress = findViewById(R.id.editIpAddress);
+        sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
 
         linkDevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String ipAddress = editIpAddress.getText().toString();
-                ConnectThread connectThread = new ConnectThread(myIp);
-                connectThread.start();
+//                ConnectThread connectThread = new ConnectThread(myIp);
+//                connectThread.start();
 
                 Intent intent = new Intent(getApplicationContext(), RegisterDevActivity.class);
                 startActivity(intent);

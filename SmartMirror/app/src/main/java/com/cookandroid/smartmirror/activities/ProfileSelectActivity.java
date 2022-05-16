@@ -1,9 +1,14 @@
 package com.cookandroid.smartmirror.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
@@ -17,8 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -26,19 +33,51 @@ import java.util.ArrayList;
 public class ProfileSelectActivity extends AppCompatActivity {
     ArrayList<LinearLayout> plsList = new ArrayList<>();
     ArrayList<String> nameList = new ArrayList<>();
+    ArrayList<userData> userDataList = new ArrayList<>();
     static int set_mode_check = 0;  //편집 or 이동모드 설정
     static int selectProfileNum = 0;    //선택한 profile 번호
     GridLayout profileGridLayout;
     ImageView setBtn, addBtn;
-
+    MirrorDBHelper sqlDB;
     int imgViewWidth;
     int imgViewHeight;
-
+    userData newUser;
+    ActivityResultLauncher<Intent> StartForResultAddProfile = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == Activity.RESULT_OK){
+                        Intent intent = result.getData();
+                        userData newUser = intent.getParcelableExtra("newUser");
+                        userDataList.add(newUser);
+                    }else{
+//                        addedStockName = "없음";
+                    }
+                }
+            });
+    ActivityResultLauncher<Intent> StartForResultEditProfile = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == Activity.RESULT_OK){
+                        Intent intent = result.getData();
+                        userData editedUser = intent.getParcelableExtra("editUser");
+                        int index = intent.getIntExtra("index", -1);
+                        userDataList.set(index, editedUser);
+                    }else{
+//                        addedStockName = "없음";
+                    }
+                }
+            });
     @Override
     protected void onResume() {
         super.onResume();
         MyApplication app = (MyApplication) getApplicationContext();
         nameList = app.getProfileNameList();
+    }
+    public void getUserData(){
+        sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
+        userDataList = sqlDB.getAllUserList();
     }
     public void drawProfileList(ArrayList<String> nameList2){
         // 변수들
@@ -97,9 +136,10 @@ public class ProfileSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 프로필 추가 화면으로 넘어갔다가 다시 돌아오므로 finish 불필요.
                 selectProfileNum = 0;
-                Intent i = new Intent(getApplicationContext(), ProfileSettingActivity.class);
-                i.putExtra("mode", "add");
-                startActivity(i);
+                Intent intent = new Intent(getApplicationContext(), ProfileSettingActivity.class);
+                intent.putExtra("mode", "add");
+//                startActivity(intent);
+                StartForResultAddProfile.launch(intent);
             }
         });
 
@@ -148,6 +188,7 @@ public class ProfileSelectActivity extends AppCompatActivity {
                         app.setSelectedProfileName(nameList.get(index));
                         System.out.println(nameList.get(index)+"의 프로필이 선택되었습니다.");
                         startActivity(intent);
+
                     }
                 });
             }
@@ -163,10 +204,12 @@ public class ProfileSelectActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), ProfileSettingActivity.class);
                         intent.putExtra("mode", "edit");
                         intent.putExtra("index", index);
-
+                        intent.putExtra("editProfile", userDataList.get(index));
+//                        intent.putExtra("userData", userDataList.get(index));
                         MyApplication app = (MyApplication) getApplicationContext();
                         app.setSelectedProfileName(nameList.get(index));
-                        startActivity(intent);
+//                        startActivity(intent);
+                        StartForResultEditProfile.launch(intent);
 
                     }
                 });

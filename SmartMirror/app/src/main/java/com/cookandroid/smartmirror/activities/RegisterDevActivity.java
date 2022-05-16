@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -26,22 +25,18 @@ import android.widget.Toast;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
-import com.cookandroid.smartmirror.myDBHelper;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
@@ -54,7 +49,7 @@ public class RegisterDevActivity extends AppCompatActivity {
     LinearLayout mainLayout;
     InputMethodManager manager;
     Toolbar toolbar;
-    myDBHelper sqlDB;
+    MirrorDBHelper sqlDB;
     AssetManager assetManager;
     JSONObject obj;
     Handler handler = new Handler();
@@ -139,7 +134,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         ab.setDisplayShowTitleEnabled(false);
         ab.setDisplayHomeAsUpEnabled(false);
 
-        sqlDB = new myDBHelper(getApplicationContext(), 1);
+        sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
         sqlDB.initDB();
         
         editSerial = findViewById(R.id.editSerial);

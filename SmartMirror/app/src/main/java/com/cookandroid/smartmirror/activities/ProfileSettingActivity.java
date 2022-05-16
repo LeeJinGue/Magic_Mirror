@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 public class ProfileSettingActivity extends AppCompatActivity {
     EditText name;
@@ -32,7 +33,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
     MyApplication app;
     EditText profileName;
     TextView tv;
-
+    userData editProfile;
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
@@ -81,9 +82,12 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // 추가할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
                     app.addProfileName(name.getText().toString());
-
-                    Intent i = new Intent(getApplicationContext(), ProfileSelectActivity.class);
-                    startActivity(i);
+                    String userName = name.getText().toString();
+                    userData newUser = new userData(1, 1, userName, "/bin");
+                    Intent intent = new Intent();
+//                    startActivity(intent);
+                    intent.putExtra("newUser", newUser);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             });
@@ -93,14 +97,21 @@ public class ProfileSettingActivity extends AppCompatActivity {
             System.out.println("프로필을 편집합니다.");
             profileName.setText(app.getProfileName(index));
             tv.setText("프로필을 편집합니다.");
+            editProfile = i.getParcelableExtra("editProfile");
             regBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 편집할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
                     app.editProfileName(name.getText().toString(), index);
 
-                    Intent i = new Intent(getApplicationContext(), ProfileSelectActivity.class);
-                    startActivity(i);
+//                    Intent i = new Intent(getApplicationContext(), ProfileSelectActivity.class);
+//                    startActivity(i);
+                    String userName = name.getText().toString();
+                    userData editedUser = new userData(editProfile.getUser_num(), editProfile.getSerial_no(), userName, editProfile.getUser_image_pass());
+                    Intent intent = new Intent();
+                    intent.putExtra("index", index);
+                    intent.putExtra("editUser", editedUser);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             });
