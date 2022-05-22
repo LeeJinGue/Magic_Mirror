@@ -25,6 +25,8 @@ import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import java.util.Random;
+
 public class ProfileSettingActivity extends AppCompatActivity {
     EditText name;
     Button regBtn;
@@ -34,6 +36,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
     EditText profileName;
     TextView tv;
     userData editProfile;
+    // EditText ?
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
@@ -76,36 +79,33 @@ public class ProfileSettingActivity extends AppCompatActivity {
 
         if(mode.equals("add")){
             // 프로필 추가 모드
+            Log.i("ProfileSettingActivity", "프로필 추가 모드");
             System.out.println("프로필을 추가합니다.");
             regBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 추가할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
-//                    app.addProfileName(name.getText().toString());
+                    app.addProfileName(name.getText().toString());
                     String userName = name.getText().toString();
-                    userData newUser = new userData(1, 1, userName, "/bin");
+                    userData newUser = new userData(2, 2, userName, "/bin");
                     Intent intent = new Intent();
-//                    startActivity(intent);
                     intent.putExtra("newUser", newUser);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
             });
-        }else{
+        }else if(mode.equals("edit")){
+            Log.i("ProfileSettingActivity", "프로필 편집 모드");
+
             // 프로필 편집 모드
             index = i.getIntExtra("index", -1);
-            System.out.println("프로필을 편집합니다.");
-            profileName.setText(app.getProfileName(index));
-            tv.setText("프로필을 편집합니다.");
             editProfile = i.getParcelableExtra("editProfile");
+            profileName.setText(editProfile.getName());
+            tv.setText("프로필을 편집합니다.");
             regBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 편집할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
-//                    app.editProfileName(name.getText().toString(), index);
-
-//                    Intent i = new Intent(getApplicationContext(), ProfileSelectActivity.class);
-//                    startActivity(i);
                     String userName = name.getText().toString();
                     userData editedUser = new userData(editProfile.getUser_num(), editProfile.getSerial_no(), userName, editProfile.getUser_image_pass());
                     Intent intent = new Intent();
@@ -115,6 +115,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
                     finish();
                 }
             });
+        }else{
+            Log.i("ProfileSettingActivity", "모드 에러");
         }
 
         //

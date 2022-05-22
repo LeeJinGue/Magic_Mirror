@@ -2345,13 +2345,11 @@ id percent
 id pin
 id position
 id postLayout
-id profileAdd
-id profileAddText
-id profileGrid
 id profileImg1
 id profileItemImV
 id profileItemLayout
 id profileItemName
+id profileRecyclerView
 id profileRegisterBtn
 id profileSetting
 id profileSettingTextView

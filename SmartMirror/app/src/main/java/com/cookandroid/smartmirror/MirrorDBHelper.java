@@ -50,6 +50,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 "location VARCHAR(255) DEFAULT NULL, " +
                 "info VARCHAR(255) NOT NULL);");
         Log.i("Create Table", "device table 생성 완료");
+
     }
     public void createUserTb(SQLiteDatabase db){
         // user 테이블 생성
@@ -58,9 +59,10 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 "(user_num INT(11) PRIMARY KEY, " +
                 "serial_no INT(11), " +
                 "name VARCHAR(100) NOT NULL, " +
-                "user_image_pass VARCHAR(255) NOT NULL, " +
-                "FOREIGN KEY(serial_no) " +
-                "REFERENCES device(serial_no));");
+                "user_image_pass VARCHAR(255) NOT NULL" +
+//                ", FOREIGN KEY(serial_no) " +
+//                "REFERENCES device(serial_no)" +
+                        ");");
         Log.i("Create Table", "user table 생성 완료");
     }
     public void createLayoutSettingTb(SQLiteDatabase db){

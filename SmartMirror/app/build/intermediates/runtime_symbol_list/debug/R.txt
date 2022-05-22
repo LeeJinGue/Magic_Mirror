@@ -2344,13 +2344,11 @@ int id percent 0x7f09017f
 int id pin 0x7f090180
 int id position 0x7f090181
 int id postLayout 0x7f090182
-int id profileAdd 0x7f090183
-int id profileAddText 0x7f090184
-int id profileGrid 0x7f090185
 int id profileImg1 0x7f090186
 int id profileItemImV 0x7f090260
 int id profileItemLayout 0x7f090261
 int id profileItemName 0x7f090262
+int id profileRecyclerView 0x7f090263
 int id profileRegisterBtn 0x7f090187
 int id profileSetting 0x7f090188
 int id profileSettingTextView 0x7f090189
