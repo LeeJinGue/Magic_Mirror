@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,8 +23,10 @@ import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.messageData;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 
 public class MessageCheckActivity extends AppCompatActivity {
     ImageView sendMessageBtn;
@@ -33,7 +36,7 @@ public class MessageCheckActivity extends AppCompatActivity {
     LinearLayout messageListLayout;
     LinearLayout.LayoutParams messageLayoutParams, receivedMessageParams, sendedMessageParams, dateParams;
     int messagePadding, messageWidth, dp;
-
+    EditText messageEditText;
 
 
     @Override
@@ -58,7 +61,7 @@ public class MessageCheckActivity extends AppCompatActivity {
         dp=ConvertDPtoPX(context, 1);
         messageWidth = ConvertDPtoPX(context, 180);
         messagePadding = ConvertDPtoPX(context,5);
-
+        messageEditText = findViewById(R.id.messageEditText);
         // Layout Params 설정
         messageLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         receivedMessageParams = new LinearLayout.LayoutParams(messageWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -86,12 +89,18 @@ public class MessageCheckActivity extends AppCompatActivity {
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String messageText = messageEditText.getText().toString();
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdf = new SimpleDateFormat("MM:dd");
+
+                addSendedMessage(messageText, sdf.format(date));
                 Log.i("MessageCheckActivity", "메시지 전송");
             }
         });
         Log.i("MessageCheckActivity", "선택된 프로필 명: "+selectedProfile);
-        addReceivedMessage("상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 ", "오전 11:00");
-        addSendedMessage("내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 ", "오전 12:00");
+        addReceivedMessage("상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 ", "02:00");
+        addSendedMessage("내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 ", "02:30");
         getMessageDataList();
     }
 
@@ -131,6 +140,7 @@ public class MessageCheckActivity extends AppCompatActivity {
         lin.addView(date);
         lin.addView(message);
         messageListLayout.addView(lin);
+        messageEditText.setText("");
     }
     public void addReceivedMessage(String receivedText, String receivedDate){
 

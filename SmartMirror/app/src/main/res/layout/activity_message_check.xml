@@ -39,6 +39,7 @@
             android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/rectangle"
+            android:id="@+id/messageEditText"
             android:hint="메시지를 입력해주세요."
             ></EditText>
         <ImageView
