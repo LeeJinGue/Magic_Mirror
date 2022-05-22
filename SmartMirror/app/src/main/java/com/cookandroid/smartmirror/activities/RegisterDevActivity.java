@@ -147,8 +147,8 @@ public class RegisterDevActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectThread connectThread = new ConnectThread(dongIp);
-                connectThread.start();
+//                ConnectThread connectThread = new ConnectThread(dongIp);
+//                connectThread.start();
 
                 Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
                 startActivity(intent);

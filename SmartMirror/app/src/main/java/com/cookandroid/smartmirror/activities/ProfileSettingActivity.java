@@ -81,7 +81,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // 추가할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
-                    app.addProfileName(name.getText().toString());
+//                    app.addProfileName(name.getText().toString());
                     String userName = name.getText().toString();
                     userData newUser = new userData(1, 1, userName, "/bin");
                     Intent intent = new Intent();
@@ -102,7 +102,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // 편집할 프로필 이름,사진을 입력하고 등록버튼을 누르면 다시 프로필 선택 화면으로 돌아간다.
-                    app.editProfileName(name.getText().toString(), index);
+//                    app.editProfileName(name.getText().toString(), index);
 
 //                    Intent i = new Intent(getApplicationContext(), ProfileSelectActivity.class);
 //                    startActivity(i);

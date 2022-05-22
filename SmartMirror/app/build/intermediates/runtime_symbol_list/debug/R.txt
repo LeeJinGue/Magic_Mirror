@@ -2269,6 +2269,7 @@ int id menu_settings 0x7f090135
 int id message 0x7f090136
 int id messageChecksendMessage 0x7f090137
 int id messageDay 0x7f090138
+int id messageEditText 0x7f090264
 int id messageGrid 0x7f090139
 int id messageListLayout 0x7f09013a
 int id middle 0x7f09013b
@@ -2347,6 +2348,9 @@ int id profileAdd 0x7f090183
 int id profileAddText 0x7f090184
 int id profileGrid 0x7f090185
 int id profileImg1 0x7f090186
+int id profileItemImV 0x7f090260
+int id profileItemLayout 0x7f090261
+int id profileItemName 0x7f090262
 int id profileRegisterBtn 0x7f090187
 int id profileSetting 0x7f090188
 int id profileSettingTextView 0x7f090189
@@ -2729,6 +2733,7 @@ int layout notification_template_media 0x7f0c007a
 int layout notification_template_media_custom 0x7f0c007b
 int layout notification_template_part_chronometer 0x7f0c007c
 int layout notification_template_part_time 0x7f0c007d
+int layout profile_item 0x7f0c009b
 int layout schedule_item 0x7f0c007e
 int layout select_dialog_item_material 0x7f0c007f
 int layout select_dialog_multichoice_material 0x7f0c0080

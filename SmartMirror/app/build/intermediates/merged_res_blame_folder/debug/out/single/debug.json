@@ -48,12 +48,12 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_mirror.png"
     },
     {
-        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
-    },
-    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_deletebtnshape.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\deletebtnshape.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_add_circle_24.xml.flat",
@@ -88,16 +88,16 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_pictureadd.png"
     },
     {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_belonging_set_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\belonging_set_item.xml"
+    },
+    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_settings_24.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_baseline_settings_24.xml"
-    },
-    {
-        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_belonging_set_item.xml.flat",
-        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\belonging_set_item.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
@@ -206,6 +206,10 @@
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_schedule_blue.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_schedule_blue.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_profile_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\profile_item.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_schedule_black.xml.flat",

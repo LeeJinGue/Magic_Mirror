@@ -49,6 +49,10 @@ public class userData implements Parcelable {
     public String getUser_image_pass() {
         return user_image_pass;
     }
+    public void setName(String name){this.name = name;}
+    public void setUser_num(int user_num){this.user_num = user_num;}
+    public void setSerial_no(int serial_no){this.serial_no = serial_no;}
+    public void setUser_image_pass(String image_pass){this.user_image_pass = image_pass;}
 
     @Override
     public int describeContents() {
