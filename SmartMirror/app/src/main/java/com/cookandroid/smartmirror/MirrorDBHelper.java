@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ import java.util.ArrayList;
 public class MirrorDBHelper extends SQLiteOpenHelper {
     private int dbVersion;
     private SQLiteDatabase db;
+    private MirrorNetworkHelper networkHelper;
     public MirrorDBHelper(@Nullable Context context, int version) {
         super(context, "groupDB", null, 1);
         dbVersion = version;
         db = getWritableDatabase();
+        networkHelper = new MirrorNetworkHelper();
         onCreate(db);
     }
 
@@ -35,6 +38,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createScheduleTb(db);
         createStockTb(db);
         createBelongingsTb(db);
+        // dev데이터를 미리 넣어둡니다.
+        addDevData(networkHelper.getDevData());
     }
 
     @Override
@@ -43,21 +48,24 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createDeviceTb(SQLiteDatabase db){
         // device 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS device");
         db.execSQL("CREATE TABLE IF NOT EXISTS device " +
-                "(serial_no INT(11) PRIMARY KEY, " +
+                "(serial_no INTEGER(11) PRIMARY KEY, " +
                 "ip VARCHAR(20) DEFAULT NULL, " +
-                "port INT(11) DEFAULT NULL, " +
+                "port INTEGER(11) DEFAULT NULL, " +
                 "location VARCHAR(255) DEFAULT NULL, " +
-                "info VARCHAR(255) NOT NULL);");
+                "info VARCHAR(255) DEFAULT NULL);");
         Log.i("Create Table", "device table 생성 완료");
+        // Device정보 초기값(IP주소, 시리얼넘버) 넣어놓기
 
     }
     public void createUserTb(SQLiteDatabase db){
         // user 테이블 생성
         // 0: 유저아이디, 1: 시리얼넘버, 2: 이름, 3: 유저 이미지 경로
+        db.execSQL("DROP TABLE IF EXISTS user");
         db.execSQL("CREATE TABLE IF NOT EXISTS user " +
-                "(user_num INT(11) PRIMARY KEY, " +
-                "serial_no INT(11), " +
+                "(user_num INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "serial_no INTEGER(11), " +
                 "name VARCHAR(100) NOT NULL, " +
                 "user_image_pass VARCHAR(255) NOT NULL" +
 //                ", FOREIGN KEY(serial_no) " +
@@ -67,61 +75,71 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createLayoutSettingTb(SQLiteDatabase db){
         // layoutsetting 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS layoutsetting");
         db.execSQL("CREATE TABLE IF NOT EXISTS layoutsetting " +
-                "(layout_id INT(11) PRIMARY KEY, " +
-                "user_no INT(11) NOT NULL, " +
-                "type INT(11) NOT NULL, " +
-                "loc INT(11) NOT NULL, " +
-                "FOREIGN KEY(user_no)" +
-                "REFERENCES user(user_no));");
+                "(layout_id INTEGER(11) PRIMARY KEY, " +
+                "user_no INTEGER(11) NOT NULL, " +
+                "type INTEGER(11) NOT NULL, " +
+                "loc INTEGER(11) NOT NULL" +
+//                ", FOREIGN KEY(user_no)" +
+//                "REFERENCES user(user_no)" +
+                ");");
         Log.i("Create Table", "layout setting table 생성 완료");
     }
     public void createBelongingsTb(SQLiteDatabase db){
         // belongings 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS belongings");
         db.execSQL("CREATE TABLE IF NOT EXISTS belongings " +
                 "(belonging_id INT(11) PRIMARY KEY, " +
                 "set_name VARCHAR(255) NOT NULL, " +
-                "user_no INT(11), " +
-                "stuff_list TEXT(255), " +
-                "FOREIGN KEY(user_no)" +
-                "REFERENCES user(user_no));");
+                "user_no INTEGER(11), " +
+                "stuff_list TEXT(255)" +
+//                ", FOREIGN KEY(user_no)" +
+//                "REFERENCES user(user_no)" +
+                ");");
         Log.i("Create Table", "belongings table 생성 완료");
     }
     public void createMessageTb(SQLiteDatabase db){
         // message 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS message");
         db.execSQL("CREATE TABLE IF NOT EXISTS message " +
-                "(message_id INT(11) PRIMARY KEY, " +
-                "receiver_num INT(11), " +
-                "sender_num INT(11), " +
+                "(message_id INTEGER(11) PRIMARY KEY, " +
+                "receiver_num INTEGER(11), " +
+                "sender_num INTEGER(11), " +
                 "text VARCHAR(100) DEFAULT NULL, " +
-                "data DATETIME DEFAULT NULL, " +
-                "FOREIGN KEY(receiver_num)" +
-                "REFERENCES user(user_no)," +
-                "FOREIGN KEY(sender_num)" +
-                "REFERENCES user(user_no));");
+                "data DATETIME DEFAULT NULL" +
+//                ", FOREIGN KEY(receiver_num)" +
+//                "REFERENCES user(user_no)," +
+//                "FOREIGN KEY(sender_num)" +
+//                "REFERENCES user(user_no)" +
+                ");");
         Log.i("Create Table", "message table 생성 완료");
     }
     public void createScheduleTb(SQLiteDatabase db){
         // schedule 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS schedule");
         db.execSQL("CREATE TABLE IF NOT EXISTS schedule " +
-                "(schedule_id INT(11) PRIMARY KEY, " +
-                "user_no INT(11), " +
+                "(schedule_id INTEGER(11) PRIMARY KEY, " +
+                "user_no INTEGER(11), " +
                 "start_time DATETIME DEFAULT NULL, " +
                 "end_time DATETIME DEFAULT NULL, " +
-                "text VARCHAR(255) DEFAULT NULL, " +
-                "FOREIGN KEY(user_no)" +
-                "REFERENCES user(user_no)" +
+                "text VARCHAR(255) DEFAULT NULL" +
+//                ", FOREIGN KEY(user_no)" +
+//                "REFERENCES user(user_no)" +
                 ");");
         Log.i("Create Table", "schedule table 생성 완료");
     }
     public void createStockTb(SQLiteDatabase db){
         // stock 테이블 생성
+        db.execSQL("DROP TABLE IF EXISTS stock");
         db.execSQL("CREATE TABLE IF NOT EXISTS stock " +
-                "(stock_id INT(11) PRIMARY KEY, " +
-                "user_no INT(11), " +
-                "stock_numa VARCHAR(255) NOT NULL, " +
-                "FOREIGN KEY(user_no)" +
-                "REFERENCES user(user_no));");
+                "(stock_id INTEGER(11) PRIMARY KEY, " +
+                "user_no INTEGER(11), " +
+                "stock_name VARCHAR(255) NOT NULL, " +
+                "stock_code VARCHAR(50)" +
+//                ", FOREIGN KEY(user_no)" +
+//                "REFERENCES user(user_no)" +
+                ");");
         Log.i("Create Table", "stock table 생성 완료");
     }
     public ArrayList<userData> getAllUserList(){
@@ -140,6 +158,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         mCursor.close();
         return list;
     }
+    // -----------------------User관련--------------------------------
+    // user추가
     public void addUser(userData newUser){
         db.execSQL("INSERT INTO user VALUES(" +
                 newUser.getUser_num() +
@@ -148,6 +168,63 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 "','"+ newUser.getUser_image_pass()+
                 "');");
         Log.i("addUserData", "신규유저 "+newUser.toString()+" 추가");
+    }
+
+    // user 수정
+
+    // ---------------------------------------------------------------
+
+    // --------------------------Device 정보-------------------------
+    // IP주소, 시리얼넘버가 맞는지 체크
+    public boolean checkIPAddressAndSerial(String IPAddress, int Serial){
+        // DB에 있는 Data 받아올 변수들
+        int db_serial = -1;
+        int db_port = -1;
+        String db_ip = "";
+
+        // 시리얼번호, IP, Port데이터 갖고옵니다.
+        Cursor cs = db.rawQuery("SELECT serial_no, ip, port FROM device", null);
+
+        // Cursor객체를 통해 DB에 저장된 데이터를 읽어옵니다.
+        while(cs.moveToNext()){
+            db_serial = cs.getInt(0);
+            db_ip = cs.getString(1);
+            db_port = cs.getInt(2);
+        }
+        // 받아온 ip가 ""라면 -> DB에 저장된게 없다면 추가해야하는데?
+        if(db_ip ==""){
+            Log.i("DBHelper", "checkIPAddressAndSerial - 저장된 IP / Serial 정보가 없습니다.");
+            return false;
+        }
+        if(db_ip.equals(IPAddress)){
+            if(db_serial == Serial){
+                // IP주소가 같고 시리얼넘버도 같다면
+                return true;
+            }else{
+                // IP주소는 같지만 serial넘버가 다르다.
+                Log.i("DBHelper", "checkIPAddressAndSerial - Serial 정보가 일치하지 않습니다.");
+                return false;
+            }
+        }
+        // IP주소가 다르다.
+        Log.i("DBHelper", "checkIPAddressAndSerial - IP주소가 일치하지 않습니다.");
+        return false;
+    }
+
+    // 새로운 IP주소, 시리얼넘버 정보를 추가
+    public void addDevData(devData devData){
+        // 시리얼넘버, IP주소, 포트넘버, location, info순
+        db.execSQL("INSERT INTO device VALUES(" +
+                devData.getSerial_no() +
+                ", '" + devData.getIp() +
+                "', " + devData.getPort() +
+                ", '" + devData.getLocation() +
+                "', '" + devData.getInfo()+
+                "');");
+        Log.i("addDevData", "새 데이터 "+devData.toString()+" 추가");
 
     }
+    // ---------------------------------------------------------------
+
+
 }

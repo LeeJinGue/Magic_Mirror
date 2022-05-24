@@ -21,15 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.cookandroid.smartmirror.activities.PutDevWifiAddress"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.cookandroid.smartmirror.activities.AddAndSearchStockActivity"
@@ -70,8 +66,13 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.cookandroid.smartmirror.activities.MainActivity"

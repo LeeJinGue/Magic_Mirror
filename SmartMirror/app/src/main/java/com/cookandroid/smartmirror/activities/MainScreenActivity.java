@@ -67,7 +67,7 @@ public class MainScreenActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.tab1:
-                                Toast.makeText(getApplicationContext(), "화면설정", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), "화면설정", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, windowSetupFragment_frag).commit();
 
                                 return true;
@@ -79,18 +79,18 @@ public class MainScreenActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.tab3:
-                                Toast.makeText(getApplicationContext(), "일정등록", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), "일정등록", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, scheduleFragment_frag).commit();
 
                                 return true;
 
                             case R.id.tab4:
-                                Toast.makeText(getApplicationContext(), "관심주설정", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), "관심주설정", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, stockSetupFragment_frag).commit();
 
                                 return true;
                             case R.id.tab5:
-                                Toast.makeText(getApplicationContext(), "소지품확인", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(getApplicationContext(), "소지품확인", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, checkBelongingsFragment_frag).commit();
 
                                 return true;
