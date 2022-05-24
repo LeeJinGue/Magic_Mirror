@@ -73,6 +73,19 @@
         android:textAppearance="@style/btnStyle"
         android:background="@drawable/radius"
 
-        android:id="@+id/profileRegisterBtn"></Button>
+        android:id="@+id/profileRegisterBtn"
+        ></Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="프로필 삭제"
+        android:textAppearance="@style/delBtnStyle"
+        android:paddingHorizontal="20dp"
+        android:background="@drawable/radius"
+        android:visibility="invisible"
+        android:id="@+id/profileDelBtn"
+        ></Button>
 
 </LinearLayout>

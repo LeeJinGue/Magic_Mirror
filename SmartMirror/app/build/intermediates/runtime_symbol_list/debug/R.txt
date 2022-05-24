@@ -2345,6 +2345,7 @@ int id percent 0x7f090180
 int id pin 0x7f090181
 int id position 0x7f090182
 int id postLayout 0x7f090183
+int id profileDelBtn 0x7f090263
 int id profileImg1 0x7f090184
 int id profileItemImV 0x7f090185
 int id profileItemLayout 0x7f090186
@@ -3605,6 +3606,7 @@ int style Widget_Support_CoordinatorLayout 0x7f1102d6
 int style appbarTitle 0x7f1102d7
 int style btnStyle 0x7f1102d8
 int style colorMainBg 0x7f1102d9
+int style delBtnStyle 0x7f1102df
 int style guideStyle 0x7f1102da
 int style hintStyle 0x7f1102db
 int style scheduleDetail 0x7f1102dc

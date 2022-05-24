@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +16,8 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,7 +40,7 @@ import java.util.Random;
 
 public class ProfileSettingActivity extends AppCompatActivity {
     EditText name;
-    Button regBtn;
+    Button regBtn, delBtn;
     String mode;
     int index;
     MyApplication app;
@@ -61,7 +64,16 @@ public class ProfileSettingActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +88,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayHomeAsUpEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         app = (MyApplication) getApplicationContext();
         Intent i = getIntent();
@@ -84,11 +96,11 @@ public class ProfileSettingActivity extends AppCompatActivity {
 
         name = (EditText) findViewById(R.id.editSerial2);
         regBtn = (Button) findViewById(R.id.profileRegisterBtn);
-
+        delBtn = (Button) findViewById(R.id.profileDelBtn);
         if(mode.equals("add")){
             // 프로필 추가 모드
             Log.i("ProfileSettingActivity", "프로필 추가 모드");
-            System.out.println("프로필을 추가합니다.");
+            regBtn.setText("등록");
             regBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +121,9 @@ public class ProfileSettingActivity extends AppCompatActivity {
             index = i.getIntExtra("index", -1);
             editProfile = i.getParcelableExtra("editProfile");
             profileName.setText(editProfile.getName());
+            delBtn.setVisibility(View.VISIBLE);
             tv.setText("프로필을 편집합니다.");
+            regBtn.setText("편집");
             regBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,6 +135,20 @@ public class ProfileSettingActivity extends AppCompatActivity {
                     intent.putExtra("editUser", editedUser);
                     setResult(RESULT_OK, intent);
                     finish();
+                }
+            });
+            delBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 프로필을 삭제합니다. 삭제할 프로필 객체와 인덱스를 함꼐 보냅니다.
+                    // 결과 코드는 100
+                    Intent intent = new Intent();
+                    intent.putExtra("delUser", editProfile);
+                    intent.putExtra("index", index);
+                    setResult(100, intent);
+                    finish();
+
+
                 }
             });
         }else{

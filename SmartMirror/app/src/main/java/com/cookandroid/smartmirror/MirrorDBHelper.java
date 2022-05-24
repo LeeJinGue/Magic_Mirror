@@ -40,6 +40,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createBelongingsTb(db);
         // dev데이터를 미리 넣어둡니다.
         addDevData(networkHelper.getDevData());
+        // userData를 미리 넣어둡니다.
+        addUser(networkHelper.getUserData());
     }
 
     @Override
@@ -142,6 +144,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 ");");
         Log.i("Create Table", "stock table 생성 완료");
     }
+    // -----------------------User관련--------------------------------
     public ArrayList<userData> getAllUserList(){
         Cursor mCursor = db.rawQuery("SELECT * FROM user", null);
         ArrayList<userData> list = new ArrayList<userData>();
@@ -151,14 +154,18 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 int serial_no = mCursor.getInt(1);
                 String name = mCursor.getString(2);
                 String usr_img_path = mCursor.getString(3);
-                Log.i("getUserData", "id: "+id+", serial_no: "+serial_no+", name: "+name+", user_image_path: "+usr_img_path+" 유저데이터를 가져옵니다.");
+//                Log.i("getUserData", "id: "+id+", serial_no: "+serial_no+", name: "+name+", user_image_path: "+usr_img_path+" 유저데이터를 가져옵니다.");
                 list.add(new userData(id, serial_no, name, usr_img_path));
             }while(mCursor.moveToNext());
         }
         mCursor.close();
+        for(userData u:list) Log.i("getUserData", "id: "+u.getUser_num()+", serial_no: "+u.getSerial_no()+", name: "+u.getName()+", user_image_path: "+u.getUser_image_pass()+" 유저데이터를 가져옵니다.");
+        if(list.isEmpty()){
+            return null;
+        }
         return list;
     }
-    // -----------------------User관련--------------------------------
+
     // user추가
     public void addUser(userData newUser){
         db.execSQL("INSERT INTO user VALUES(" +
@@ -171,10 +178,16 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     // user 수정
+    public void editUserName(userData editUser){
+        db.execSQL("UPDATE user SET name = '"+ editUser.getName() + "'"
+        + "WHERE user_num = "+editUser.getUser_num());
+        Log.i("editUserNameAt", " "+editUser.toString()+"로 수정");
+
+    }
 
     // ---------------------------------------------------------------
 
-    // --------------------------Device 정보-------------------------
+    // --------------------------Device 관련-------------------------
     // IP주소, 시리얼넘버가 맞는지 체크
     public boolean checkIPAddressAndSerial(String IPAddress, int Serial){
         // DB에 있는 Data 받아올 변수들

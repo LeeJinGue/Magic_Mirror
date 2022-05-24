@@ -35,21 +35,31 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         this.StartForResultEditProfile = StartForResultEditProfile;
         this.mDataList = mDataList;
         this.context = context;
+        this.sqlDB = new MirrorDBHelper(context, 1);
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
         userData last = new userData(2, -1, "추가하기", "없음");
         mDataList.add(last);
     }
     public void addItem(userData newUser){
         // index랑 size는 1씩 차이가 나고 마지막엔 추가하기 버튼이므로 -2
-        mDataList.add(mDataList.size()-1, newUser);
-        sqlDB = new MirrorDBHelper(context, 1);
-        sqlDB.addUser(newUser);
+
         ArrayList<userData> newUserList = sqlDB.getAllUserList();
         for(userData u:newUserList) Log.i("test", "newUser: "+u.toString());
+        // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
+        // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
+        newUser.setUser_num(newUserList.size()+1);
+        sqlDB.addUser(newUser);
+        // Server에서 OK받고 추가함.
+        mDataList.add(mDataList.size()-1, newUser);
         notifyItemInserted(mDataList.size()-2);
     }
-    public void editItemNameAt(String name, int index){
-        mDataList.get(index).setName(name);
+    public void editItemNameAt(userData editUser, int index){
+        mDataList.get(index).setName(editUser.getName());
+        sqlDB.editUserName(editUser);
+        notifyItemChanged(index);
+    }
+    public void delItemAt(int index){
+        mDataList.remove(index);
         notifyItemChanged(index);
     }
     public void changeImgViewList(boolean isSettingMode){

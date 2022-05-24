@@ -63,6 +63,15 @@ public class ProfileSelectActivity extends AppCompatActivity {
                         mAdapter.changeImgViewList(true);
                         isSettingMode = false;
 
+                    }else if(result.getResultCode() == 100){
+                        // 결과코드 100 == 해당 프로필을 삭제하려고 할 때
+                        Intent intent = result.getData();
+                        int index = intent.getIntExtra("index", -1);
+                        userData delUser = intent.getParcelableExtra("delUser");
+                        Log.i("ProfileSelectActivity", "삭제할 프로필"+delUser.toString());
+                        // mAdapter.delItemAt(delUser, index);
+                        mAdapter.changeImgViewList(true);
+                        isSettingMode = false;
                     }else{
 
                     }
@@ -77,8 +86,8 @@ public class ProfileSelectActivity extends AppCompatActivity {
                         userData editedUser = intent.getParcelableExtra("editUser");
                         int index = intent.getIntExtra("index", -1);
                         Log.i("ProfileSelectActivity", "수정된 프로필: "+editedUser.toString());
-                        userDataList.set(index, editedUser);
-                        mAdapter.editItemNameAt(editedUser.getName(), index);
+//                        userDataList.set(index, editedUser);
+                        mAdapter.editItemNameAt(editedUser, index);
                         mAdapter.changeImgViewList(isSettingMode);
                         isSettingMode = false;
                     }else{

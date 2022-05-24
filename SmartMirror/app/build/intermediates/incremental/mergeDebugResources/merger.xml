@@ -7761,7 +7761,7 @@
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="hintStyle">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">12pt</item>
+        <item name="android:textSize">10pt</item>
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="scheduleTitle">
         <item name="android:textSize">7pt</item>
@@ -7787,6 +7787,11 @@
         
         <item name="android:statusBarColor" ns2:targetApi="l">?attr/colorPrimaryVariant</item>
         
+    </style><style name="delBtnStyle">
+        <item name="android:textColor">#E91E63</item>
+        <item name="backgroundColor">#FFFFFF</item>
+        <item name="android:textSize">10pt</item>
+        <item name="fontFamily">@font/notosanskr_regular</item>
     </style></file><file path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\values-night\themes.xml" qualifiers="night-v8"><style name="Theme.SmartMirror" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
         <item name="colorPrimary">@color/purple_200</item>

@@ -82,6 +82,7 @@ public class MessageCheckActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
+        // 뒤로가기 버튼
         ab.setDisplayHomeAsUpEnabled(true);
 
         messageListLayout = findViewById(R.id.messageListLayout);

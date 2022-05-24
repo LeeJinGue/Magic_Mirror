@@ -2161,6 +2161,7 @@ id editIpAddress
 id editSerial
 id editSerial2
 id editTest
+id editWifi
 id edit_query
 id elastic
 id end
@@ -2345,6 +2346,7 @@ id percent
 id pin
 id position
 id postLayout
+id profileDelBtn
 id profileImg1
 id profileItemImV
 id profileItemLayout
@@ -3605,6 +3607,7 @@ style Widget_Support_CoordinatorLayout
 style appbarTitle
 style btnStyle
 style colorMainBg
+style delBtnStyle
 style guideStyle
 style hintStyle
 style scheduleDetail

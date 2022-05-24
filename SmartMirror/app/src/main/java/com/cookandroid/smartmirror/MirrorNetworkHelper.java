@@ -1,6 +1,7 @@
 package com.cookandroid.smartmirror;
 
 import com.cookandroid.smartmirror.dataClass.devData;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -22,6 +23,10 @@ public class MirrorNetworkHelper {
         // 시리얼넘버1, ip주소1
         devData newDevData = new devData(1, "1", PORTNUMBER, LOCATION, INFO);
         return newDevData;
+    }
+    public userData getUserData(){
+        userData newUser = new userData(0, 1, "테스트", "\\bin");
+        return newUser;
     }
     public void httpMain(){
         System.out.println("[HttpURLConnection 사용해  post body json 방식 데이터 요청 및 응답 값 확인 실시]");
