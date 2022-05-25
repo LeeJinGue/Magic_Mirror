@@ -26,7 +26,7 @@ class camera(object):
 
         icon_path= os.path.dirname(os.path.abspath(__file__)) #리소스 폴더 경로 추적
         #icon_path+="\\resource\weather_icon\weather_icon_001.png"
-        pixmap = QPixmap(icon_path+"\\resource\download.jpg")
+        pixmap = QPixmap(icon_path+"/resource/download.jpg")
         print(icon_path)
         pixmap = pixmap.scaled(480, 250, Qt.IgnoreAspectRatio) #아이콘 크기 설정
         self.frame.setPixmap(pixmap)

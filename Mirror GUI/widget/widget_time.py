@@ -10,9 +10,36 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt
 import datetime
+import time
+
+
+
+class Thread1(QThread):
+    #parent = MainWidget을 상속 받음.
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        self.days  =["월","화","수", '목','금','토', '일']
+    def run(self):
+      while True:
+        try:
+          now = datetime.datetime.now()
+          tstr = str(now.hour).zfill(2) + " : " + str(now.minute).zfill(2)
+          ts = str(now.second).zfill(2)
+          self.parent.time.setText(tstr)
+          self.parent.sec.setText(ts)
+          mdstr = str(now.month).zfill(2) + "월 "+ str(now.day).zfill(2)+"일"
+          self.parent.date.setText(mdstr)
+          self.parent.week_day.setText(self.days[now.weekday()])
+          time.sleep(1)
+          #print("루프루프")
+        except:
+          break
+      print("작동종료")
 
 
 class clock(QWidget):
@@ -75,72 +102,35 @@ class clock(QWidget):
       self.week_day.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
       self.week_day.setObjectName("week_day")
       self.retranslateUi_time(Form)
-
-
       self.timer_init(Form)
       QtCore.QMetaObject.connectSlotsByName(Form)
 
   def timeout_fun(self): #시간 재설정 함수
     now = datetime.datetime.now()
-    tstr = ""
-    ts = ""
-    if(now.hour<10):
-      tstr = "0"+ str(now.hour)
-    else:
-      tstr += str(now.hour)
-    tstr += " : "
-    if(now.minute<10):
-      tstr += "0"
-      tstr += str(now.minute)
-    else:
-      tstr += str(now.minute)
-
-    if(now.second<10):
-      ts += "0"
-      ts += str(now.second)
-    else:
-      ts += str(now.second)
+    tstr = str(now.hour).zfill(2) + " : " + str(now.minute).zfill(2)
+    ts = str(now.second).zfill(2)
     self.time.setText(tstr)
     self.sec.setText(ts)
-    mdstr = str(now.month) + "월 "+ str(now.day)+"일"
+    mdstr = str(now.month).zfill(2) + "월 "+ str(now.day).zfill(2)+"일"
     self.date.setText(mdstr)
     self.week_day.setText(self.days[now.weekday()])
 
-      #print("time cnt is %d" %self.time_cnt)
 
   def timer_init(self,Form): #시계 작동 타이머 이벤트
-      print("시작")
-      self.timer = QTimer(Form)
-      print(self.timer)
-      self.timer.start(1000)
-      self.timer.timeout.connect(self.timeout_fun)
-
-    
+      # self.timer = QTimer(Form)
+      # self.timer.start(1000)
+      # self.timer.timeout.connect(self.timeout_fun)
+      t1 = Thread1(self)
+      t1.start()
 
 
   def retranslateUi_time(self, Form): #시계 위젯 화면 초기화
     now = datetime.datetime.now()
-    tstr = ""
-    ts = ""
-    if(now.hour<10):
-      tstr = "0"+ str(now.hour)
-    else:
-      tstr += str(now.hour)
-    tstr += " : "
-    if(now.minute<10):
-      tstr += "0"
-      tstr += str(now.minute)
-    else:
-      tstr += str(now.minute)
-
-    if(now.second<10):
-      ts += "0"
-      ts += str(now.second)
-    else:
-      ts += str(now.second)
+    tstr = str(now.hour).zfill(2) + " : " + str(now.minute).zfill(2)
+    ts = str(now.second).zfill(2)
     self.time.setText(tstr)
     self.sec.setText(ts)
-    mdstr = str(now.month) + "월 "+ str(now.day)+"일"
+    mdstr = str(now.month).zfill(2) + "월 "+ str(now.day).zfill(2)+"일"
     self.date.setText(mdstr)
     self.week_day.setText(self.days[now.weekday()])
 

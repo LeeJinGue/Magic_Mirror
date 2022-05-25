@@ -44,27 +44,29 @@ def get_weather():
     }
 
     now = datetime.now().hour
+
     for hour in data['hourly']: #현재부터 1시간 단위로 5시간 후까지 일기예보 추출
         unixtime = hour['dt']
         hourly_time = datetime.fromtimestamp(int(unixtime))
         hourly_temp = hour['temp']
-        if hourly_time.hour > now:
-            hourly_weather = hour['weather'][0]['description']
-            hourly_icon = hour['weather'][0]['icon']
-            hourly_temp = k2c(hourly_temp)
-            tmp = {'time':hourly_time.hour, 'temp':int(hourly_temp), 'weather':hourly_weather, 'icon':hourly_icon}
-            hour_weather_set.insert(len(hour_weather_set),tmp)
-            #print(tmp)
-            #print(hourly_time.hour )
-            #print(int(hourly_temp))
-            #print(hourly_weather)
-            count+=1
-        if(count>=5):
+        hourly_weather = hour['weather'][0]['description']
+        hourly_icon = hour['weather'][0]['icon']
+        hourly_temp = k2c(hourly_temp)
+        tmp = {'time':hourly_time.hour, 'temp':int(hourly_temp), 'weather':hourly_weather, 'icon':hourly_icon}
+        hour_weather_set.insert(len(hour_weather_set),tmp)
+        # print(tmp)
+        # print(hourly_time.hour )
+        # print(int(hourly_temp))
+        # print(hourly_weather)
+        count+=1
+        if(count>=6):
             break
-    print('현재 날씨')
-    print(current_weather)
+    # print('현재 날씨')
+    # print(current_weather)
 
-    print('날씨 예보')
-    print(hour_weather_set)
+    # print('날씨 예보')
+    # print(hour_weather_set)
     
     return current_weather, hour_weather_set
+
+#a, b = get_weather()

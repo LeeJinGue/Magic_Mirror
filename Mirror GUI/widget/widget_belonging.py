@@ -9,15 +9,15 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPixmap,QIcon,QFont
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import *
+from db import db_access
 
 class belonging(QWidget):
   def __init__(self):
     super().__init__()
-  def setupUi(self, Form, x, y):
+  def setupUi(self, Form, x, y,user_id):
         self.frame = QtWidgets.QLabel(Form)
         self.frame.setGeometry(QtCore.QRect(x+20, y+60, 480, 250))
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
@@ -32,14 +32,16 @@ class belonging(QWidget):
         self.belonging_label.setObjectName("belonging_label")
         self.belonging_view = QtWidgets.QListWidget(Form)
         self.belonging_view.setGeometry(QtCore.QRect(x+30, y+100, 460, 201))
+        self.belonging_view.setStyleSheet( "QListWidget{background: black;} QScrollBar{ background-color: black; } ")
+        self.belonging_view.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         font = QtGui.QFont()
         font.setPointSize(20)
         self.belonging_view.setFont(font)
         self.belonging_view.setObjectName("belonging_view")
         
         self.retranslatesBelonging(Form)
+        self.setBelogings(user_id)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        self.addBelonging()
 
 
   def retranslatesBelonging(self, Form):
@@ -47,16 +49,30 @@ class belonging(QWidget):
       Form.setWindowTitle(_translate("Form", "Form"))
       self.belonging_label.setText(_translate("Form", "소지품 확인"))
 
-  def addBelonging(self):
+  def setBelogings(self, user_id):
+    #print("소지품 추가")
+    data = db_access.get_belongings(user_id)
+    blist = data[0][0].split(',')
+    for i in blist:
+      self.addBelonging(i)
+    
+  def addBelonging(self,str):
+   print(str)
    def get_item_wight():
-
     layout_main = QHBoxLayout()
     map1 = QLabel()
     map1.setStyleSheet( "QLabel{color: white;}")
-    map1.setFixedWidth(430)
-    map1.setFixedHeight(60)
+    map1.setFixedWidth(420)
+    map1.setFixedHeight(40)
     map1.setFrameShape(QtWidgets.QFrame.Box)
-    map1.setText("BBBB")
+    map1.setText(str)
+    map1.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 15pt """)
     layout_main.addWidget(map1)
 
     wight = QWidget()
@@ -64,7 +80,7 @@ class belonging(QWidget):
     return wight #   wight
 
    item = QListWidgetItem() #   QListWidgetItem  
-   item.setSizeHint(QSize(200, 80)) #   QListWidgetItem 
+   item.setSizeHint(QSize(420, 50)) #   QListWidgetItem 
    brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
    item.setBackground(brush)
    
