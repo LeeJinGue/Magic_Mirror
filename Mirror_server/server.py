@@ -66,14 +66,14 @@ def delProfile():
 def layoutSet():
     params = json.loads(request.get_data())
     data = server_db_access.layout_set(params)
-    return data
+    return jsonify(data)
 
 #메시지 수신
 @app.route('/sendMessage', methods=['GET','POST'])
 def sendMessage():
     params = json.loads(request.get_data())
     data = server_db_access.send_message(params)
-    return data
+    return jsonify(data)
 
 #메시지 삭제
 @app.route('/delMessage', methods=['GET','POST'])
@@ -90,7 +90,7 @@ def delMessage():
 def addSchedule():
     params = json.loads(request.get_data())
     data = server_db_access.add_schedule(params)
-    return data
+    return jsonify(data)
 
 #일정 수정
 @app.route('/editSchedule', methods=['GET','POST'])
@@ -117,7 +117,7 @@ def delSchedule():
 def addStock():
     params = json.loads(request.get_data())
     data = server_db_access.add_stock(params)
-    return data
+    return jsonify(data)
 
 #관심주 삭제
 @app.route('/delStock', methods=['GET','POST'])
@@ -135,7 +135,7 @@ def delStock():
 def addBelongingSet():
     params = json.loads(request.get_data())
     data = server_db_access.add_belongings(params)
-    return data
+    return jsonify(data)
 
 #소지품 수정
 @app.route('/editBelongingSet', methods=['GET','POST'])
