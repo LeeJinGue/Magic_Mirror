@@ -13,12 +13,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import datetime
+from db import db_access
 
 
 class schedule(QWidget):
   def __init__(self):
     super().__init__()
-  def setupUi(self, Form, x, y):
+  def setupUi(self, Form, x, y, user_id):
         self.widget_border = QtWidgets.QLabel(Form)
         self.widget_border.setGeometry(QtCore.QRect(x+20, y+60, 480, 520))
         self.widget_border.setFrameShape(QtWidgets.QFrame.Box)
@@ -45,66 +46,37 @@ class schedule(QWidget):
 
         self.pushButton.clicked.connect(self.addSchedule)
         self.retranslateschedule(Form)
+        self.setSchedule(user_id)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
   def retranslateschedule(self, Form):
       _translate = QtCore.QCoreApplication.translate
       Form.setWindowTitle(_translate("Form", "Form"))
-
-
-      
       self.label.setText(_translate("Form", self.getDate()))
       self.pushButton.setText(_translate("Form", "PushButton"))
     
-  def getSchedule(self): #데이터 베이스에서 스케쥴 호출
-    pass
+  def setSchedule(self,user_id): #데이터 베이스에서 스케쥴 호출
+    data = db_access.get_schedule(user_id)
+    for i in data:
+      self.addSchedule(i)
 
+  #날자 함수
   def getDate(self):
     days  =["월","화","수", '목','금','토', '일']
     now = datetime.datetime.now()
     mdstr = " " + str(now.month) + "월 "+ str(now.day)+"일   "+ days[now.weekday()]
     return mdstr
 
-
-  def addSchedule(self): #스케줄 리스트 위젯에 아이템 추가
+  #스케줄 아이템 추가 함수
+  def addSchedule(self,data):
    def get_item_wight():
-    #     
-    #ship_name = "park"
-    #ship_photo = "a"
-    #ship_index = "hello"
-    #ship_type = "hello"
-    #ship_country = "한국"
-    #ship_star = "5개"
-    ##  Widget
-    #wight = QWidget()
-    ##       
-    #layout_main = QHBoxLayout()
-    #map_l = QLabel() #     
-    #map_l.setFixedSize(40, 25)
-    ##maps = QPixmap(ship_photo).scaled(40, 25)
-    #map_l.setPixmap(maps)
-    ##        
-    #layout_right = QVBoxLayout()
-    ##         
-    #layout_right_down = QHBoxLayout() #        
-    #layout_right_down.addWidget(QLabel(ship_type))
-    #layout_right_down.addWidget(QLabel(ship_country))
-    #layout_right_down.addWidget(QLabel(str(ship_star) + " "))
-    #layout_right_down.addWidget(QLabel(ship_index))
-    ##       ,         
-    #layout_main.addWidget(map_l) #       
-    #layout_right.addWidget(QLabel(ship_name)) #        
-    #layout_right.addLayout(layout_right_down) #        
-    #layout_main.addLayout(layout_right) #      
-    #wight.setLayout(layout_main) #    wight
-
     layout_main = QHBoxLayout()
     map1 = QLabel()
     map1.setStyleSheet( "QLabel{color: white;}")
     map1.setFixedWidth(340)
     map1.setFixedHeight(70)
     map1.setFrameShape(QtWidgets.QFrame.Box)
-    map1.setText("Hello World")
+    map1.setText(data[4]) #메시지 설정
     layout_main.addWidget(map1)
     
     map2 = QLabel()
@@ -112,17 +84,18 @@ class schedule(QWidget):
     map2.setFixedWidth(80)
     map2.setFixedHeight(70)
     map2.setFrameShape(QtWidgets.QFrame.Box)
-    map2.setText("11AM\n1PM")
+    #map2.setText("11AM\n1PM")
+    map2.setText(" %s:%s\n %s:%s" %(str(data[2].hour).zfill(2), str(data[2].minute).zfill(2), str(data[3].hour).zfill(2), str(data[3].minute).zfill(2)))
     layout_main.addWidget(map2)
     wight = QWidget()
     wight.setLayout(layout_main)
     return wight #   wight
 
-   item = QListWidgetItem() #   QListWidgetItem  
-   item.setSizeHint(QSize(200, 80)) #   QListWidgetItem 
+   item = QListWidgetItem() 
+   item.setSizeHint(QSize(200, 80))
    brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
    item.setBackground(brush)
    
-   widget = get_item_wight() #            
-   self.schedule_listWidget.addItem(item) #   item
-   self.schedule_listWidget.setItemWidget(item, widget) #  item  widget
+   widget = get_item_wight()       
+   self.schedule_listWidget.addItem(item) 
+   self.schedule_listWidget.setItemWidget(item, widget)

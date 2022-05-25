@@ -13,11 +13,12 @@ from PyQt5.QtGui import QPixmap,QIcon,QFont
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import *
+from db import db_access
 
 class message(QWidget):
   def __init__(self):
     super().__init__()
-  def setupUi(self, Form, x, y):
+  def setupUi(self, Form, x, y,user_id):
         self.frame = QtWidgets.QLabel(Form)
         self.frame.setGeometry(QtCore.QRect(x+20, y+60, 480, 250))
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
@@ -39,24 +40,28 @@ class message(QWidget):
         
         self.retranslatesMessage(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-        self.addMessage()
+        self.setMessage(user_id)
 
 
   def retranslatesMessage(self, Form):
       _translate = QtCore.QCoreApplication.translate
       Form.setWindowTitle(_translate("Form", "Form"))
       self.message_label.setText(_translate("Form", "메시지"))
+  
+  def setMessage(self, user_id):
+    data = db_access.get_message(user_id)
+    for i in data:
+      self.addMessage(i)
 
-  def addMessage(self):
+  def addMessage(self,data):
    def get_item_wight():
-
     layout_main = QHBoxLayout()
     map1 = QLabel()
     map1.setStyleSheet( "QLabel{color: white;}")
     map1.setFixedWidth(60)
     map1.setFixedHeight(60)
     map1.setFrameShape(QtWidgets.QFrame.Box)
-    map1.setText("BBBB")
+    map1.setText(data[7])
     layout_main.addWidget(map1)
     
     map2 = QLabel()
@@ -64,7 +69,7 @@ class message(QWidget):
     map2.setFixedWidth(370)
     map2.setFixedHeight(60)
     map2.setFrameShape(QtWidgets.QFrame.Box)
-    map2.setText("15000")
+    map2.setText(data[3])
     layout_main.addWidget(map2)
 
     wight = QWidget()

@@ -2,8 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer ,Qt
 import numpy as np
-import Layout_generator
-from window import Network_init , default_wait
+import Layout_generator,Touch_Layout
+from window import Network_init , default_wait, default_wait_touch
 import sys
 
 
@@ -160,46 +160,53 @@ class Ui_Form(QMainWindow):
 
 
 
-    
+    #네트워크 설정 버튼
     self.btn_d1 = QtWidgets.QPushButton(Form)
-    self.btn_d1.setGeometry(QtCore.QRect(60, 100, 150, 23))
+    self.btn_d1.setGeometry(QtCore.QRect(60, 100, 150, 40))
     self.btn_d1.setObjectName("btn_d1")
     self.btn_d1.setStyleSheet("""color: #FFFFFF; 
                                         background-color: #000000;
                                         border-style: solid; 
                                         border-width: 1px; 
                                         border-color: #FFFFFF; 
-                                        border-radius: 0px; """)
+                                        border-radius: 0px;
+                                        font: 15pt """)
+
+    #작동시작 버튼                                   
     self.btn_d2 = QtWidgets.QPushButton(Form)
-    self.btn_d2.setGeometry(QtCore.QRect(60, 140, 75, 23))
+    self.btn_d2.setGeometry(QtCore.QRect(60, 260, 100, 40))
     self.btn_d2.setObjectName("btn_d2")
     self.btn_d2.setStyleSheet("""color: #FFFFFF; 
                                         background-color: #000000;
                                         border-style: solid; 
                                         border-width: 1px; 
                                         border-color: #FFFFFF; 
-                                        border-radius: 0px; """)
+                                        border-radius: 0px;
+                                        font: 15pt """)
 
+    #사용자 UI 버튼
     self.btn_d3 = QtWidgets.QPushButton(Form)
-    self.btn_d3.setGeometry(QtCore.QRect(60, 180, 75, 23))
+    self.btn_d3.setGeometry(QtCore.QRect(60, 180, 100, 40))
     self.btn_d3.setObjectName("btn_d3")
     self.btn_d3.setStyleSheet("""color: #FFFFFF; 
                                         background-color: #000000;
                                         border-style: solid; 
                                         border-width: 1px; 
                                         border-color: #FFFFFF; 
-                                        border-radius: 0px; """)
+                                        border-radius: 0px;
+                                        font: 15pt """)
 
-
+    #종료버튼
     self.btn_exit = QtWidgets.QPushButton(Form)
-    self.btn_exit.setGeometry(QtCore.QRect(310, 140, 75, 23))
+    self.btn_exit.setGeometry(QtCore.QRect(60,340, 75, 23))
     self.btn_exit.setObjectName("btn_exit")
     self.btn_exit.setStyleSheet("""color: #FFFFFF; 
                                         background-color: #000000;
                                         border-style: solid; 
                                         border-width: 1px; 
                                         border-color: #FFFFFF; 
-                                        border-radius: 0px; """)
+                                        border-radius: 0px;
+                                        font: 15pt """)
 
     self.retranslateUi(Form)
     QtCore.QMetaObject.connectSlotsByName(Form)
@@ -210,11 +217,11 @@ class Ui_Form(QMainWindow):
     self.btn_d1.setText(_translate("Form", "네트워크 설정"))
     self.btn_d1.clicked.connect(self.jump_to_Network)
 
-    self.btn_d2.setText(_translate("Form", "대기화면"))
-    self.btn_d2.clicked.connect(self.jump_to_default_wait)
+    self.btn_d2.setText(_translate("Form", "작동시작"))
+    self.btn_d2.clicked.connect(self.jump_to_user_UI)
 
-    self.btn_d3.setText(_translate("Form", "사용자 UI"))
-    self.btn_d3.clicked.connect(self.jump_to_user_UI)
+    self.btn_d3.setText(_translate("Form", "터치 모드"))
+    self.btn_d3.clicked.connect(self.jump_to_default_touch)
 
     self.btn_exit.setText(_translate("Form", "Exit"))
     self.btn_exit.clicked.connect(self.exit)
@@ -231,7 +238,7 @@ class Ui_Form(QMainWindow):
 
   #네트워크 설정 화면 이동
   def jump_to_Network(self):        
-   self.form.hide()    
+   #self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = Network_init.Ui_Form()
    ui.setupUi(form1)
@@ -240,8 +247,18 @@ class Ui_Form(QMainWindow):
    self.form.show()
 
   #기본화면 이동
-  def jump_to_default_wait(self):         
-   self.form.hide()    
+  def jump_to_default(self):         
+   #self.form.hide()    
+   form1 = QtWidgets.QDialog()
+   ui = default_wait.Ui_Form()
+   ui.setupUi(form1)
+   form1.show()
+   form1.exec_()
+   self.form.show()
+
+  #터치모드로 작동 시작
+  def jump_to_default_touch(self):         
+   #self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = default_wait.Ui_Form()
    ui.setupUi(form1)
@@ -251,7 +268,7 @@ class Ui_Form(QMainWindow):
 
   #유저 설정 UI 이동
   def jump_to_user_UI(self):        
-   self.form.hide()    
+   #self.form.hide()    
    form1 = QtWidgets.QDialog()
    ui = Layout_generator.Ui_Form()
    ui.setupUi(form1)

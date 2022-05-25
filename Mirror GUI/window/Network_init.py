@@ -19,6 +19,7 @@ os.environ["QT_IM_MODULE"] = "qtvirtualkeyboard"
 
 class Ui_Form(object):
     def setupUi(self, Form):
+        self.Form = Form
         Form.setObjectName("Form")
         Form.resize(1024, 600)
         Form.setWindowFlags(Qt.FramelessWindowHint)
@@ -465,9 +466,20 @@ class Ui_Form(object):
         self.SerialNo = QtWidgets.QTextBrowser(Form)
         self.SerialNo.setGeometry(QtCore.QRect(650, 450, 321, 51))
         self.SerialNo.setObjectName("SerialNo")
+
+        #나가기 버튼
+        self.net_exit = QtWidgets.QPushButton(Form)
+        self.net_exit.setGeometry(QtCore.QRect(850, 20, 150, 40))
+        self.net_exit.setObjectName("net_exit")
+        self.net_exit.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: bold 15pt """)
       
         self.icon1 = QtWidgets.QPushButton(Form)
-
         icon_path= os.path.dirname(os.path.abspath(__file__))
         icon_path+="/wifi.jpg"
         pixmap = QPixmap(icon_path)
@@ -499,6 +511,9 @@ class Ui_Form(object):
             form1.show()
             form1.exec_()
             #print(s.text())
+
+    def exit_fun(self):
+            self.Form.close()
 
 
     def retranslateUi(self, Form):
@@ -544,5 +559,6 @@ class Ui_Form(object):
                         border-color: #FFFFFF; 
                         border-radius: 0px; """)
         
-        
+        self.net_exit.setText(_translate("Form", "나가기"))
+        self.net_exit.clicked.connect(self.exit_fun)
         self.icon1.setText(_translate("Form", ""))
