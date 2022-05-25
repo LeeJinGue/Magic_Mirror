@@ -1,6 +1,7 @@
 package com.cookandroid.smartmirror;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -179,10 +180,18 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     // user 수정
     public void editUserName(userData editUser){
+
         db.execSQL("UPDATE user SET name = '"+ editUser.getName() + "'"
         + "WHERE user_num = "+editUser.getUser_num());
-        Log.i("editUserNameAt", " "+editUser.toString()+"로 수정");
+        Log.i("editUserName", " "+editUser.toString()+"로 수정");
 
+    }
+
+    // user 삭제
+    public void delUser(userData delUser){
+        db.delete("user", "user_num=?",new String[]{String.valueOf(delUser.getUser_num())});
+//        db.execSQL("DELETE FROM user WHERE user_num ="+delUser.getUser_num());
+        Log.i("delUser", " "+delUser.toString()+"삭제");
     }
 
     // ---------------------------------------------------------------

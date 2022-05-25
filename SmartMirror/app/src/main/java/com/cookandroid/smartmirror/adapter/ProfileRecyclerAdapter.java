@@ -44,23 +44,29 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         // index랑 size는 1씩 차이가 나고 마지막엔 추가하기 버튼이므로 -2
 
         ArrayList<userData> newUserList = sqlDB.getAllUserList();
-        for(userData u:newUserList) Log.i("test", "newUser: "+u.toString());
+        for(userData u:newUserList) Log.i("addItem", "newUser: "+u.toString());
         // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
         // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
         newUser.setUser_num(newUserList.size()+1);
         sqlDB.addUser(newUser);
         // Server에서 OK받고 추가함.
         mDataList.add(mDataList.size()-1, newUser);
+
+
         notifyItemInserted(mDataList.size()-2);
+//        notifyDataSetChanged();
     }
     public void editItemNameAt(userData editUser, int index){
-        mDataList.get(index).setName(editUser.getName());
         sqlDB.editUserName(editUser);
+        mDataList.get(index).setName(editUser.getName());
         notifyItemChanged(index);
     }
-    public void delItemAt(int index){
+    public void delItemAt(userData delUser,int index){
+        sqlDB.delUser(delUser);
         mDataList.remove(index);
-        notifyItemChanged(index);
+        imageViewArrayList.remove(index);
+        notifyItemRemoved(index);
+
     }
     public void changeImgViewList(boolean isSettingMode){
         // 데이터가 없으면 바꾸지않는다.
@@ -68,7 +74,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         if(mDataList.size() == 1) return;
         if(isSettingMode){
             // 수정모드라면 프로필선택 모드로 바꾼다.
-            for(int i =0; i< imageViewArrayList.size(); i++){
+            for(int i =0; i< imageViewArrayList.size()-1; i++){
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_image_24);
                 imView.setTag("Select");
@@ -76,7 +82,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
             }
         }else{
             // 프로필 선택 모드라면 수정모드로 바꾼다.
-            for(int i =0; i< imageViewArrayList.size(); i++){
+            for(int i =0; i< imageViewArrayList.size()-1; i++){
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_offline_pin_24);
                 imView.setTag("Edit");
@@ -111,10 +117,12 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                     StartForResultAddProfile.launch(intent);
                 }
             });
+            imageViewArrayList.add(holder.profileItemImV);
+
         }else{
             // 마지막 인덱스가 아닐 경우
             holder.profileItemName.setText(mDataList.get(holder.getAdapterPosition()).getName());
-            imageViewArrayList.add(holder.profileItemImV);
+            holder.profileItemImV.setTag("Select");
             holder.profileItemImV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -138,6 +146,9 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                     }
                 }
             });
+            // 맨뒤에는 추가하기가 들어가야되므로 size-2의 인덱스부분에 추가한다.
+            imageViewArrayList.add(imageViewArrayList.size()-1, holder.profileItemImV);
+
 
         }
     }

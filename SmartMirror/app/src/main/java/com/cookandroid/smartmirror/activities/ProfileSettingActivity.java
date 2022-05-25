@@ -142,6 +142,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // 프로필을 삭제합니다. 삭제할 프로필 객체와 인덱스를 함꼐 보냅니다.
                     // 결과 코드는 100
+                    Log.i("test", "삭제버튼 클릭");
                     Intent intent = new Intent();
                     intent.putExtra("delUser", editProfile);
                     intent.putExtra("index", index);
