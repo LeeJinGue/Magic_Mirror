@@ -1,7 +1,7 @@
 package com.cookandroid.smartmirror;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,15 +9,23 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MirrorDBHelper extends SQLiteOpenHelper {
     private int dbVersion;
     private SQLiteDatabase db;
     private MirrorNetworkHelper networkHelper;
+
+    // 더미데이터 - 레이아웃 ID
+    private int layout_id = 1;
+    public void setLayout_id(int user_no){
+        layout_id = user_no * 100;
+    }
     public MirrorDBHelper(@Nullable Context context, int version) {
         super(context, "groupDB", null, 1);
         dbVersion = version;
@@ -27,11 +35,6 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     public void initDB(){
-        Log.i("DataBase", "DB초기화");
-    }
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS groupTBL ( gName CHAR(20) PRIMARY KEY, gNumber INTEGER);");
         createDeviceTb(db);
         createUserTb(db);
         createLayoutSettingTb(db);
@@ -43,6 +46,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         addDevData(networkHelper.getDevData());
         // userData를 미리 넣어둡니다.
         addUser(networkHelper.getUserData());
+        Log.i("DataBase", "DB초기화");
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE IF NOT EXISTS groupTBL ( gName CHAR(20) PRIMARY KEY, gNumber INTEGER);");
+
     }
 
     @Override
@@ -146,6 +155,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         Log.i("Create Table", "stock table 생성 완료");
     }
     // -----------------------User관련--------------------------------
+    // userData List로 갖고오기
     public ArrayList<userData> getAllUserList(){
         Cursor mCursor = db.rawQuery("SELECT * FROM user", null);
         ArrayList<userData> list = new ArrayList<userData>();
@@ -248,5 +258,62 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     // ---------------------------------------------------------------
 
+    // --------------------------Layout 관련---------------------------
 
+    public void layoutSet(ArrayList<layoutData> layoutDataList, userData selectedUser){
+
+        // layoutsetting 테이블에서 받은 userData에 있는 user_no와 같은 user_no인 Row들 삭제
+        db.delete("layoutsetting", "user_no=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        // 새 layoutData들 모아서 추가
+        for(layoutData layoutData:layoutDataList){
+            ContentValues values = new ContentValues();
+            values.put("layout_id", ++layout_id);
+            values.put("user_no", selectedUser.getUser_num());
+            values.put("type", layoutData.getType());
+            values.put("loc", layoutData.getLoc());
+            long result =db.insert("layoutsetting", null, values);
+//            db.execSQL("INSERT INTO layoutsetting VALUES(" +
+//                    ++layout_id +
+//                    ", " + selectedUser.getUser_num() +
+//                    ", " + layoutData.getType() +
+//                    ", " + layoutData.getLoc() +
+//                    ");");
+            if(result != -1){
+                Log.i("layoutSet", layoutData.toString() + ", id: "+ layout_id+" 레이아웃 추가");
+
+            }else{
+                Log.i("layoutSet", "db insert 오류");
+            }
+        }
+    }
+
+    public ArrayList<layoutData> getLayoutDataListByUser(userData selectedUser){
+        ArrayList<layoutData> layoutDataArrayList = new ArrayList<>();
+        Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting WHERE user_no="+selectedUser.getUser_num()+";", null);
+        while(layoutCursor.moveToNext()){
+            int layout_id = layoutCursor.getInt(0);
+            int user_no = layoutCursor.getInt(1);
+            int type = layoutCursor.getInt(2);
+            int loc = layoutCursor.getInt(3);
+            layoutData newLayoutData = new layoutData(layout_id, user_no, loc, type);
+            layoutDataArrayList.add(newLayoutData);
+            Log.i("getLayoutDataListByUser", newLayoutData.toString() + " 레이아웃 데이터 갖고옴");
+        }
+        return layoutDataArrayList;
+    }
+    public ArrayList<layoutData> getAllLayoutData(){
+        ArrayList<layoutData> layoutDataArrayList = new ArrayList<>();
+        Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting;", null);
+        while(layoutCursor.moveToNext()){
+            int layout_id = layoutCursor.getInt(0);
+            int user_no = layoutCursor.getInt(1);
+            int type = layoutCursor.getInt(2);
+            int loc = layoutCursor.getInt(3);
+            layoutData newLayoutData = new layoutData(layout_id, user_no, loc, type);
+            layoutDataArrayList.add(newLayoutData);
+            Log.i("getAllLayoutDataList", newLayoutData.toString() + ", id: "+newLayoutData.getLayout_id()+ " 레이아웃 데이터 갖고옴");
+        }
+        return layoutDataArrayList;
+    }
+    // ----------------------------------------------------------------
 }

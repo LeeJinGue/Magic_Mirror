@@ -37,8 +37,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         this.context = context;
         this.sqlDB = new MirrorDBHelper(context, 1);
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
-        userData last = new userData(2, -1, "추가하기", "없음");
-        mDataList.add(last);
+
     }
     public void addItem(userData newUser){
         // index랑 size는 1씩 차이가 나고 마지막엔 추가하기 버튼이므로 -2
@@ -70,7 +69,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     }
     public void changeImgViewList(boolean isSettingMode){
         // 데이터가 없으면 바꾸지않는다.
-        Log.i("ProfileRecyclerAdapter", "모드를 변경합니다.");
+        Log.i("ProfileRecyclerAdapter", "모드를 변경합니다. 이미지리스트 크기: "+imageViewArrayList.size());
         if(mDataList.size() == 1) return;
         if(isSettingMode){
             // 수정모드라면 프로필선택 모드로 바꾼다.
@@ -78,7 +77,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_image_24);
                 imView.setTag("Select");
-
+                Log.i("test", "프로필 선택 모드로 변경");
             }
         }else{
             // 프로필 선택 모드라면 수정모드로 바꾼다.
@@ -86,6 +85,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_offline_pin_24);
                 imView.setTag("Edit");
+                Log.i("test", "프로필 수정 모드로 변경");
 
             }
         }
@@ -105,7 +105,8 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // 마지막 인덱스는 추가하기 버튼으로
-        if(mDataList.size()==1){
+        Log.i("position&size Test", "position: "+holder.getAdapterPosition()+", size: "+mDataList.size());
+        if(holder.getAdapterPosition() == mDataList.size()-1){
             holder.profileItemName.setText("추가하기");
             holder.profileItemImV.setImageResource(R.drawable.ic_baseline_add_photo_alternate_24);
             holder.profileItemImV.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +130,8 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                     Log.i("ProfileSelectRecyclerAdapter", "태그내용: "+holder.profileItemImV.getTag().toString());
                     if(holder.profileItemImV.getTag() == "Select"){
                         // 선택모드에서 클릭시 프로필 정보를 갖고 메인 화면으로 간다.
+                        MyApplication myApp = (MyApplication)context.getApplicationContext();
+                        myApp.setSelectedUser(mDataList.get(holder.getAdapterPosition()));
                         Intent intent = new Intent(context, MainScreenActivity.class);
                         intent.putExtra("profileData",mDataList.get(holder.getAdapterPosition()));
                         Log.i("ProfileSelectRecyclerAdapter", mDataList.get(holder.getAdapterPosition()).getName()+"가 선택되었습니다..");
@@ -147,7 +150,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                 }
             });
             // 맨뒤에는 추가하기가 들어가야되므로 size-2의 인덱스부분에 추가한다.
-            imageViewArrayList.add(imageViewArrayList.size()-1, holder.profileItemImV);
+            imageViewArrayList.add(holder.getAdapterPosition(),holder.profileItemImV);
 
 
         }

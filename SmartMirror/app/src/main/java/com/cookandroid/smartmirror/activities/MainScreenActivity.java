@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.userData;
 import com.cookandroid.smartmirror.navigationFragment.CheckBelongingsFragment;
 import com.cookandroid.smartmirror.navigationFragment.MessageSendFragment;
 import com.cookandroid.smartmirror.navigationFragment.ScheduleFragment;
@@ -30,13 +31,19 @@ public class MainScreenActivity extends AppCompatActivity {
     CheckBelongingsFragment checkBelongingsFragment_frag;
     Toolbar toolbar;
     TextView tvTitle;
+    userData selectedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
+
+
         MyApplication app = (MyApplication)getApplicationContext();
-        Log.i("메인스크린", app.getSelectedProfileName()+"의 프로필이 선택되었습니다.");
+        selectedUser = app.getSelectedUser();
+        Log.i("MainScreenActivity", selectedUser.getName()+"의 프로필이 선택되었습니다.");
+
+
         // Add Coustom AppBar & Set Title Color Gradient\
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 

@@ -11,10 +11,18 @@ public class MyApplication extends Application {
     private String selectedProfileName = null;
     private String testData = "First";
     public String getTestData(){return testData;}
+    private userData selectedUser = null;
     public void setTestData(String testData){
         this.testData = testData;
     }
 
+    public userData getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(userData selectedUser){
+        this.selectedUser = selectedUser;
+    }
     public void addProfileName(String name){
         Log.i("MyApplication", name+"이라는 이름의 프로필 추가");
         this.profileNameList.add(name);

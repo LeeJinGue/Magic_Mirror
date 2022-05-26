@@ -146,8 +146,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(false);
 
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
-        sqlDB.initDB();
-        
+
         editSerial = findViewById(R.id.editSerial);
         editIP = findViewById(R.id.editWifi);
         btn = findViewById(R.id.testBtnRegister);
@@ -169,6 +168,8 @@ public class RegisterDevActivity extends AppCompatActivity {
                 // IP주소, 시리얼넘버가 맞는지 확인합니다.
                 if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo)){
                     Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
+                    // 연결되었으므로 DB를 초기화
+                    sqlDB.initDB();
                     Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
                     startActivity(intent);
 

@@ -27,6 +27,7 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_blue.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_orange.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_purple.xml" value="0.2765" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_watch_later_24.xml" value="0.144" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/radius.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/rectangle.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/savebtnshape.xml" value="0.1" />
@@ -63,7 +64,7 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/test.xml" value="0.2210144927536232" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/title_smartmirror.xml" value="0.13134057971014493" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/wift_list_view.xml" value="0.223731884057971" />
-        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/window_item.xml" value="0.11481481481481481" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/window_item.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/menu/menu_bottom.xml" value="0.18333333333333332" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/menu/menu_main.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/xml/searchable.xml" value="0.25181159420289856" />

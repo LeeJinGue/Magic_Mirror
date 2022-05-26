@@ -1906,6 +1906,7 @@ drawable ic_stock
 drawable ic_trash_can
 drawable ic_triangle_green
 drawable ic_triangle_white
+drawable ic_watch
 drawable ic_weather
 drawable ic_windowsetup
 drawable material_cursor_drawable
@@ -2560,7 +2561,7 @@ id wifiImg
 id wifiListView
 id wifiName
 id windowItem
-id windowsetupbutton
+id windowSetupBtn
 id withText
 id withinBounds
 id wrap

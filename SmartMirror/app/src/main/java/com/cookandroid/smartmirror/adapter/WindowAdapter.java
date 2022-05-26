@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.R;
-import com.cookandroid.smartmirror.dataClass.Window;
-import com.cookandroid.smartmirror.dataClass.wifiData;
+import com.cookandroid.smartmirror.dataClass.layoutData;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
     private Context mContext;
     private static final String VIEW_TAG = "드래그 이미지";
 
-    private ArrayList<Window> items = new ArrayList<Window>();
+    private ArrayList<layoutData> items = new ArrayList<layoutData>();
 
     public interface OnListItemLongSelectedInterface {
         void onItemLongSelected(View v, int position);
@@ -46,7 +45,7 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int position) {
-        Window item = items.get(position);
+        layoutData item = items.get(position);
         viewholder.setItem(item);
     }
 
@@ -93,25 +92,25 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
             });
         }
         
-        public void setItem(Window item) {
-            textView.setText(item.getScreen());
+        public void setItem(layoutData item) {
+            textView.setText(item.getLayoutName());
             imageView.setImageResource(item.getImageResId());
         }
     }
 
-    public void addItem(Window item) {
+    public void addItem(layoutData item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<Window> items) {
+    public void setItems(ArrayList<layoutData> items) {
         this.items = items;
     }
 
-    public Window getItem(int position) {
+    public layoutData getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, Window item) {
+    public void setItem(int position, layoutData item) {
         items.set(position,item);
     }
 }

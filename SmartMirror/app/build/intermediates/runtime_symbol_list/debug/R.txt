@@ -1905,6 +1905,7 @@ int drawable ic_stock 0x7f070090
 int drawable ic_trash_can 0x7f070091
 int drawable ic_triangle_green 0x7f070092
 int drawable ic_triangle_white 0x7f070093
+int drawable ic_watch 0x7f0700c2
 int drawable ic_weather 0x7f070094
 int drawable ic_windowsetup 0x7f070095
 int drawable material_cursor_drawable 0x7f070096
@@ -2559,7 +2560,7 @@ int id wifiImg 0x7f090255
 int id wifiListView 0x7f090256
 int id wifiName 0x7f090257
 int id windowItem 0x7f090258
-int id windowsetupbutton 0x7f090259
+int id windowSetupBtn 0x7f090264
 int id withText 0x7f09025a
 int id withinBounds 0x7f09025b
 int id wrap 0x7f09025c
