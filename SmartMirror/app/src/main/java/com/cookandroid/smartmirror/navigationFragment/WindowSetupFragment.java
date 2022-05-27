@@ -62,6 +62,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 //        layoutSetList = sqlDB.getLayoutDataListByUser(selectedUser);
         layoutSetList = sqlDB.getLayoutDataListByUser(selectedUser);
         sqlDB.setLayout_id(selectedUser.getUser_num());
+        sqlDB.setMessage_id(selectedUser.getUser_num());
         String dataset = "DB에서 불러온 레이아웃 데이터 리스트: \n";
         for(layoutData l: layoutSetList){
             dataset += l.toString()+"\n";

@@ -6,39 +6,68 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
+import com.cookandroid.smartmirror.adapter.MessageRecyclerAdapter;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.messageData;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 
 public class MessageCheckActivity extends AppCompatActivity {
     ImageView sendMessageBtn;
-    String selectedProfile;
+//    String selectedProfile;
     Context context;
     ArrayList<messageData> messageDataList = new ArrayList<>();
     LinearLayout messageListLayout;
     LinearLayout.LayoutParams messageLayoutParams, receivedMessageParams, sendedMessageParams, dateParams;
     int messagePadding, messageWidth, dp;
     EditText messageEditText;
-
-
+    userData messageReceiverUser, selectedUser;
+    MirrorDBHelper sqlDB;
+    ArrayList<messageData> receivedMessageList, sendedMessageList, allMessageList;
+    MessageRecyclerAdapter mAdapter;
+    RecyclerView msgRecyclerView;
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        if(view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE)
+                && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")){
+            int scrcoords[] = new int[2];
+            view.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view.getTop() - scrcoords[1];
+            if(x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom()){
+                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                messageEditText.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -55,28 +84,30 @@ public class MessageCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_check);
         context = getApplicationContext();
-        selectedProfile = getIntent().getStringExtra("selectedProfile");
+        messageReceiverUser = getIntent().getParcelableExtra("messageReceiverUser");
+        sqlDB = new MirrorDBHelper(context, 2);
+        MyApplication myapp = (MyApplication)getApplicationContext();
+        // 현재 로그인되어있는 유저
+        selectedUser = myapp.getSelectedUser();
 
-        // width/padding값 설정
-        dp=ConvertDPtoPX(context, 1);
-        messageWidth = ConvertDPtoPX(context, 180);
-        messagePadding = ConvertDPtoPX(context,5);
+        allMessageList = new ArrayList<>();
         messageEditText = findViewById(R.id.messageEditText);
-        // Layout Params 설정
-        messageLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        receivedMessageParams = new LinearLayout.LayoutParams(messageWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-        receivedMessageParams.gravity = Gravity.LEFT;
-        receivedMessageParams.rightMargin = dp*10;
-        sendedMessageParams = new LinearLayout.LayoutParams(messageWidth, LinearLayout.LayoutParams.WRAP_CONTENT);
-        sendedMessageParams.gravity = Gravity.RIGHT;
-        sendedMessageParams.leftMargin = dp*10;
-        dateParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dateParams.gravity = Gravity.BOTTOM;
+        msgRecyclerView = findViewById(R.id.messageRecyclerView);
+        getMessageDataList();
+        mAdapter = new MessageRecyclerAdapter(context, allMessageList);
+        msgRecyclerView.setAdapter(mAdapter);
+        msgRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false));
+        String msgTest = "sendedMsgList: \n";
+        for(messageData sendedMsg : allMessageList){
+            msgTest+= sendedMsg.toString()+"\n";
+        }
+        Log.i("msgTest", msgTest);
+
 
         // Add Coustom AppBar & Set Title Color Gradient
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
-        tvTitle.setText(selectedProfile+"님의 메시지");
+        tvTitle.setText(messageReceiverUser.getName()+"님의 메시지");
         Methods methods = new Methods();
         methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
@@ -85,7 +116,6 @@ public class MessageCheckActivity extends AppCompatActivity {
         // 뒤로가기 버튼
         ab.setDisplayHomeAsUpEnabled(true);
 
-        messageListLayout = findViewById(R.id.messageListLayout);
         sendMessageBtn = findViewById(R.id.messageChecksendMessage);
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,83 +124,116 @@ public class MessageCheckActivity extends AppCompatActivity {
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
                 SimpleDateFormat sdf = new SimpleDateFormat("MM:dd");
-
-                addSendedMessage(messageText, sdf.format(date));
+                LocalDateTime nowTime = LocalDateTime.now();
+                messageData newMsg = new messageData(++myapp.msgId, messageReceiverUser.getUser_num(), selectedUser.getUser_num(), messageText, nowTime.getYear(), nowTime.getMonthValue(), nowTime.getDayOfMonth(), nowTime.getHour(), nowTime.getMinute(), false);
+                mAdapter.addMessage(newMsg);
+                messageEditText.setText("");
                 Log.i("MessageCheckActivity", "메시지 전송");
             }
         });
-        Log.i("MessageCheckActivity", "선택된 프로필 명: "+selectedProfile);
-        addReceivedMessage("상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 상대가보낸메시지 ", "02:00");
-        addSendedMessage("내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 내가 보낸 메시지 ", "02:30");
-        getMessageDataList();
+        Log.i("MessageCheckActivity", "선택된 프로필 명: "+messageReceiverUser.getName());
+
+
     }
 
     // 보낸 사람, 받는 사람에 따른 메시지 데이터를 받아온다.
     public void getMessageDataList(){
         // 1. 보낸사람, 받는사람, 날짜에 따른 메시지 데이터를 받아온다.
         // 2. 메시지를 시간 순으로 정렬한다.
-        messageData msg1 = new messageData(1, 1, 2, "안녕하세요.","2022년 5월 8일 일요일", 11, 0);
-        messageDataList.add(new messageData(2, 2, 1, "반갑습니다.", "2022년 5월 8일 일요일", 12, 10));
-        messageDataList.add(msg1);
-        messageDataList.add(new messageData(2, 2, 1, "반갑습니다.", "2022년 5월 8일 일요일", 12, 0));
-        messageDataList.sort(new MessageTimeComparator());
-        System.out.println("정렬 결과: ");
-        for(messageData msg : messageDataList){
-            System.out.println(msg.toString());
+
+        // 내가 보낸 리스트, 상대한테 받은 리스트 다 받아옴
+        allMessageList = sqlDB.getMeesageList(selectedUser, messageReceiverUser, false);
+        allMessageList.addAll(sqlDB.getMeesageList(selectedUser, messageReceiverUser, true));
+        // 받아온 메시지 데이터를 시간순으로 정렬합니다.
+        allMessageList.sort(new MessageDateTimeComparator());
+        if(allMessageList.isEmpty()) return;
+        // 날짜가 달라지면 날짜객체를 추가합니다.
+        messageData firstDate = new messageData(allMessageList.get(0).getYear(), allMessageList.get(0).getMonth(), allMessageList.get(0).getDate());
+        allMessageList.add(0, firstDate);
+        String msgTest = "allMessageList(처음거추가): \n";
+        for(messageData sendedMsg : allMessageList){
+            msgTest+= sendedMsg.toString()+"\n";
+        }
+        Log.i("msgTest", msgTest);
+        Log.i("날짜데이터",firstDate.getYear()+"년 "+ firstDate.getMonth()+"월 "+ firstDate.getDate()+"일 추가");
+        for(int i=1; i<allMessageList.size()-1; i++){
+            messageData now = allMessageList.get(i);
+            messageData next = allMessageList.get(i+1);
+            if(now.getDate() != next.getDate()){
+                messageData dateData = new messageData(next.getYear(), next.getMonth(), next.getDate());
+                allMessageList.add(i+1, dateData);
+                i++;
+                Log.i("날짜데이터",next.getYear()+"년 "+ next.getMonth()+"월 "+ next.getDate()+"일 추가");
+            }
         }
     }
-    public void addSendedMessage(String sendedText, String sendedDate){
-
-        LinearLayout lin = new LinearLayout(context);
-        lin.setLayoutParams(messageLayoutParams);
-        lin.setOrientation(LinearLayout.HORIZONTAL);
-        lin.setPadding(0, dp*10, 0, dp*10);
-        lin.setGravity(Gravity.RIGHT);
-
-        TextView message = new TextView(context);
-        TextView date = new TextView(context);
-
-        message.setText(sendedText);
-        message.setLayoutParams(sendedMessageParams);
-        message.setPadding(messagePadding, messagePadding, messagePadding, messagePadding);
-        message.setBackgroundResource(R.drawable.rectangle);
-
-        date.setText(sendedDate);
-        date.setLayoutParams(dateParams);
-
-        lin.addView(date);
-        lin.addView(message);
-        messageListLayout.addView(lin);
-        messageEditText.setText("");
+    public class MessageDateTimeComparator implements Comparator<messageData>{
+        @Override
+        public int compare(messageData o1, messageData o2) {
+            // 연도비교
+            if(o1.getYear() > o2.getYear()){
+                return 1;
+            }else if(o1.getYear() < o2.getYear()){
+                return -1;
+            }else{
+                // 월비교
+                if(o1.getMonth() > o2.getMonth()){
+                    return 1;
+                }else if(o1.getMonth() < o2.getMonth()){
+                    return -1;
+                }else{
+                    // 일비교
+                    if(o1.getDate() > o2.getDate()){
+                        return 1;
+                    }else if(o1.getDate() < o2.getDate()){
+                        return -1;
+                    }else{
+                        // 연월일 다 같은데 뒤에꺼가 날짜 텍스트뷰다 -> 뒤에꺼를 앞으로
+                        if(o2.getViewType() == R.integer.TYPE_DATE) return 1;
+                        // 시간비교
+                        if(o1.getHour() > o2.getHour()){
+                            return 1;
+                        }else if(o1.getHour() < o2.getHour()){
+                            return -1;
+                        }else{
+                            // 분비교
+                            if(o1.getMinute() > o2.getMinute()){
+                                return 1;
+                            }else if(o1.getMinute() < o2.getMinute()){
+                                return -1;
+                            }else{
+                                // 아예 같다면 1
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-    public void addReceivedMessage(String receivedText, String receivedDate){
-
-        LinearLayout lin = new LinearLayout(context);
-        lin.setLayoutParams(messageLayoutParams);
-        lin.setOrientation(LinearLayout.HORIZONTAL);
-        lin.setPadding(0, dp*10, 0, dp*10);
-        lin.setGravity(Gravity.LEFT);
-
-        TextView message = new TextView(context);
-        TextView date = new TextView(context);
-
-        message.setText(receivedText);
-        message.setLayoutParams(receivedMessageParams);
-        message.setPadding(messagePadding, messagePadding, messagePadding, messagePadding);
-        message.setBackgroundResource(R.drawable.rectangle);
-
-        date.setText(receivedDate);
-        date.setLayoutParams(dateParams);
-
-        lin.addView(message);
-        lin.addView(date);
-        messageListLayout.addView(lin);
-    }
-
     public class MessageDateComparator implements Comparator<messageData>{
         @Override
         public int compare(messageData o1, messageData o2) {
-            return o1.getDate().compareTo(o2.getDate());
+            if(o1.getYear() > o2.getYear()){
+                return 1;
+            }else if(o1.getYear() < o2.getYear()){
+                return -1;
+            }else{
+                if(o1.getMonth() > o2.getMonth()){
+                    return 1;
+                }else if(o1.getMonth() < o2.getMonth()){
+                    return -1;
+                }else{
+                    if(o1.getDate() > o2.getDate()){
+                        return 1;
+                    }else if(o1.getDate() < o2.getDate()){
+                        return -1;
+                    }else{
+                        // 아예 같다면 1
+                        return 1;
+                    }
+                }
+            }
         }
     }
     public class MessageTimeComparator implements Comparator<messageData>{

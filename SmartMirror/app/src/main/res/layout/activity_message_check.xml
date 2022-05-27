@@ -9,44 +9,53 @@
 
     tools:context=".activities.MessageCheckActivity">
     <include layout="@layout/custom_appbar"></include>
-    <LinearLayout
-        android:id="@+id/messageListLayout"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="10dp"
-        >
-<!--오늘 날짜-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="2022년 5월 4일 수요일"
-            android:id="@+id/messageDay"></TextView>
-    </LinearLayout>
+        android:id="@+id/messageRecyclerView"
+        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/messageListLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="9"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        >-->
+<!--&lt;!&ndash;오늘 날짜&ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:text="2022년 5월 4일 수요일"-->
+<!--            android:id="@+id/messageDay"></TextView>-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginHorizontal="10dp"
         android:orientation="horizontal"
         >
-        <EditText
+        <com.cookandroid.smartmirror.custom.customEditText
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:padding="10dp"
             android:layout_weight="1"
             android:background="@drawable/rectangle"
             android:id="@+id/messageEditText"
+            android:layout_marginRight="10dp"
             android:hint="메시지를 입력해주세요."
-            ></EditText>
+            ></com.cookandroid.smartmirror.custom.customEditText>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:id="@+id/messageChecksendMessage"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_send_24"></ImageView>
     </LinearLayout>
 

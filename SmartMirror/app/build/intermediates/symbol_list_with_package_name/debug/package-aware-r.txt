@@ -1944,6 +1944,7 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable radius
 drawable rectangle
+drawable rectangle_bgcolor
 drawable savebtnshape
 drawable selected_bg
 drawable selector
@@ -2269,12 +2270,16 @@ id material_timepicker_view
 id material_value_index
 id media_actions
 id menu_settings
+id mesaageDateTextView
 id message
 id messageChecksendMessage
-id messageDay
 id messageEditText
 id messageGrid
-id messageListLayout
+id messageLeftRelativeLayout
+id messageRecyclerView
+id messageRightRelativeLayout
+id messageText
+id messageTime
 id middle
 id mini
 id monday
@@ -2570,6 +2575,9 @@ id wrap_content_constrained
 id x_left
 id x_right
 id zero_corner_chip
+integer TYPE_DATE
+integer TYPE_MESSAGE_LEFT
+integer TYPE_MESSAGE_RIGHT
 integer abc_config_activityDefaultDur
 integer abc_config_activityShortDur
 integer app_bar_elevation_anim_duration
@@ -2691,6 +2699,9 @@ layout material_time_input
 layout material_timepicker
 layout material_timepicker_dialog
 layout material_timepicker_textinput_display
+layout message_date_item
+layout message_left_item
+layout message_right_item
 layout mtrl_alert_dialog
 layout mtrl_alert_dialog_actions
 layout mtrl_alert_dialog_title

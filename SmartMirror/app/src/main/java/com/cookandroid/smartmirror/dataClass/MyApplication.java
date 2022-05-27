@@ -23,6 +23,13 @@ public class MyApplication extends Application {
     public void setSelectedUser(userData selectedUser){
         this.selectedUser = selectedUser;
     }
+    public void setId(int id){
+        msgId = id*1000;
+        profileId = id*100;
+    }
+    public int msgId = 1;
+    public int profileId = 1;
+
     public void addProfileName(String name){
         Log.i("MyApplication", name+"이라는 이름의 프로필 추가");
         this.profileNameList.add(name);

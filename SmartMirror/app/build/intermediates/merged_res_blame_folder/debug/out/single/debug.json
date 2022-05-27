@@ -64,8 +64,16 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\ic_message.png"
     },
     {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_message_left_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\message_left_item.xml"
+    },
+    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\font_inter.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\font\\inter.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_rectangle_bgcolor.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\drawable\\rectangle_bgcolor.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_stock_search_item.xml.flat",
@@ -144,6 +152,10 @@
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_message_right_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\message_right_item.xml"
+    },
+    {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.webp"
     },
@@ -194,6 +206,10 @@
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_fragment_schedule.xml.flat",
         "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\fragment_schedule.xml"
+    },
+    {
+        "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\layout_message_date_item.xml.flat",
+        "source": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\src\\main\\res\\layout\\message_date_item.xml"
     },
     {
         "merged": "C:\\Capstone1\\copyFolder\\SmartMirror\\app\\build\\intermediates\\merged_res\\debug\\drawable_border.xml.flat",

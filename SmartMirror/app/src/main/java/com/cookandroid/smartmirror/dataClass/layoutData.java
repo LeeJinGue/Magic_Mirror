@@ -11,7 +11,7 @@ public class layoutData {
     private int loc;    // 0~3
     private int type;   // 0~5
     public String toString(){
-        return "layoutName: "+layoutName+", locationName: "+locationName+", user_no: "+user_no+", type: "+type+", loc: "+loc;
+        return "layout_id: "+layout_id+", layoutName: "+layoutName+", locationName: "+locationName+", user_no: "+user_no+", type: "+type+", loc: "+loc;
     }
     // type 값에 맞는 인덱스로
     // 날씨, 시계, 스케쥴, 주식, 메세지, 소지품 순서 -> imageResId

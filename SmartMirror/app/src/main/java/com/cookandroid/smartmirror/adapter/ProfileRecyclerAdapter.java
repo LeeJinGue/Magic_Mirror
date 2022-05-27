@@ -30,6 +30,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     ActivityResultLauncher<Intent> StartForResultAddProfile;
     Context context;
     MirrorDBHelper sqlDB;
+    MyApplication myApp;
     public ProfileRecyclerAdapter(ArrayList<userData> mDataList, Context context,ActivityResultLauncher<Intent> StartForResultEditProfile, ActivityResultLauncher<Intent> StartForResultAddProfile ){
         this.StartForResultAddProfile = StartForResultAddProfile;
         this.StartForResultEditProfile = StartForResultEditProfile;
@@ -37,6 +38,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         this.context = context;
         this.sqlDB = new MirrorDBHelper(context, 1);
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
+        myApp = (MyApplication) context.getApplicationContext();
 
     }
     public void addItem(userData newUser){
@@ -53,7 +55,6 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
 
 
         notifyItemInserted(mDataList.size()-2);
-//        notifyDataSetChanged();
     }
     public void editItemNameAt(userData editUser, int index){
         sqlDB.editUserName(editUser);
@@ -135,6 +136,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                         Intent intent = new Intent(context, MainScreenActivity.class);
                         intent.putExtra("profileData",mDataList.get(holder.getAdapterPosition()));
                         Log.i("ProfileSelectRecyclerAdapter", mDataList.get(holder.getAdapterPosition()).getName()+"가 선택되었습니다..");
+                        myApp.setId(mDataList.get(holder.getAdapterPosition()).getUser_num());
                         holder.context.startActivity(intent);
                     }else if(holder.profileItemImV.getTag() == "Edit"){
                         // 수정모드에서 클릭시 프로필 정보를 갖고 프로필세팅 화면으로 간다.

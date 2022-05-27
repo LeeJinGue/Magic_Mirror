@@ -146,6 +146,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(false);
 
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
+        sqlDB.getDevData();
 
         editSerial = findViewById(R.id.editSerial);
         editIP = findViewById(R.id.editWifi);
