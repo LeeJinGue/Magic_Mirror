@@ -153,6 +153,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 "user_no INTEGER(11), " +
                 "start_time DATETIME DEFAULT NULL, " +
                 "end_time DATETIME DEFAULT NULL, " +
+                "date DATETIME DEFAULT NULL, " +
                 "text VARCHAR(255) DEFAULT NULL" +
 //                ", FOREIGN KEY(user_no)" +
 //                "REFERENCES user(user_no)" +
@@ -396,24 +397,48 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     // ----------------------------------------------------------------
 
 
-//    // --------------------------Schedule 관련---------------------------
-//
-//    public void addSchedule(scheduleData newSchedule){
-//        // 메세지아이디,
-//        Log.i("addSchedule", "스케줄아이디 체크: "+newSchedule.get());
-//        db.execSQL("INSERT INTO message VALUES(" +
-//                newMessage.getMessage_id()+
-//                ", " + newMessage.getUser_num() +
-//                ", " + newMessage.getSender_num() +
-//                ", '" + newMessage.getText() +
-//                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDate()+"일 "+
-//                newMessage.getHour()+"시 "+newMessage.getMinute()+ "분"+
-//                "');");
-//        newMessage.setMessage_id(set_message_id);
-//        Log.i("addMessage", "새 메세지 "+newMessage.toString()+" 추가");
-//    }
-//
-//    // ----------------------------------------------------------------
+    // --------------------------Schedule 관련---------------------------
+
+    public void addSchedule(scheduleData newSchedule){
+        // 메세지아이디,
+        Log.i("addSchedule", "스케줄아이디 체크: "+newSchedule.getSchedule_id());
+        db.execSQL("INSERT INTO schedule VALUES(" +
+                newSchedule.getSchedule_id()+
+                ", " + newSchedule.getUser_no() +
+                ", '" + newSchedule.getStartTime() +
+                "', '" + newSchedule.getEndTiem() +
+                "', '" + newSchedule.getTitle() +
+                "', '" + newSchedule.getDate() +
+                "');");
+//        newSchedule.setMessage_id(set_message_id);
+        Log.i("addSchedule", "새 일정 "+newSchedule.toString()+" 추가");
+    }
+    public ArrayList<scheduleData> getScheduleByDate(String selectedDate, userData selectedUser){
+        ArrayList<scheduleData> scheduleDataList = new ArrayList<>();
+        // schedule table COlumn에서 date를 날짜, 시간으로 나눠야 할 것 같다.
+        // schedule_id, user_no, start_time, end_time, text, date?;
+
+        Cursor scheduleCursor = db.rawQuery("SELECT * FROM schedule WHERE date='"+selectedDate+"' AND user_no="+ selectedUser.getUser_num()+";", null);
+        while (scheduleCursor.moveToNext()){
+            int schedule_id = scheduleCursor.getInt(0);
+            int user_no = scheduleCursor.getInt(1);
+            String start_time = scheduleCursor.getString(2);
+            String end_time = scheduleCursor.getString(3);
+
+            String text = scheduleCursor.getString(4);
+            String dateTime = scheduleCursor.getString(5);
+            String[] year = dateTime.split("년 ");
+            String[] month = year[1].split("월 ");
+            String[] date = month[1].split("일 ");
+            String[] hour = date[1].split("시 ");
+            String[] minute = hour[1].split("분");
+            scheduleData newSchedule = new scheduleData(schedule_id, user_no, start_time,end_time, text);
+            Log.i("getScheduleByDate","일정: "+newSchedule.toString());
+            scheduleDataList.add(newSchedule);
+        }
+        return scheduleDataList;
+    }
+    // ----------------------------------------------------------------
 
 }
 

@@ -21,7 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.cookandroid.smartmirror.R;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
+import com.cookandroid.smartmirror.dataClass.userData;
+
+import java.time.LocalDate;
 
 public class ScheduleTypeDialog extends DialogFragment implements View.OnClickListener{
     private Context context;
@@ -31,12 +35,13 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
     private String title;
     private int startHour, startMinute, endHour, endMinute, iconRes, index;
     private scheduleData data;
+    private userData selectedUser;
     WindowManager windowManager;
     // 일정 추가라면 true, 일정 수정이라면 false
     private boolean isAdd;
-
-    public ScheduleTypeDialog() {
-
+    MyApplication myApp;
+    public ScheduleTypeDialog(userData selectedUser) {
+        this.selectedUser = selectedUser;
     }
     public interface EditScheduleDialogListener{
         void onFinishedEditDialog(int index, scheduleData data);
@@ -50,6 +55,7 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
         isAdd = getArguments().getBoolean("isAdd");
         data = getArguments().getParcelable("Data");
 
+//        selectedUser = myApp.getSelectedUser();
 //        iconRes = getArguments().getInt("iconRes");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 //        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
@@ -80,13 +86,17 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("ScheduleTypeDialog", "확인버튼 클릭");
                 EditScheduleDialogListener listener = (EditScheduleDialogListener) getParentFragment();
-
-                scheduleData newData = new scheduleData(titleEditText.getText().toString()
-                        , -1
-                        , Integer.parseInt(startHourEditText.getText().toString())
-                        , Integer.parseInt(startMinuteEditText.getText().toString())
-                        , Integer.parseInt(endHourEditText.getText().toString())
-                        , Integer.parseInt(endMinuteEditText.getText().toString()));
+                // 스케줄아이디, 유저아이디, 시작시간, 종료시간, 제목, 아이콘
+                LocalDate nowDate = LocalDate.now();
+                String date = nowDate.getYear()+"년 " +nowDate.getMonthValue()+"월 "+nowDate.getDayOfMonth()+ "일 ";
+                String startTime = startHourEditText.getText().toString()+"시 "+startMinuteEditText.getText().toString()+"분";
+                String startDateTime = date + startTime;
+                String endTime = endHourEditText.getText().toString()+"시 "+endMinuteEditText.getText().toString()+"분";
+                String endDateTime = date + endTime;
+                scheduleData newData = new scheduleData(
+                        3000, selectedUser.getUser_num()
+                        , startDateTime, endDateTime,
+                        titleEditText.getText().toString());
                 if(isAdd) {
                     // 일정 추가일 때
                     newData.setIconRes(R.drawable.ic_schedule_blue);
@@ -110,8 +120,8 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
         return alertDialogBuilder.create();
     }
 
-    public static ScheduleTypeDialog newInstance(scheduleData data, int index) {
-        ScheduleTypeDialog dialogFrag = new ScheduleTypeDialog();
+    public static ScheduleTypeDialog newInstance(scheduleData data, int index, userData selectedUser) {
+        ScheduleTypeDialog dialogFrag = new ScheduleTypeDialog(selectedUser);
         Bundle args = new Bundle();
         if (data == null) {
             args.putBoolean("isAdd", true);

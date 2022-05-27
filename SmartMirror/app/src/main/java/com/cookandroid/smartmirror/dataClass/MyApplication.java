@@ -26,9 +26,12 @@ public class MyApplication extends Application {
     public void setId(int id){
         msgId = id*1000;
         profileId = id*100;
+        scheduleId = id * 1000;
+        Log.i("MyApplication", "id setting - profileId: "+profileId+", msgId: "+msgId+", scheduleId: "+scheduleId);
     }
     public int msgId = 1;
     public int profileId = 1;
+    public int scheduleId = 1;
 
     public void addProfileName(String name){
         Log.i("MyApplication", name+"이라는 이름의 프로필 추가");
