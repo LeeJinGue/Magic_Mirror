@@ -18,7 +18,7 @@ from db import db_access
 class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, 
 widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_belonging.belonging):
 
-  loc_xy = [[0,0],[504,0],[504,270],[0,270]] # 0좌상, 1우상, 2우하, 3좌하
+  loc_xy = [[0,0],[504,0],[504,270],[0,270]] # 1좌상, 2우상, 3우하, 4좌하
   user_id = 1
   def __init__(self):
     super().__init__()
