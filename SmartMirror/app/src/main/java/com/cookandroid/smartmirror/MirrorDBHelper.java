@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.messageData;
+import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.lang.reflect.Array;
@@ -276,7 +277,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     // ---------------------------------------------------------------
 
     // --------------------------Layout 관련---------------------------
-
+    // 적용버튼 눌렀을 때 작동하는, 세팅을 DB에 저장하는 함수
     public void layoutSet(ArrayList<layoutData> layoutDataList, userData selectedUser){
 
         // layoutsetting 테이블에서 받은 userData에 있는 user_no와 같은 user_no인 Row들 삭제
@@ -356,43 +357,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.delete("message", "message_id=?", new String[]{String.valueOf(delMessage.getMessage_id())});
     }
 
-//    public ArrayList<messageData> getMessageListBySender(userData senderUser){
-//        Log.i("MirrorDBHelper", "보낸사람 기준의 메시지를 가져옵니다. 보낸사람: "+senderUser.getName()+", id: "+senderUser.getUser_num());
-//        ArrayList<messageData> sendedMessageList = new ArrayList<>();
-//        Cursor sendedMsgCursor = db.rawQuery("SELECT * FROM message " +
-//                "WHERE sender_num="+senderUser.getUser_num()+
-//                ";", null);
-//        while (sendedMsgCursor.moveToNext()){
-//            int message_id = sendedMsgCursor.getInt(0);
-//            int receiver_num = sendedMsgCursor.getInt(1);
-//            int sender_num = sendedMsgCursor.getInt(2);
-//            String text = sendedMsgCursor.getString(3);
-//            String dateTime = sendedMsgCursor.getString(4);
-//            messageData newMessage = new messageData(message_id, receiver_num, sender_num, text, 2022, 12, 2, 11, 0);
-//            sendedMessageList.add(newMessage);
-//            Log.i("시간체크",dateTime);
-//        }
-//        return sendedMessageList;
-//    }
-
-//    public ArrayList<messageData> getMeesageListByReceiver(userData receiverUser){
-//        Log.i("MirrorDBHelper", "받는사람 기준의 메시지를 가져옵니다.");
-//        ArrayList<messageData> receivedMessageList = new ArrayList<>();
-//        Cursor receivedMsgCursor = db.rawQuery("SELECT * FROM message " +
-//                "WHERE receiver_num="+receiverUser.getUser_num()+";", null);
-//        while (receivedMsgCursor.moveToNext()){
-//            int message_id = receivedMsgCursor.getInt(0);
-//            int receiver_num = receivedMsgCursor.getInt(1);
-//            int sender_num = receivedMsgCursor.getInt(2);
-//            String text = receivedMsgCursor.getString(3);
-//            String dateTime = receivedMsgCursor.getString(4);
-//
-//            messageData newMessage = new messageData(message_id, sender_num, receiver_num, text, 2022, 5, 2, 10, 0);
-//            receivedMessageList.add(newMessage);
-//            Log.i("시간체크",dateTime);
-//        }
-//        return receivedMessageList;
-//    }
+    // isRecieved==true -> 너가 보내고 내가 받은 메시지 데이터를 받아옴
+    // isRecieved==false -> 내가 보내고 너가 받은 메시지 데이터를 받아옴
     public ArrayList<messageData> getMeesageList(userData me, userData you, boolean isReceived){
         ArrayList<messageData> messageList = new ArrayList<>();
         Cursor msgCursor;
@@ -428,6 +394,26 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     // ----------------------------------------------------------------
+
+
+//    // --------------------------Schedule 관련---------------------------
+//
+//    public void addSchedule(scheduleData newSchedule){
+//        // 메세지아이디,
+//        Log.i("addSchedule", "스케줄아이디 체크: "+newSchedule.get());
+//        db.execSQL("INSERT INTO message VALUES(" +
+//                newMessage.getMessage_id()+
+//                ", " + newMessage.getUser_num() +
+//                ", " + newMessage.getSender_num() +
+//                ", '" + newMessage.getText() +
+//                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDate()+"일 "+
+//                newMessage.getHour()+"시 "+newMessage.getMinute()+ "분"+
+//                "');");
+//        newMessage.setMessage_id(set_message_id);
+//        Log.i("addMessage", "새 메세지 "+newMessage.toString()+" 추가");
+//    }
+//
+//    // ----------------------------------------------------------------
 
 }
 

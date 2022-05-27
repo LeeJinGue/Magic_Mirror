@@ -9,12 +9,15 @@ public class scheduleData implements Parcelable {
 //    private String time;
     private String startTime;
     private String endTime;
+    private String date;
     private int startHour;
     private int startMinute;
     private int endHour;
     private int endMinute;
+    private int schedule_id;
 
     protected scheduleData(Parcel in) {
+        date = in.readString();
         title = in.readString();
         iconRes = in.readInt();
         startTime = in.readString();
@@ -23,6 +26,7 @@ public class scheduleData implements Parcelable {
         startMinute = in.readInt();
         endHour = in.readInt();
         endMinute = in.readInt();
+        schedule_id = in.readInt();
     }
 
     public static final Creator<scheduleData> CREATOR = new Creator<scheduleData>() {
@@ -42,7 +46,9 @@ public class scheduleData implements Parcelable {
     }
 
     //    private String detail;
-    public scheduleData(String title, int iconRes, int startHour, int startMinute, int endHour, int endMinute){
+    public scheduleData(int schedule_id,String date, String title, int iconRes, int startHour, int startMinute, int endHour, int endMinute){
+        this.schedule_id = schedule_id;
+        this.date = date;
         this.title = title;
         this.startHour = startHour;
         this.startMinute = startMinute;
