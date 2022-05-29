@@ -3,20 +3,28 @@ package com.cookandroid.smartmirror.dataClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.cookandroid.smartmirror.Methods;
+
+import java.time.LocalDateTime;
+
 public class scheduleData implements Parcelable {
     private String title;
     private int iconRes;
 //    private String time;
     // time을 "0000년 00월 00일 00시 00분"으로 입력한다고 가정.
-    private String startTime;
-    private String endTime;
-    private String date;
-    private int startHour;
-    private int startMinute;
-    private int endHour;
-    private int endMinute;
+    private String startTime;   // 0000-00-00 00:00:00
+    private String endTime;     // 0000-00-00 00:00:00
+    private String date;        // 0000-00-00
+    private String startHour, startMinute, endHour, endMinute;
+//    private int startMinute;
+//    private int endHour;
+//    private int endMinute;
     private int schedule_id;
-    private int user_no;
+    private int user_num;
+
+    public void setSchedule_id(int schedule_id) {
+        this.schedule_id = schedule_id;
+    }
 
     protected scheduleData(Parcel in) {
         date = in.readString();
@@ -24,10 +32,10 @@ public class scheduleData implements Parcelable {
         iconRes = in.readInt();
         startTime = in.readString();
         endTime = in.readString();
-        startHour = in.readInt();
-        startMinute = in.readInt();
-        endHour = in.readInt();
-        endMinute = in.readInt();
+        startHour = in.readString();
+        startMinute = in.readString();
+        endHour = in.readString();
+        endMinute = in.readString();
         schedule_id = in.readInt();
     }
 
@@ -45,39 +53,23 @@ public class scheduleData implements Parcelable {
 
     public String toString(){
 //        return "제목: "+title+", 시작시간: "+startHour+"시 "+startMinute+"분 - "+endHour+"시 "+endMinute+"분 입니다.";
-        return "아이디: "+schedule_id+", 제목: "+title+", 시작시간: "+startTime+" - "+endTime+" 입니다.";
+        return "아이디: "+schedule_id+", 제목: "+title+", 시작시간: "+startTime+", 종료시간: "+endTime+" 입니다.";
     }
 
-    //    private String detail;
-//    public scheduleData(int schedule_id,String date, String title, int iconRes, int startHour, int startMinute, int endHour, int endMinute){
-//        this.schedule_id = schedule_id;
-//        this.date = date;
-//        this.title = title;
-//        this.startHour = startHour;
-//        this.startMinute = startMinute;
-//        this.endHour = endHour;
-//        this.endMinute = endMinute;
-//
-//        this.iconRes = iconRes;
-////        this.detail = detail;
-//    }
-    public scheduleData(int schedule_id, int user_no, String start_time, String end_time, String title){
+    public scheduleData(int schedule_id, int user_num, String start_time, String end_time, String title){
         this.schedule_id = schedule_id;
-        this.user_no = user_no;
+        this.user_num = user_num;
         this.startTime = start_time;
         this.endTime = end_time;
         this.title = title;
+        this.date = Methods.getDateFromDateString(start_time);
+        this.startHour=Methods.getHourFromDateString(start_time);
+        this.startMinute = Methods.getMinuteFromDateString(start_time);
+        this.endHour=Methods.getHourFromDateString(end_time);
+        this.endMinute = Methods.getMinuteFromDateString(end_time);
 
-        // 0000년 00월 00일->date로
-        String[] dateAndTime = start_time.split("일 ");
-        this.date = dateAndTime[0]+"일";
-        String[] startHourAndMinute = dateAndTime[1].split("시 ");
-        this.startHour = Integer.parseInt(startHourAndMinute[0]);
-        this.startMinute = Integer.parseInt(startHourAndMinute[1].split("분")[0]);
-        String[] endHourAndMinute = (this.endTime.split("일 ")[1]).split("시 "); // 00,00분이 나온다.
-        this.endHour = Integer.parseInt(endHourAndMinute[0]);
-        this.endMinute = Integer.parseInt(endHourAndMinute[1].replace("분", "")) ;
-//        this.iconRes = iconRes;
+        // 0000-00-00 00:00:00에서 가져와야 합니다.
+
     }
     public String getTitle(){
         return title;
@@ -86,16 +78,16 @@ public class scheduleData implements Parcelable {
         return iconRes;
     }
     public String getStartTime(){return startTime;}
-    public int getStartHour(){return startHour;}
-    public int getStartMinute() {return startMinute;}
-    public int getEndHour() { return endHour;}
-    public int getEndMinute() {return endMinute;}
+    public String getStartHour(){return startHour;}
+    public String getStartMinute() {return startMinute;}
+    public String getEndHour() { return endHour;}
+    public String getEndMinute() {return endMinute;}
     public int getSchedule_id() { return schedule_id; }
-    public int getUser_no() { return user_no; }
+    public int getUser_num() { return user_num; }
 
     public String getDate() { return date; }
 
-    public String getEndTiem(){return endTime;}
+    public String getEndTime(){return endTime;}
     public void setIconRes(int iconRes){this.iconRes = iconRes;}
 
     @Override
@@ -110,10 +102,10 @@ public class scheduleData implements Parcelable {
         dest.writeInt(iconRes);
         dest.writeString(startTime);
         dest.writeString(endTime);
-        dest.writeInt(startHour);
-        dest.writeInt(startMinute);
-        dest.writeInt(endHour);
-        dest.writeInt(endMinute);
+        dest.writeString(startHour);
+        dest.writeString(startMinute);
+        dest.writeString(endHour);
+        dest.writeString(endMinute);
     }
 //    public String getDetail(){
 //        return detail;

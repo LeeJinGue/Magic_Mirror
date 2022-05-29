@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.ScheduleRecyclerAdapter;
@@ -40,9 +41,10 @@ public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.Edi
     MirrorDBHelper sqlDB;
     userData selectedUser;
     MyApplication myApp;
-    String selectedTime;
-    public void getScheduleDataList(String date){
-        mList = sqlDB.getScheduleByDate(date, selectedUser);
+    String selectedDate;
+    String nowDate; // 오늘날짜데이터
+    public ArrayList<scheduleData> getScheduleDataList(String date){
+        return sqlDB.getScheduleByDate(date, selectedUser);
 
     }
 
@@ -54,15 +56,20 @@ public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.Edi
         selectedUser = myApp.getSelectedUser();
         sqlDB = new MirrorDBHelper(context, 2);
         mList = new ArrayList<>();
-        getScheduleDataList("2022년 5월 27일");
+        nowDate = Methods.getNowDate();
+        mList = getScheduleDataList(nowDate);
+        selectedDate = Methods.getNowDate(); // 처음엔 현재시간을 갖고온다.
         scheduleAddBtn = rootView.findViewById(R.id.scheduleAddBtn);
         calendarView = rootView.findViewById(R.id.calendar_view);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Log.i("일정관리", year+"년 "+(month+1)+"월 "+dayOfMonth+"일이 선택되었습니다.");
-                selectedTime = year+"년 "+(month+1)+"월 "+dayOfMonth+"일";
-                getScheduleDataList(selectedTime);
+//                Log.i("일정관리", year+"년 "+(month+1)+"월 "+dayOfMonth+"일이 선택되었습니다.");
+                selectedDate =Methods.getDateStringFromInteger(year, month+1, dayOfMonth);
+                Log.i("ScheduleFragment", "getDateStringFromInteger: "+selectedDate);
+
+                mList = getScheduleDataList(selectedDate);
+                mAdapter.reset(mList);
                 // RecyclerView
 //                mAdapter.addItem("테스트", 20, 00, 22,00, R.drawable.ic_schedule_orange);
 //                mAdapter.notifyDataSetChanged();
@@ -75,22 +82,19 @@ public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.Edi
 
         // RecyclerView
         mRecyclerView = rootView.findViewById(R.id.scheduleRecyclerView);
-        mAdapter = new ScheduleRecyclerAdapter(mList, selectedUser, sqlDB);
+        mAdapter = new ScheduleRecyclerAdapter(mList, sqlDB, myApp);
         mAdapter.setFragmentManager(getChildFragmentManager());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), LinearLayoutManager.VERTICAL));
-        scheduleData newData = new scheduleData(++myApp.scheduleId, selectedUser.getUser_num(), "2022년 5월 28일 13시 10분", "2022년 5월 28일 13시 10분", "휴");
-        mAdapter.addItem(newData);
-        scheduleData newData2 = new scheduleData(++myApp.scheduleId, selectedUser.getUser_num(), "2022년 5월 28일 13시 10분", "2022년 5월 28일 13시 10분", "휴");
-        mAdapter.addItem(newData2);
+
 
         // 스케줄추가버튼
         scheduleAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fm = getChildFragmentManager();
-                ScheduleTypeDialog dialog = ScheduleTypeDialog.newInstance(null, -1, selectedUser);
+                ScheduleTypeDialog dialog = ScheduleTypeDialog.newInstance(null, -1,myApp, selectedDate);
                 dialog.show(fm, "일정추가");
             }
         });
@@ -106,6 +110,7 @@ public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.Edi
     @Override
     public void onFinishedAddDialog(scheduleData data) {
         Toast.makeText(getContext(), "일정이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+        data.setSchedule_id(++myApp.scheduleId);
         mAdapter.addItem(data);
     }
 

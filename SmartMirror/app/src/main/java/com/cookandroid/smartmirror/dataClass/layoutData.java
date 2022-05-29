@@ -7,11 +7,11 @@ public class layoutData {
     private String locationName;
     private int imageResId;
     private int layout_id;  // PK
-    private int user_no;    // FK
+    private int user_num;    // FK
     private int loc;    // 0~3
     private int type;   // 0~5
     public String toString(){
-        return "layout_id: "+layout_id+", layoutName: "+layoutName+", locationName: "+locationName+", user_no: "+user_no+", type: "+type+", loc: "+loc;
+        return "layout_id: "+layout_id+", layoutName: "+layoutName+", locationName: "+locationName+", user_num: "+user_num+", type: "+type+", loc: "+loc;
     }
     // type 값에 맞는 인덱스로
     // 날씨, 시계, 스케쥴, 주식, 메세지, 소지품 순서 -> imageResId
@@ -20,9 +20,9 @@ public class layoutData {
     public static String[] LAYOUT_NAME = {"날씨", "시계", "일정", "관심주", "메시지", "소지품세트"};
     // 좌상단, 우상단, 우하단, 좌하단 순서
     private static String[] LAYOUT_LOCATION = {"LEFT_UP", "RIGHT_UP", "RIGHT_DOWN", "LEFT_DOWN"};
-    public layoutData(int layout_id, int user_no, int loc, int type) {
+    public layoutData(int layout_id, int user_num, int loc, int type) {
         this.layout_id = layout_id;
-        this.user_no = user_no;
+        this.user_num = user_num;
         this.loc = loc;
         this.type = type;
         this.layoutName = LAYOUT_NAME[type];
@@ -46,8 +46,8 @@ public class layoutData {
         return locationName;
     }
 
-    public int getUser_no() {
-        return user_no;
+    public int getuser_num() {
+        return user_num;
     }
 
     public int getLoc() {

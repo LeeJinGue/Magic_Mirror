@@ -22,11 +22,11 @@ public class MirrorNetworkHelper {
     public static String INFO = "none";
     public devData getDevData(){
         // 시리얼넘버1, ip주소1
-        devData newDevData = new devData(1, "1", PORTNUMBER, LOCATION, INFO);
+        devData newDevData = new devData("1", "1", PORTNUMBER, LOCATION, INFO);
         return newDevData;
     }
     public userData getUserData(){
-        userData newUser = new userData(0, 1, "테스트", "\\bin");
+        userData newUser = new userData(0, "1", "테스트", "\\bin");
         return newUser;
     }
     public messageData getMessageDate(){

@@ -15,11 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
@@ -27,22 +29,78 @@ import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.time.LocalDate;
 
-public class ScheduleTypeDialog extends DialogFragment implements View.OnClickListener{
+public class ScheduleTypeDialog extends DialogFragment implements DialogInterface.OnClickListener{
     private Context context;
     private TextView AddOrEdit;
     private EditText titleEditText, startHourEditText, startMinuteEditText, endHourEditText, endMinuteEditText;
     private Button neagtiveBtn, positiveBtn;
-    private String title;
+    private String title, selectedDate;
     private int startHour, startMinute, endHour, endMinute, iconRes, index;
     private scheduleData data;
     private userData selectedUser;
     WindowManager windowManager;
+    View view;
     // 일정 추가라면 true, 일정 수정이라면 false
     private boolean isAdd;
     MyApplication myApp;
-    public ScheduleTypeDialog(userData selectedUser) {
-        this.selectedUser = selectedUser;
+    public ScheduleTypeDialog(MyApplication myApp) { this.myApp = myApp;
+    selectedUser = myApp.getSelectedUser();}
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which){
+            case AlertDialog.BUTTON_POSITIVE:
+                Log.i("ScheduleTypeDialog", "확인버튼 클릭");
+                EditScheduleDialogListener listener = (EditScheduleDialogListener) getParentFragment();
+                // 스케줄아이디, 유저아이디, 시작시간, 종료시간, 제목, 아이콘
+//                LocalDate nowDate = LocalDate.now();
+                String date = Methods.getNowDate();
+//                String dateTime = Methods.getNowDateTime();
+                // 시:분:초. 초까지 붙여줘야 한다.
+                String startHourString = Methods.checkHour(startHourEditText.getText().toString());
+                String startMinuteString = Methods.checkMinute(startMinuteEditText.getText().toString());
+                String endHourString = Methods.checkHour(endHourEditText.getText().toString());
+                String endMinuteString = Methods.checkMinute(endMinuteEditText.getText().toString());
+                if(startHourString.equals("") || startHourString.equals("over") || startMinuteString.equals("") || startMinuteString.equals("over")){
+                    Toast.makeText(getActivity(), "시작시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Log.i("ScheduleTypeDialog", "시작시간 오류");
+                    return;
+                }else if(endHourString.equals("") || endHourString.equals("over") || endMinuteString.equals("") || endMinuteString.equals("over")){
+                    Toast.makeText(getActivity(), "종료시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Log.i("ScheduleTypeDialog", "종료시간 오류");
+                    return;
+                }else{
+                    // 시간이 똑바로 되어있다면 저장
+                    String startTime = startHourString+":"+startMinuteString+":00";
+                    String startDateTime = date + " " +startTime;
+                    String endTime = endHourString+":"+endMinuteString+":00";
+                    String endDateTime = date + " " + endTime;
+                    scheduleData newData = new scheduleData(
+                            3000, selectedUser.getUser_num()
+                            , startDateTime, endDateTime,
+                            titleEditText.getText().toString());
+                    if(isAdd) {
+                        // 일정 추가일 때
+                        newData.setIconRes(R.drawable.ic_schedule_blue);
+                        listener.onFinishedAddDialog(newData);
+                        dialog.dismiss();
+                    }else{
+                        // 일정 수정일 때
+                        newData.setIconRes(data.getIconRes());
+                        listener.onFinishedEditDialog(index, newData);
+                        dialog.dismiss();
+                    }
+                }
+                break;
+            case AlertDialog.BUTTON_NEGATIVE:
+                Log.i("ScheduleTypeDialog", "취소버튼 클릭");
+                dialog.dismiss();
+                break;
+            default:
+                break;
+        }
     }
+
     public interface EditScheduleDialogListener{
         void onFinishedEditDialog(int index, scheduleData data);
         void onFinishedAddDialog(scheduleData data);
@@ -54,12 +112,13 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
         String title = getArguments().getString("title");
         isAdd = getArguments().getBoolean("isAdd");
         data = getArguments().getParcelable("Data");
-
+        context = getActivity().getApplicationContext();
+        selectedDate = getArguments().getString("selectedDate");
 //        selectedUser = myApp.getSelectedUser();
 //        iconRes = getArguments().getInt("iconRes");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 //        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View view = getLayoutInflater().inflate(R.layout.dialog_schedule_edit, null);
+        view = getLayoutInflater().inflate(R.layout.dialog_schedule_edit, null);
         titleEditText = view.findViewById(R.id.scheduleDialogTitleTextView);
         startHourEditText = view.findViewById(R.id.scheduleDialogStartHourEditText);
         startMinuteEditText = view.findViewById(R.id.scheduleDialogStartMinuteEditText);
@@ -73,44 +132,66 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
         }else{
             alertDialogBuilder.setTitle("일정수정");
             titleEditText.setText(data.getTitle());
-            startHourEditText.setText(Integer.toString(data.getStartHour()));
-            startMinuteEditText.setText(Integer.toString(data.getStartMinute()));
-            endHourEditText.setText(Integer.toString(data.getEndHour()));
-            endMinuteEditText.setText(Integer.toString(data.getEndMinute()));
+            startHourEditText.setText(data.getStartHour());
+            startMinuteEditText.setText(data.getStartMinute());
+            endHourEditText.setText(data.getEndHour());
+            endMinuteEditText.setText(data.getEndMinute());
+            selectedDate = data.getDate();
             index = getArguments().getInt("index");
         }
         alertDialogBuilder.setView(view);
 
-        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("ScheduleTypeDialog", "확인버튼 클릭");
                 EditScheduleDialogListener listener = (EditScheduleDialogListener) getParentFragment();
                 // 스케줄아이디, 유저아이디, 시작시간, 종료시간, 제목, 아이콘
-                LocalDate nowDate = LocalDate.now();
-                String date = nowDate.getYear()+"년 " +nowDate.getMonthValue()+"월 "+nowDate.getDayOfMonth()+ "일 ";
-                String startTime = startHourEditText.getText().toString()+"시 "+startMinuteEditText.getText().toString()+"분";
-                String startDateTime = date + startTime;
-                String endTime = endHourEditText.getText().toString()+"시 "+endMinuteEditText.getText().toString()+"분";
-                String endDateTime = date + endTime;
-                scheduleData newData = new scheduleData(
-                        3000, selectedUser.getUser_num()
-                        , startDateTime, endDateTime,
-                        titleEditText.getText().toString());
-                if(isAdd) {
-                    // 일정 추가일 때
-                    newData.setIconRes(R.drawable.ic_schedule_blue);
-                    listener.onFinishedAddDialog(newData);
-                    dialog.dismiss();
+//                LocalDate nowDate = LocalDate.now();
+
+                String date = Methods.getNowDate();
+//                String dateTime = Methods.getNowDateTime();
+                // 시:분:초. 초까지 붙여줘야 한다.
+                String startHourString = Methods.checkHour(startHourEditText.getText().toString());
+                String startMinuteString = Methods.checkMinute(startMinuteEditText.getText().toString());
+                String endHourString = Methods.checkHour(endHourEditText.getText().toString());
+                String endMinuteString = Methods.checkMinute(endMinuteEditText.getText().toString());
+                Log.i("ScheduleTypeDialog", "중간체크\n"+"startHourString: "+startHourString+", startMinuteString: "+startMinuteString+", endHourString: "+endHourString+", endMinuteString: "+endMinuteString);
+                if(startHourString.equals("") || startHourString.equals("over") || startMinuteString.equals("") || startMinuteString.equals("over")){
+                    Toast.makeText(getActivity(), "시작시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Log.i("ScheduleTypeDialog", "시작시간 오류");
+                    return;
+                }else if(endHourString.equals("") || endHourString.equals("over") || endMinuteString.equals("") || endMinuteString.equals("over")){
+                    Toast.makeText(getActivity(), "종료시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Log.i("ScheduleTypeDialog", "종료시간 오류");
+                    return;
                 }else{
-                    // 일정 수정일 때
-                    newData.setIconRes(data.getIconRes());
-                    listener.onFinishedEditDialog(index, newData);
-                    dialog.dismiss();
+                    // 시간이 똑바로 되어있다면 저장
+                    String startTime = startHourString+":"+startMinuteString+":00";
+                    String endTime = endHourString+":"+endMinuteString+":00";
+                    String startDateTime = selectedDate + " " +startTime;
+                    String endDateTime = selectedDate + " " + endTime;
+                    scheduleData newData = new scheduleData(
+                            3000, selectedUser.getUser_num()
+                            , startDateTime, endDateTime,
+                            titleEditText.getText().toString());
+                    if(isAdd) {
+                        // 일정 추가일 때
+                        newData.setIconRes(R.drawable.ic_schedule_blue);
+                        listener.onFinishedAddDialog(newData);
+                        dialog.dismiss();
+                    }else{
+                        // 일정 수정일 때
+                        newData.setIconRes(data.getIconRes());
+                        listener.onFinishedEditDialog(index, newData);
+                        dialog.dismiss();
+                    }
                 }
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i("ScheduleTypeDialog", "취소버튼 클릭");
@@ -120,11 +201,13 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
         return alertDialogBuilder.create();
     }
 
-    public static ScheduleTypeDialog newInstance(scheduleData data, int index, userData selectedUser) {
-        ScheduleTypeDialog dialogFrag = new ScheduleTypeDialog(selectedUser);
+    public static ScheduleTypeDialog newInstance(scheduleData data, int index, MyApplication myApp, String selectedDate) {
+        ScheduleTypeDialog dialogFrag = new ScheduleTypeDialog(myApp);
         Bundle args = new Bundle();
         if (data == null) {
+            Log.i("ScheduleTypeDialog", "선택된 날짜: "+selectedDate);
             args.putBoolean("isAdd", true);
+            args.putString("selectedDate", selectedDate);
         } else {
             Log.i("ScheduleTypeDialog", "전달받은 data: "+data.toString());
             args.putInt("index", index);
@@ -137,11 +220,7 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
     }
     ScheduleTypeDialog.ScheduleTypeDialogListener dlgListener;
 
-    // 일정 추가/편집 다이얼로그 리스너
-    public void setDlgListener(ScheduleTypeDialog.ScheduleTypeDialogListener listener){
-        this.dlgListener = listener;
 
-    }
 
     @Nullable
     @Override
@@ -150,10 +229,7 @@ public class ScheduleTypeDialog extends DialogFragment implements View.OnClickLi
     }
 
 
-    @Override
-    public void onClick(View v) {
 
-    }
 
     public interface ScheduleTypeDialogListener{
         void onPositiveClicked(String title, int startHour, int startMinute, int endHour, int endMinute);

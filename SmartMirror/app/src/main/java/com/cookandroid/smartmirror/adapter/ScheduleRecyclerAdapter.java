@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.ScheduleTypeDialog;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
@@ -29,25 +30,32 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     View.OnClickListener onClickListener;
     userData selectedUser;
     MirrorDBHelper sqlDB;
-    public ScheduleRecyclerAdapter(ArrayList<scheduleData> mList, userData selectedUser, MirrorDBHelper sqlDB){
+    MyApplication myApp;
+    static int[] iconResArray = {R.drawable.ic_schedule_black, R.drawable.ic_schedule_blue, R.drawable.ic_schedule_green, R.drawable.ic_schedule_orange, R.drawable.ic_schedule_purple};
+    public ScheduleRecyclerAdapter(ArrayList<scheduleData> mList, MirrorDBHelper sqlDB, MyApplication myApp){
         mData = mList;
-        this.selectedUser = selectedUser;
+        this.selectedUser = myApp.getSelectedUser();
         this.sqlDB = sqlDB;
+        this.myApp = myApp;
     }
     public void addItem(scheduleData sData){
         sqlDB.addSchedule(sData);
         mData.add(sData);
         notifyItemInserted(mData.size()-1);
-
     }
     public void editItem(int index, scheduleData data){
+        sqlDB.editSchedule(data);
         mData.set(index, data);
         notifyItemChanged(index);
     }
     public void removeAt(int index){
+        sqlDB.delSchedule(mData.get(index));
         mData.remove(index);
         notifyItemRemoved(index);
-//        notifyItemRangeChanged(index, mData.size());
+    }
+    public void reset(ArrayList<scheduleData> mList){
+        this.mData = mList;
+        notifyDataSetChanged();
     }
     public void setFragmentManager(FragmentManager fm){
         this.fm = fm;
@@ -73,7 +81,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         scheduleData item = mData.get(position);
         holder.scheduleTitle.setText(item.getTitle());
         holder.scheduleTime.setText(item.getStartHour()+"시 "+item.getStartMinute()+"분" + " - "+item.getEndHour()+"시 "+item.getEndMinute()+"분");
-        holder.scheduleIcon.setImageResource(item.getIconRes());
+        holder.scheduleIcon.setImageResource(iconResArray[holder.getAdapterPosition() % iconResArray.length]);
         holder.data = mData.get(position);
         holder.index = holder.getAdapterPosition();
         holder.selectedUser = selectedUser;
@@ -131,7 +139,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
                 @Override
                 public void onClick(View v) {
                     Log.i("뷰홀더","선택된 제목: "+scheduleTitle.getText().toString()+", 시간: "+scheduleTime.getText().toString());
-                    ScheduleTypeDialog dialog = ScheduleTypeDialog.newInstance(data, index, selectedUser);
+                    ScheduleTypeDialog dialog = ScheduleTypeDialog.newInstance(data, index,myApp, "");
                     dialog.show(fm, "일정수정");
 //                    ScheduleTypeDialog dialog = new ScheduleTypeDialog(context, data);
 //                    dialog.show("fragment_edit_name");

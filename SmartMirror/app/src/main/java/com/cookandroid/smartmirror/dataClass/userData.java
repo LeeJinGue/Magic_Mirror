@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 public class userData implements Parcelable {
     private int user_num;
-    private int serial_no;
+    private String serial_no;
     private String name;
     private String user_image_pass;
-    public userData(int user_num, int serial_no, String name, String user_image_pass){
+    public userData(int user_num, String serial_no, String name, String user_image_pass){
         this.user_num = user_num;
         this.serial_no = serial_no;
         this.name = name;
@@ -17,7 +17,7 @@ public class userData implements Parcelable {
 
     protected userData(Parcel in) {
         user_num = in.readInt();
-        serial_no = in.readInt();
+        serial_no = in.readString();
         name = in.readString();
         user_image_pass = in.readString();
     }
@@ -43,7 +43,7 @@ public class userData implements Parcelable {
     public int getUser_num() {
         return user_num;
     }
-    public int getSerial_no() {
+    public String getSerial_no() {
         return serial_no;
     }
     public String getUser_image_pass() {
@@ -51,7 +51,7 @@ public class userData implements Parcelable {
     }
     public void setName(String name){this.name = name;}
     public void setUser_num(int user_num){this.user_num = user_num;}
-    public void setSerial_no(int serial_no){this.serial_no = serial_no;}
+    public void setSerial_no(String serial_no){this.serial_no = serial_no;}
     public void setUser_image_pass(String image_pass){this.user_image_pass = image_pass;}
 
     @Override
@@ -62,7 +62,7 @@ public class userData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(user_num);
-        dest.writeInt(serial_no);
+        dest.writeString(serial_no);
         dest.writeString(name);
         dest.writeString(user_image_pass);
     }

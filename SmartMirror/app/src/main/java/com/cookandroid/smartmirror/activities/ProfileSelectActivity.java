@@ -100,7 +100,7 @@ public class ProfileSelectActivity extends AppCompatActivity {
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
         ArrayList<userData> userDataList = sqlDB.getAllUserList();
         // 초기값
-        userData last = new userData(2, -1, "추가하기", "없음");
+        userData last = new userData(2, "", "추가하기", "없음");
         userDataList.add(last);
         return userDataList;
     }

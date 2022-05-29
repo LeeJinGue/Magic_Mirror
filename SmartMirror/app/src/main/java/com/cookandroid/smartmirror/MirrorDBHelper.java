@@ -16,8 +16,10 @@ import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MirrorDBHelper extends SQLiteOpenHelper {
     private int dbVersion;
@@ -26,12 +28,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     // 더미데이터 - 레이아웃 ID
     private int set_layout_id = 1;
-    public void setLayout_id(int user_no){
-        set_layout_id = user_no * 100;
+    public void setLayout_id(int user_num){
+        set_layout_id = user_num * 100;
         Log.i("MirrorDBHelper", "레이아웃아이디 세팅: "+set_layout_id);
     }
     private int set_message_id = 1;
-    public void setMessage_id(int user_no){set_message_id = user_no*1000;
+    public void setMessage_id(int user_num){set_message_id = user_num*1000;
         Log.i("MirrorDBHelper", "메세지 세팅: "+set_message_id);
     }
     public MirrorDBHelper(@Nullable Context context, int version) {
@@ -50,7 +52,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createStockTb(db);
         createBelongingsTb(db);
 
-        // userData를 미리 넣어둡니다.
+        // 테스트를 위해 userData를 미리 넣어둡니다.
         addUser(networkHelper.getUserData());
         addMessage(networkHelper.getMessageDate());
         messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", 2022, 5, 20, 11, 30, true);
@@ -58,7 +60,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // 상대메시지 내매시지 잘나오나 확인
         addMessage(receive);
         addMessage(send);
-
+        // 스케줄 데이터를 넣어봅니다.
+        scheduleData newData = new scheduleData(11, 3, "2022-05-28 13:10:00", "2022-05-28 14:10:00", "휴");
+        addSchedule(newData);
+        scheduleData newData2 = new scheduleData(21, 3, "2022-05-27 13:10:00", "2022-05-27 14:10:00", "휴");
+        addSchedule(newData2);
         Log.i("DataBase", "DB초기화");
     }
     @Override
@@ -80,7 +86,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // device 테이블 생성
         db.execSQL("DROP TABLE IF EXISTS device");
         db.execSQL("CREATE TABLE IF NOT EXISTS device " +
-                "(serial_no INTEGER(11) PRIMARY KEY, " +
+                "(serial_no VARCHAR(50) PRIMARY KEY, " +
                 "ip VARCHAR(20) DEFAULT NULL, " +
                 "port INTEGER(11) DEFAULT NULL, " +
                 "location VARCHAR(255) DEFAULT NULL, " +
@@ -108,11 +114,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS layoutsetting");
         db.execSQL("CREATE TABLE IF NOT EXISTS layoutsetting " +
                 "(layout_id INTEGER(11) PRIMARY KEY, " +
-                "user_no INTEGER(11) NOT NULL, " +
+                "user_num INTEGER(11) NOT NULL, " +
                 "type INTEGER(11) NOT NULL, " +
                 "loc INTEGER(11) NOT NULL" +
-//                ", FOREIGN KEY(user_no)" +
-//                "REFERENCES user(user_no)" +
+//                ", FOREIGN KEY(user_num)" +
+//                "REFERENCES user(user_num)" +
                 ");");
         Log.i("Create Table", "layout setting table 생성 완료");
     }
@@ -122,10 +128,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS belongings " +
                 "(belonging_id INT(11) PRIMARY KEY, " +
                 "set_name VARCHAR(255) NOT NULL, " +
-                "user_no INTEGER(11), " +
-                "stuff_list TEXT(255)" +
-//                ", FOREIGN KEY(user_no)" +
-//                "REFERENCES user(user_no)" +
+                "activation VARCHAR(10), " +
+                "set_info VARCHAR(255), " +
+                "user_num INTEGER(11), " +
+                "stuff_list TEXT" +
+//                ", FOREIGN KEY(user_num)" +
+//                "REFERENCES user(user_num)" +
                 ");");
         Log.i("Create Table", "belongings table 생성 완료");
     }
@@ -134,14 +142,14 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS message");
         db.execSQL("CREATE TABLE IF NOT EXISTS message " +
                 "(message_id INTEGER(11) PRIMARY KEY, " +
-                "receiver_num INTEGER(11), " +
+                "user_num INTEGER(11), " +
                 "sender_num INTEGER(11), " +
                 "text VARCHAR(100) DEFAULT NULL, " +
                 "date DATETIME DEFAULT (datetime('now', 'localtime'))"+
 //                ", FOREIGN KEY(receiver_num)" +
-//                "REFERENCES user(user_no)," +
+//                "REFERENCES user(user_num)," +
 //                "FOREIGN KEY(sender_num)" +
-//                "REFERENCES user(user_no)" +
+//                "REFERENCES user(user_num)" +
                 ");");
         Log.i("Create Table", "message table 생성 완료");
     }
@@ -150,13 +158,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS schedule");
         db.execSQL("CREATE TABLE IF NOT EXISTS schedule " +
                 "(schedule_id INTEGER(11) PRIMARY KEY, " +
-                "user_no INTEGER(11), " +
+                "user_num INTEGER(11), " +
                 "start_time DATETIME DEFAULT NULL, " +
                 "end_time DATETIME DEFAULT NULL, " +
-                "date DATETIME DEFAULT NULL, " +
+//                "date DATETIME DEFAULT NULL, " +
                 "text VARCHAR(255) DEFAULT NULL" +
-//                ", FOREIGN KEY(user_no)" +
-//                "REFERENCES user(user_no)" +
+//                ", FOREIGN KEY(user_num)" +
+//                "REFERENCES user(user_num)" +
                 ");");
         Log.i("Create Table", "schedule table 생성 완료");
     }
@@ -165,11 +173,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS stock");
         db.execSQL("CREATE TABLE IF NOT EXISTS stock " +
                 "(stock_id INTEGER(11) PRIMARY KEY, " +
-                "user_no INTEGER(11), " +
+                "user_num INTEGER(11), " +
                 "stock_name VARCHAR(255) NOT NULL, " +
-                "stock_code VARCHAR(50)" +
-//                ", FOREIGN KEY(user_no)" +
-//                "REFERENCES user(user_no)" +
+                "stock_code VARCHAR(50) NOT NULL" +
+//                ", FOREIGN KEY(user_num)" +
+//                "REFERENCES user(user_num)" +
                 ");");
         Log.i("Create Table", "stock table 생성 완료");
     }
@@ -181,7 +189,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         if(mCursor.moveToFirst()){
             do {
                 int id = mCursor.getInt(0);
-                int serial_no = mCursor.getInt(1);
+                String serial_no = mCursor.getString(1);
                 String name = mCursor.getString(2);
                 String usr_img_path = mCursor.getString(3);
 //                Log.i("getUserData", "id: "+id+", serial_no: "+serial_no+", name: "+name+", user_image_path: "+usr_img_path+" 유저데이터를 가져옵니다.");
@@ -281,13 +289,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     // 적용버튼 눌렀을 때 작동하는, 세팅을 DB에 저장하는 함수
     public void layoutSet(ArrayList<layoutData> layoutDataList, userData selectedUser){
 
-        // layoutsetting 테이블에서 받은 userData에 있는 user_no와 같은 user_no인 Row들 삭제
-        db.delete("layoutsetting", "user_no=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        // layoutsetting 테이블에서 받은 userData에 있는 user_num와 같은 user_num인 Row들 삭제
+        db.delete("layoutsetting", "user_num=?", new String[]{String.valueOf(selectedUser.getUser_num())});
         // 새 layoutData들 모아서 추가
         for(layoutData layoutData:layoutDataList){
             ContentValues values = new ContentValues();
             values.put("layout_id", ++set_layout_id);
-            values.put("user_no", selectedUser.getUser_num());
+            values.put("user_num", selectedUser.getUser_num());
             values.put("type", layoutData.getType());
             values.put("loc", layoutData.getLoc());
             long result =db.insert("layoutsetting", null, values);
@@ -308,13 +316,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     public ArrayList<layoutData> getLayoutDataListByUser(userData selectedUser){
         ArrayList<layoutData> layoutDataArrayList = new ArrayList<>();
-        Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting WHERE user_no="+selectedUser.getUser_num()+";", null);
+        Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting WHERE user_num="+selectedUser.getUser_num()+";", null);
         while(layoutCursor.moveToNext()){
             int layout_id = layoutCursor.getInt(0);
-            int user_no = layoutCursor.getInt(1);
+            int user_num = layoutCursor.getInt(1);
             int type = layoutCursor.getInt(2);
             int loc = layoutCursor.getInt(3);
-            layoutData newLayoutData = new layoutData(layout_id, user_no, loc, type);
+            layoutData newLayoutData = new layoutData(layout_id, user_num, loc, type);
             layoutDataArrayList.add(newLayoutData);
             Log.i("getLayoutDataListByUser", newLayoutData.toString() + " 레이아웃 데이터 갖고옴");
         }
@@ -325,10 +333,10 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting;", null);
         while(layoutCursor.moveToNext()){
             int layout_id = layoutCursor.getInt(0);
-            int user_no = layoutCursor.getInt(1);
+            int user_num = layoutCursor.getInt(1);
             int type = layoutCursor.getInt(2);
             int loc = layoutCursor.getInt(3);
-            layoutData newLayoutData = new layoutData(layout_id, user_no, loc, type);
+            layoutData newLayoutData = new layoutData(layout_id, user_num, loc, type);
             layoutDataArrayList.add(newLayoutData);
             Log.i("getAllLayoutDataList", newLayoutData.toString() + ", id: "+newLayoutData.getLayout_id()+ " 레이아웃 데이터 갖고옴");
         }
@@ -404,35 +412,54 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         Log.i("addSchedule", "스케줄아이디 체크: "+newSchedule.getSchedule_id());
         db.execSQL("INSERT INTO schedule VALUES(" +
                 newSchedule.getSchedule_id()+
-                ", " + newSchedule.getUser_no() +
+                ", " + newSchedule.getUser_num() +
                 ", '" + newSchedule.getStartTime() +
-                "', '" + newSchedule.getEndTiem() +
+                "', '" + newSchedule.getEndTime() +
                 "', '" + newSchedule.getTitle() +
-                "', '" + newSchedule.getDate() +
+//                "', '" + newSchedule.getDate() +
                 "');");
 //        newSchedule.setMessage_id(set_message_id);
         Log.i("addSchedule", "새 일정 "+newSchedule.toString()+" 추가");
     }
+    public void editSchedule(scheduleData editSchedule){
+        Log.i("editSchedule", "수정된 일정: "+editSchedule.toString());
+        db.execSQL("UPDATE schedule " +
+                "SET start_time = '"+editSchedule.getStartTime() +
+                "', end_time = '" + editSchedule.getEndTime()+
+                "', text = '" + editSchedule.getTitle() +
+                "' WHERE schedule_id = "+editSchedule.getSchedule_id()+
+                ";");
+    }
+    public void delSchedule(scheduleData delSchedule){
+        Log.i("delSchedule", "삭제할 일정: "+delSchedule.toString());
+        db.delete("schedule", "schedule_id=?", new String[]{String.valueOf(delSchedule.getSchedule_id())});
+    }
     public ArrayList<scheduleData> getScheduleByDate(String selectedDate, userData selectedUser){
         ArrayList<scheduleData> scheduleDataList = new ArrayList<>();
         // schedule table COlumn에서 date를 날짜, 시간으로 나눠야 할 것 같다.
-        // schedule_id, user_no, start_time, end_time, text, date?;
+        // schedule_id, user_num, start_time, end_time, text, date?;
 
-        Cursor scheduleCursor = db.rawQuery("SELECT * FROM schedule WHERE date='"+selectedDate+"' AND user_no="+ selectedUser.getUser_num()+";", null);
+        Cursor scheduleCursor = db.rawQuery("SELECT * " +
+                "FROM schedule " +
+                "WHERE" +
+                " user_num="+ selectedUser.getUser_num() +
+                " AND start_time >= '"+selectedDate+
+                "' AND start_time <= '" + Methods.getNextDate(selectedDate) +
+                "';", null);
         while (scheduleCursor.moveToNext()){
             int schedule_id = scheduleCursor.getInt(0);
-            int user_no = scheduleCursor.getInt(1);
+            int user_num = scheduleCursor.getInt(1);
             String start_time = scheduleCursor.getString(2);
             String end_time = scheduleCursor.getString(3);
 
             String text = scheduleCursor.getString(4);
-            String dateTime = scheduleCursor.getString(5);
-            String[] year = dateTime.split("년 ");
-            String[] month = year[1].split("월 ");
-            String[] date = month[1].split("일 ");
-            String[] hour = date[1].split("시 ");
-            String[] minute = hour[1].split("분");
-            scheduleData newSchedule = new scheduleData(schedule_id, user_no, start_time,end_time, text);
+//            String dateTime = scheduleCursor.getString(5);
+//            String[] year = dateTime.split("년 ");
+//            String[] month = year[1].split("월 ");
+//            String[] date = month[1].split("일 ");
+//            String[] hour = date[1].split("시 ");
+//            String[] minute = hour[1].split("분");
+            scheduleData newSchedule = new scheduleData(schedule_id, user_num, start_time,end_time, text);
             Log.i("getScheduleByDate","일정: "+newSchedule.toString());
             scheduleDataList.add(newSchedule);
         }

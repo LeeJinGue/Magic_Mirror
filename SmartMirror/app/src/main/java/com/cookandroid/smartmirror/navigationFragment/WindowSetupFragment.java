@@ -100,7 +100,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
         WindowAdapter adapter = new WindowAdapter(rootView.getContext(),this);
 
         //icon 출처 : Flatcon
-        // id, user_no, loc, type
+        // id, user_num, loc, type
 
         adapter.addItem(new layoutData(1, selectedUser.getUser_num(), 0, 0));
         adapter.addItem(new layoutData(1, selectedUser.getUser_num(), 0, 1));
