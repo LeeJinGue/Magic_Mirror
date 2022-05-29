@@ -23,6 +23,8 @@ import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecyclerAdapter.ViewHolder> {
     ArrayList<scheduleData> mData = new ArrayList<>();
@@ -32,6 +34,14 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     MirrorDBHelper sqlDB;
     MyApplication myApp;
     static int[] iconResArray = {R.drawable.ic_schedule_black, R.drawable.ic_schedule_blue, R.drawable.ic_schedule_green, R.drawable.ic_schedule_orange, R.drawable.ic_schedule_purple};
+    public void sortItems(){
+        Collections.sort(mData, new Comparator<scheduleData>() {
+            @Override
+            public int compare(scheduleData s1, scheduleData s2) {
+                return s1.getStartTime().compareTo(s2.getStartTime());
+            }
+        });
+    }
     public ScheduleRecyclerAdapter(ArrayList<scheduleData> mList, MirrorDBHelper sqlDB, MyApplication myApp){
         mData = mList;
         this.selectedUser = myApp.getSelectedUser();
@@ -41,20 +51,28 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     public void addItem(scheduleData sData){
         sqlDB.addSchedule(sData);
         mData.add(sData);
-        notifyItemInserted(mData.size()-1);
+        sortItems();
+        notifyDataSetChanged();
+//        notifyItemInserted(mData.size()-1);
     }
     public void editItem(int index, scheduleData data){
         sqlDB.editSchedule(data);
         mData.set(index, data);
-        notifyItemChanged(index);
+        sortItems();
+        notifyDataSetChanged();
+        //        notifyItemChanged(index);
     }
     public void removeAt(int index){
         sqlDB.delSchedule(mData.get(index));
         mData.remove(index);
-        notifyItemRemoved(index);
+//        notifyItemRemoved(index);
+        sortItems();
+        notifyDataSetChanged();
+
     }
     public void reset(ArrayList<scheduleData> mList){
         this.mData = mList;
+        sortItems();
         notifyDataSetChanged();
     }
     public void setFragmentManager(FragmentManager fm){
