@@ -19,11 +19,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.BelongingSetAddActivity;
 import com.cookandroid.smartmirror.adapter.BelongingSetRecyclerAdapter;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.util.ArrayList;
 
@@ -31,9 +36,13 @@ import java.util.ArrayList;
 public class CheckBelongingsFragment extends Fragment {
     RecyclerView belongingSetRecyclerView;
     Context context;
-    Button belongingAddBtn;
+//    Button belongingAddBtn;
+    ImageView belongingSetAddBtn;
     ArrayList<belongingSetData> mList;
     BelongingSetRecyclerAdapter mAdapter;
+    MyApplication myApp;
+    userData selectedUser;
+    MirrorDBHelper sqlDB;
     belongingSetData addedBelongingSet, editedBelongingSet;
     ActivityResultLauncher<Intent> mStartForResultAddSet = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -74,16 +83,25 @@ public class CheckBelongingsFragment extends Fragment {
                     }
                 }
             });
+    public ArrayList<belongingSetData> getBelongingSetListWithUser(userData selectedUser){
+        ArrayList<belongingSetData> belongingSetData = sqlDB.getBelongingSetDataByUser(selectedUser);
+        return belongingSetData;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i("CheckBelongingsFragment", "뷰생성");
         // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_check_belongings, container, false);
         context = rootView.getContext();
+        myApp = (MyApplication) getActivity().getApplicationContext();
+        selectedUser = myApp.getSelectedUser();
+        sqlDB = new MirrorDBHelper(context, 1);
+        mList = getBelongingSetListWithUser(selectedUser);
         belongingSetRecyclerView = rootView.findViewById(R.id.belongingSetRecyclerView);
-        belongingAddBtn = rootView.findViewById(R.id.belongingAddBtn);
-        belongingAddBtn.setOnClickListener(new View.OnClickListener() {
+        belongingSetAddBtn = rootView.findViewById(R.id.belongingSetAddBtn);
+        belongingSetAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 소지품 프리셋 추가 액티비티로 전환
@@ -94,29 +112,28 @@ public class CheckBelongingsFragment extends Fragment {
             }
         });
 
-        mList = new ArrayList<>();
-        mAdapter = new BelongingSetRecyclerAdapter(mList);
+        mAdapter = new BelongingSetRecyclerAdapter(mList, sqlDB);
         mAdapter.setFragmentContext(rootView.getContext());
         mAdapter.setmStartForResult(mStartForResultEditSet);
         belongingSetRecyclerView.setAdapter(mAdapter);
         belongingSetRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
         belongingSetRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), LinearLayoutManager.VERTICAL));
-        ArrayList<String> belongItemList = new ArrayList<>();
-        belongItemList.add("지갑");
-        belongItemList.add("핸드폰");
-        belongItemList.add("핸드크림");
-        belongItemList.add("립밤");
-        belongItemList.add("USB");
-        mAdapter.addItem(new belongingSetData("월요일", "수업 때 챙길 물품", (ArrayList<String>) belongItemList.clone()));
-        belongItemList.remove(4);
-        belongItemList.add("노트북");
-        mAdapter.addItem(new belongingSetData("화요일", "Java", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.addItem(new belongingSetData("수요일", "C++", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.addItem(new belongingSetData("목요일", "공강", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.addItem(new belongingSetData("금요일", "블록체인", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.addItem(new belongingSetData("토요일", "휴식", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.addItem(new belongingSetData("일요일", "휴식", (ArrayList<String>) belongItemList.clone()));
-        mAdapter.notifyDataSetChanged();
+//        ArrayList<String> belongItemList = new ArrayList<>();
+//        belongItemList.add("지갑");
+//        belongItemList.add("핸드폰");
+//        belongItemList.add("핸드크림");
+//        belongItemList.add("립밤");
+//        belongItemList.add("USB");
+//        mAdapter.addItem(new belongingSetData(1, selectedUser.getUser_num(),"월요일","0", "수업 때 챙길 물품", Methods.getStringFromStuffArrayList(belongItemList)));
+//        belongItemList.remove(4);
+//        belongItemList.add("노트북");
+//        mAdapter.addItem(new belongingSetData(2, selectedUser.getUser_num(),"화요일","0", "Java", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.addItem(new belongingSetData(3, selectedUser.getUser_num(),"수요일","0", "C++", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.addItem(new belongingSetData(4, selectedUser.getUser_num(),"목요일","0", "공강", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.addItem(new belongingSetData(5, selectedUser.getUser_num(),"금요일","0", "블록체인", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.addItem(new belongingSetData(6, selectedUser.getUser_num(),"토요일","0", "휴식", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.addItem(new belongingSetData(7, selectedUser.getUser_num(),"일요일","0", "교회", Methods.getStringFromStuffArrayList(belongItemList)));
+//        mAdapter.notifyDataSetChanged();
         return rootView;
     }
 }

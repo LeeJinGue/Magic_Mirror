@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.BelongingItemRecyclerAdapter;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
 
 import java.util.ArrayList;
@@ -49,22 +50,17 @@ public class BelongingSetAddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     Context context;
-    EditText belongingNameEditText, belongingDetailEditText;
+    EditText belongingNameEditText, belongingInfoEditText;
     Button belongingSetAddBtn;
     ImageView belongingItemAddBtn;
     RecyclerView belongingItemRecyclerView;
     BelongingItemRecyclerAdapter belongingItemRecyclerAdapter;
-    boolean isChecked;
+    boolean isActiavted;
     // 수정할 / 추가할 소지품 세트의 인덱스
     int index;
+    MyApplication myApp;
     ArrayList<String> belongingItemList;
-//    belongingSetData addedBelongingSet;
-    public void getSetItemData(){
-        belongingItemList.add("카메라");
-        belongingItemList.add("핸드폰");
-        belongingItemList.add("지갑");
-        belongingItemList.add("소지품명1");
-    }
+
     // 소지품 추가버튼 클릭시 생성되는 Dialog에 소지품 이름을 입력하는 EditText
     private EditText nameEditText;
 
@@ -84,10 +80,13 @@ public class BelongingSetAddActivity extends AppCompatActivity {
         ab.setDisplayShowTitleEnabled(false);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        // 선택된 유저 등 전역변수를 관리하는 객체
+        myApp = (MyApplication)getApplicationContext();
+
         // 소지품 세트의 이름을 입력하는 EditText
         belongingNameEditText = findViewById(R.id.belongingSetNameEditText);
         // 소지품 세트의 상세설명을 입력하는 EditText
-        belongingDetailEditText = findViewById(R.id.belongingSetDetailEditText);
+        belongingInfoEditText = findViewById(R.id.belongingSetInfoEditText);
         // 소지품 세트를 추가하는(현재까지 입력한 소지품들을 저장하는) 버튼
         belongingSetAddBtn = findViewById(R.id.belongingSetAddBtn);
         // 현재 소지품 세트의 소지품 아이템 리스트를 보여주는 Recycler View
@@ -102,31 +101,29 @@ public class BelongingSetAddActivity extends AppCompatActivity {
             belongingSetData forEditData = intent.getParcelableExtra("belongingSet");
 
             Log.i("BelongingSetAddActivity", "수정모드입니다. 수정할 소지품세트 정보:\n"+forEditData.toString());
-            belongingItemList = new ArrayList<>();
-            belongingItemList = forEditData.getBelongingList();
-            belongingNameEditText.setText(forEditData.getName());
-            belongingDetailEditText.setText(forEditData.getDetail());
-            isChecked = forEditData.getSelected();
+            belongingItemList = Methods.getStuffArrayListFromString(forEditData.getStuff_list_str());
+            belongingNameEditText.setText(forEditData.getSet_name());
+            belongingInfoEditText.setText(forEditData.getSet_info());
+            isActiavted = forEditData.isActiavted();
         }else{
             // 추가 모드일 때. default값
             belongingItemList = new ArrayList<>();
             index = -1;
-            getSetItemData();
-            isChecked = false;
+//            getSetItemData();
+            isActiavted = false;
         }
         belongingItemRecyclerAdapter = new BelongingItemRecyclerAdapter(belongingItemList);
         belongingItemRecyclerView.setAdapter(belongingItemRecyclerAdapter);
         belongingItemRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         belongingItemRecyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
-        belongingItemRecyclerAdapter.notifyDataSetChanged();
         belongingItemAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                 alertDialog.create();
                 nameEditText = new EditText(alertDialog.getContext());
-                int dp10 = ConvertDPtoPX(alertDialog.getContext(), 10);
-                nameEditText.setPadding(dp10, 0, dp10, 0);
+                int paddingDp = ConvertDPtoPX(alertDialog.getContext(), 10);
+                nameEditText.setPadding(paddingDp, 0, paddingDp, 0);
                 alertDialog
                         .setTitle("소지품 명을 입력해주세요.")
                         .setPositiveButton("추가", new DialogInterface.OnClickListener() {
@@ -154,11 +151,13 @@ public class BelongingSetAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String setName = belongingNameEditText.getText().toString();
-                String setDetail = belongingDetailEditText.getText().toString();
-                ArrayList<String> setItemList = new ArrayList<>();
-                setItemList = (ArrayList<String>) belongingItemRecyclerAdapter.getBelongingItemList().clone();
-                belongingSetData newBelongingSet = new belongingSetData(setName, setDetail, setItemList);
-                newBelongingSet.setSelected(isChecked);
+                String setInfo = belongingInfoEditText.getText().toString();
+                ArrayList<String> stuffList_arr = new ArrayList<>();
+                stuffList_arr = (ArrayList<String>) belongingItemRecyclerAdapter.getBelongingItemList().clone();
+                String stuff_list_str = Methods.getStringFromStuffArrayList(stuffList_arr);
+                belongingSetData newBelongingSet = new belongingSetData(++myApp.belongingId, myApp.getSelectedUser().getUser_num(), setName,"0", setInfo, stuff_list_str);
+                newBelongingSet.setActiavted(isActiavted);
+
                 Log.i("belongingSetAddActivity", newBelongingSet.toString()+"\n을 추가합니다.");
                 Intent intent = new Intent();
                 intent.putExtra("belongingSet", newBelongingSet);

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.cookandroid.smartmirror.dataClass.belongingSetData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.messageData;
@@ -36,6 +37,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     public void setMessage_id(int user_num){set_message_id = user_num*1000;
         Log.i("MirrorDBHelper", "메세지 세팅: "+set_message_id);
     }
+    private int set_belongingSet_id = 1;
+    public void setBelongingSet_id(int user_num){set_belongingSet_id = user_num*1000;
+        Log.i("MirrorDBHelper", "소지품세트 세팅: "+set_belongingSet_id);
+    }
+
     public MirrorDBHelper(@Nullable Context context, int version) {
         super(context, "groupDB", null, 1);
         dbVersion = version;
@@ -65,6 +71,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         addSchedule(newData);
         scheduleData newData2 = new scheduleData(21, 3, "2022-05-27 13:10:00", "2022-05-27 14:10:00", "휴");
         addSchedule(newData2);
+        // 소지품리스트 데이터를 넣어봅니다.
+        addBelongingSet(new belongingSetData(2, 3,"화요일","0", "Test Java", "신분증,물통,커피"));
         Log.i("DataBase", "DB초기화");
     }
     @Override
@@ -127,10 +135,10 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS belongings");
         db.execSQL("CREATE TABLE IF NOT EXISTS belongings " +
                 "(belonging_id INT(11) PRIMARY KEY, " +
+                "user_num INTEGER(11), " +
                 "set_name VARCHAR(255) NOT NULL, " +
                 "activation VARCHAR(10), " +
                 "set_info VARCHAR(255), " +
-                "user_num INTEGER(11), " +
                 "stuff_list TEXT" +
 //                ", FOREIGN KEY(user_num)" +
 //                "REFERENCES user(user_num)" +
@@ -465,6 +473,58 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         }
         return scheduleDataList;
     }
+    // ----------------------------------------------------------------
+
+    // ----------------------------Belonging관련-----------------------------
+
+    public ArrayList<belongingSetData> getBelongingSetDataByUser(userData selectedUser){
+        ArrayList<belongingSetData> belongingSetDataList = new ArrayList<>();
+        // activation == 0 비활성화, 1 활성화
+        // belonging_id, user_num, set_name, activation, set_info, stuff_list
+
+        Cursor belongingCursor = db.rawQuery("SELECT * " +
+                "FROM belongings " +
+                "WHERE" +
+                " user_num="+ selectedUser.getUser_num() +
+                ";", null);
+        while (belongingCursor.moveToNext()){
+            int belonging_id = belongingCursor.getInt(0);
+            int user_num=belongingCursor.getInt(1);
+            String set_name=belongingCursor.getString(2);
+            String activation=belongingCursor.getString(3);
+            String set_info=belongingCursor.getString(4);
+            String stuff_list=belongingCursor.getString(5);
+            belongingSetData newBelongingSet = new belongingSetData(belonging_id, user_num, set_name, activation, set_info, stuff_list);
+            Log.i("getBelongingSetDataByUser","일정: "+newBelongingSet.toString());
+            belongingSetDataList.add(newBelongingSet);
+        }
+        return belongingSetDataList;
+    }
+
+    public void addBelongingSet(belongingSetData newBelongingSet){
+        Log.i("addBelongingSetWithUser", "DB에 추가할 belongingSet 이름: "+newBelongingSet.getSet_name()+", 유저ID: "+newBelongingSet.getUser_num());
+        ContentValues values = new ContentValues();
+        values.put("belonging_id", newBelongingSet.getBelonging_id());
+        values.put("set_name", newBelongingSet.getSet_name());
+        values.put("activation", newBelongingSet.getActivation());
+        values.put("set_info", newBelongingSet.getSet_info());
+        values.put("user_num", newBelongingSet.getUser_num());
+        values.put("stuff_list", newBelongingSet.getStuff_list_str());
+        long result =db.insert("belongings", null, values);
+        if(result != -1){
+            Log.i("addBelongingSetWithUser", newBelongingSet.toString() + ", id: "+ newBelongingSet.getBelonging_id()+" 소지품세트 추가");
+//            newBelongingSet.setBelonging_id(set_belongingSet_id);
+        }else{
+            Log.i("addBelongingSetWithUser", "db insert 오류");
+        }
+    }
+    public void delBelongingSet(belongingSetData delBelongingSet){
+
+        Log.i("delBelongingSet", "삭제할 소지품 세트: "+delBelongingSet.toString());
+        db.delete("belongings", "belonging_id=?", new String[]{String.valueOf(delBelongingSet.getBelonging_id())});
+
+    }
+
     // ----------------------------------------------------------------
 
 }

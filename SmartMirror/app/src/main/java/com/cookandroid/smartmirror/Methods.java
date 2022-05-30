@@ -3,6 +3,7 @@ package com.cookandroid.smartmirror;
 import android.content.Context;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,7 +39,7 @@ public class Methods {
         json1.put("name", "syncAllTable");
 
     }
-
+    // ---------------------- 날짜관리 --------------------------------
     // DB에서 받아온 String형식의 DateTime 데이터를 통해 년/월/일/시/분 값을 가져옵니다.
     public static String getYearFromDateString(String time){
         return time.substring(0,4);
@@ -129,6 +132,7 @@ public class Methods {
             return "";
         }
     }
+
     public static boolean isInteger(String strNum){
         if(strNum == null){
             return false;
@@ -143,4 +147,24 @@ public class Methods {
         }
         return true;
     }
+    // -------------------------------------------------------------
+
+    // ----------------------stuff_list <--> ArrayList<String>---------------------
+    public static ArrayList<String> getStuffArrayListFromString(String stuff_list){
+        // ,로 stuff_list를 쪼갭니다.
+        String[] stringArray = stuff_list.split(",");
+        ArrayList<String> stuffList_arr = new ArrayList<String>(Arrays.asList(stringArray));
+        Log.i("getStuffArrayListFromString", "stuffList_arr: "+stuffList_arr.toString());
+        return stuffList_arr;
+    }
+    public static String getStringFromStuffArrayList(ArrayList<String> stuffList_arr){
+        // ArrayList를 toString하면 item사이에 ", "가 붙는데, 여기에서 붙는 공백을 제거해줍니다. 앞뒤에 붙는 []도 제거해줍니다.
+        String stuff_list = stuffList_arr.toString().replace(", ", ",").replace("[","").replace("]","");
+
+//        for(String s:stuffList_arr) stuff_list += ","+s;
+        Log.i("getStringFromStuffArrayList", "stuff_list: "+stuff_list);
+        return stuff_list;
+    }
+    // -----------------------------------------------------------------------------
+
 }

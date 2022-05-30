@@ -41,7 +41,7 @@
         android:layout_weight="1"
         android:layout_marginVertical="10dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/belongingSetDetailLayout"
+        android:id="@+id/belongingSetInfoLayout"
         android:layout_below="@+id/belongingSetNameLayout"
         android:orientation="horizontal">
         <TextView
@@ -52,7 +52,7 @@
             ></TextView>
 
         <EditText
-            android:id="@+id/belongingSetDetailEditText"
+            android:id="@+id/belongingSetInfoEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -88,7 +88,7 @@
         android:scrollbars="vertical"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="10dp"
-        android:layout_below="@+id/belongingSetDetailLayout"
+        android:layout_below="@+id/belongingSetInfoLayout"
         android:layout_marginVertical="10dp"></androidx.recyclerview.widget.RecyclerView>
     <LinearLayout
         android:layout_width="match_parent"
