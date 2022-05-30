@@ -72,7 +72,6 @@ class FaceRecog():
                         id = "unknown"
                     confidence = "  {0}%".format(round(confidence))
 
-
                     cv2.putText(frame, str(id), (startX + 5, startY - 5), self.font, 1, (255, 255, 255), 2)
                     cv2.putText(frame, str(confidence), (startX + 5, endY - 5), self.font, 1, (255, 255, 0), 1)
 
@@ -135,6 +134,8 @@ class FaceRecog():
                     face_in_img = cv2.cvtColor(face_in_img, cv2.COLOR_BGR2GRAY)
                     cv2.imwrite(self.faceimagepath + name + '/mask/' + name + '_' + str(captured_num) + '.jpg',
                                 face_in_img)
+                cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
+                cv2.putText(frame, str(confidence), (startX + 5, endY - 5), self.font, 1, (255, 255, 0), 1)
 
             # display output
             cv2.imshow("captured frames", frame)
@@ -178,6 +179,8 @@ class FaceRecog():
                     face_in_img = cv2.cvtColor(face_in_img, cv2.COLOR_BGR2GRAY)
                     cv2.imwrite(self.faceimagepath + name + '/nomask/' + name + '_' + str(captured_num) + '.jpg',
                                 face_in_img)
+                cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
+                cv2.putText(frame, str(confidence), (startX + 5, endY - 5), self.font, 1, (255, 255, 0), 1)
 
             # display output
             cv2.imshow("captured frames", frame)
@@ -229,8 +232,9 @@ class FaceRecog():
 
         self.trainerset.append(_faceimagepath + name + '_trainer.yml')
 
-        # Print the numer of faces trained and end program
+        # Print the numeric of faces trained and end program
         print("\n [INFO] {0} faces trained. Exiting Program".format(len(self.trainerset)))
+        self.updateModel()
 
     # ./fileimage/user_name dir 생성
     def createFloder(self, name):
@@ -346,3 +350,6 @@ class FaceRecog():
 
 if __name__ == "__main__":
     face_rg = FaceRecog()
+
+    face_rg.facedetect_recogize()
+
