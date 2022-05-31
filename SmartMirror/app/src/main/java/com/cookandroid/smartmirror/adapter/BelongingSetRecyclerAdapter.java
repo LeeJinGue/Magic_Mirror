@@ -41,13 +41,11 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         sqlDB.addBelongingSet(item);
         belongingSetDataArrayList.add(item);
         notifyItemInserted(belongingSetDataArrayList.size());
-//        notifyItemRangeChanged(belongingSetDataArrayList.size()-1, belongingSetDataArrayList.size());
-//        notifyDataSetChanged();
     }
     public void editItem(int index, belongingSetData changeItem){
+        sqlDB.editBelongingSet(changeItem);
         belongingSetDataArrayList.set(index, changeItem);
         notifyItemChanged(index);
-//        notifyDataSetChanged();
     }
     public void removeAt(int index){
         sqlDB.delBelongingSet(belongingSetDataArrayList.get(index));
@@ -55,11 +53,18 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         notifyItemRemoved(index);
 //        notifyItemRangeChanged(index, belongingSetDataArrayList.size());
     }
+    public void setSwitchAt(int index, boolean isActivted){
+        Log.i("setSwitchAt", index+"번째 스위치를 "+isActivted+"한 상태로");
+        belongingSetDataArrayList.get(index).setActiavted(isActivted);
+        belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+        sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
+    }
     public BelongingSetRecyclerAdapter(ArrayList<belongingSetData> dataList, MirrorDBHelper sqlDB){
         belongingSetDataArrayList = dataList;
         belongingSetSwitchArrayList = new ArrayList<Switch>();
         this.sqlDB = sqlDB;
     }
+
     @NonNull
     @Override
     public BelongingSetRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -85,7 +90,6 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         holder.set_name.setText(item.getSet_name());
         holder.set_info.setText(item.getSet_info());
         holder.belongingSwitch.setChecked(item.isActiavted());
-//        holder.belongingSwitch.setText("활성화");
         holder.belongingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -93,25 +97,23 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
                 if(!isChecked){
                     // 해제될 때
                     // 해당 인덱스가 해제되었다는 정보만 저장
-                    belongingSetDataArrayList.get(holder.getAdapterPosition()).setActiavted(false);
-
+                    setSwitchAt(holder.getAdapterPosition(),false);
                 }else{
                     // 체크될 때
                     // 다른 스위치를 확인해서 체크된 게 있다면 그 스위치를 해제시켜야 함.
-                    int index = getCheckedIndex();
-                    if(index == -1){
+                    int checkedIndex = getCheckedIndex();
+                    if(checkedIndex == -1){
                         // 리턴값이 -1이면 체크된 게 없으므로 걍 스위치를 체크함
-                        Log.i("belongingSetRecyclerAdapter", "체크되어있는 스위치가 없습니다.");
+//                        Log.i("belongingSetRecyclerAdapter", "체크되어있는 스위치가 없습니다.");
+                        setSwitchAt(holder.getAdapterPosition(),true);
                     }else{
                         // 리턴값이 있다면 해당 인덱스의 스위치를 off해준다.
-                        Log.i("belongingSetRecyclerAdapter", "체크되어있던 스위치 인덱스: "+index);
-
-                        belongingSetDataArrayList.get(index).setActiavted(false);
-                        belongingSetSwitchArrayList.get(index).setChecked(false);
+//                        Log.i("belongingSetRecyclerAdapter", "체크되어있던 스위치 인덱스: "+checkedIndex);
+                        setSwitchAt(checkedIndex,false);
                     }
 
                     // 현재 스위치를 체크된 상태로
-                    belongingSetDataArrayList.get(holder.getAdapterPosition()).setActiavted(true);
+                    setSwitchAt(holder.getAdapterPosition(),true);
                 }
             }
         });
@@ -122,7 +124,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
             public void onClick(View v) {
                 // 소지품 프리셋 추가 액티비티로 전환 - 수정임
                 // 전달되는 데이터 O
-                Log.i("belongingSetRecyclerAdapter", "소지품세트를 수정합니다.");
+//                Log.i("belongingSetRecyclerAdapter", "소지품세트를 수정합니다.");
                 Intent intent = new Intent(fragmentContext, BelongingSetAddActivity.class);
                 intent.putExtra("isAdd", false);
                 intent.putExtra("index", holder.getAdapterPosition());
@@ -133,7 +135,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         holder.belongingSetDelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("belongingSetRecyclerAdapter", "소지품세트를 삭제합니다.");
+//                Log.i("belongingSetRecyclerAdapter", "소지품세트를 삭제합니다.");
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                 alertDialog.create();
                 alertDialog
@@ -141,7 +143,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
                         .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.i("belongingSetDelDialog", holder.getAdapterPosition()+"번째 아이템 "+"삭제");
+//                                Log.i("belongingSetDelDialog", holder.getAdapterPosition()+"번째 아이템 "+"삭제");
                                 removeAt(holder.getAdapterPosition());
                                 dialog.dismiss();
                             }
@@ -149,7 +151,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.i("belongingSetDelDialog", "취소");
+//                                Log.i("belongingSetDelDialog", "취소");
                                 dialog.dismiss();
                             }
                         });

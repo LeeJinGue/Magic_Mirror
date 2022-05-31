@@ -164,19 +164,25 @@ public class RegisterDevActivity extends AppCompatActivity {
 //                httpMain();
                 // 입력받은 시리얼넘버, 아이피주소로 로그인
                 // 테스트값은 시리얼넘버1, 아이피주소1
-                int serialNo = Integer.parseInt(editSerial.getText().toString());
-                String IPAddress = editIP.getText().toString();
-                // IP주소, 시리얼넘버가 맞는지 확인합니다.
-                if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo)){
-                    Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
-                    // 연결되었으므로 DB를 초기화
-                    sqlDB.initDB();
-                    Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
-                    startActivity(intent);
+                try{
+                    int serialNo = Integer.parseInt(editSerial.getText().toString());
+                    String IPAddress = editIP.getText().toString();
+                    // IP주소, 시리얼넘버가 맞는지 확인합니다.
+                    if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo)){
+                        Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
+                        // 연결되었으므로 DB를 초기화
+                        sqlDB.initDB();
+                        Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
+                        startActivity(intent);
 
-                }else{
-                    Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치하지 않습니다.");
-                    Toast.makeText(getApplicationContext(), "시리얼넘버 또는 아이피주소를 잘못 입력하셨습니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치하지 않습니다.");
+                        Toast.makeText(getApplicationContext(), "시리얼넘버 또는 아이피주소를 잘못 입력하셨습니다.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
 
                 }
             }

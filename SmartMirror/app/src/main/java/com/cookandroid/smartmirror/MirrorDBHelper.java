@@ -204,8 +204,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 list.add(new userData(id, serial_no, name, usr_img_path));
             }while(mCursor.moveToNext());
         }
-        mCursor.close();
         for(userData u:list) Log.i("getUserData", "id: "+u.getUser_num()+", serial_no: "+u.getSerial_no()+", name: "+u.getName()+", user_image_path: "+u.getUser_image_pass()+" 유저데이터를 가져옵니다.");
+        mCursor.close();
         if(list.isEmpty()){
             return null;
         }
@@ -275,6 +275,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         }
         // IP주소가 다르다.
         Log.i("DBHelper", "checkIPAddressAndSerial - IP주소가 일치하지 않습니다.");
+        cs.close();
         return false;
     }
 
@@ -307,12 +308,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             values.put("type", layoutData.getType());
             values.put("loc", layoutData.getLoc());
             long result =db.insert("layoutsetting", null, values);
-//            db.execSQL("INSERT INTO layoutsetting VALUES(" +
-//                    ++layout_id +
-//                    ", " + selectedUser.getUser_num() +
-//                    ", " + layoutData.getType() +
-//                    ", " + layoutData.getLoc() +
-//                    ");");
+
             if(result != -1){
                 Log.i("layoutSet", layoutData.toString() + ", id: "+ set_layout_id+" 레이아웃 추가");
 
@@ -334,6 +330,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             layoutDataArrayList.add(newLayoutData);
             Log.i("getLayoutDataListByUser", newLayoutData.toString() + " 레이아웃 데이터 갖고옴");
         }
+        layoutCursor.close();
         return layoutDataArrayList;
     }
     public ArrayList<layoutData> getAllLayoutData(){
@@ -348,6 +345,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             layoutDataArrayList.add(newLayoutData);
             Log.i("getAllLayoutDataList", newLayoutData.toString() + ", id: "+newLayoutData.getLayout_id()+ " 레이아웃 데이터 갖고옴");
         }
+        layoutCursor.close();
         return layoutDataArrayList;
     }
     // ----------------------------------------------------------------
@@ -382,12 +380,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         if(isReceived){
             // 내가 받고 상대가 보낸 메시지 리스트. isleft = true
             Log.i("MirrorDBHelper", "내가 받고 상대가 보낸 메시지 리스트를 가져옵니다. 받는사람: "+me.getName()+", 보낸사람: "+you.getName());
-            msgCursor = db.rawQuery("SELECT * FROM message WHERE receiver_num="+me.getUser_num()+" AND sender_num="+ you.getUser_num()+";", null);
+            msgCursor = db.rawQuery("SELECT * FROM message WHERE user_num="+me.getUser_num()+" AND sender_num="+ you.getUser_num()+";", null);
 
         }else{
             // 내가 보내서 상대가 받은 메시지 리스트. isleft = false;
             Log.i("MirrorDBHelper", "내가 보내고 상대가 받은 메시지 리스트를 가져옵니다. 받는사람: "+you.getName()+", 보낸사람: "+me.getName());
-            msgCursor = db.rawQuery("SELECT * FROM message WHERE receiver_num="+you.getUser_num()+" AND sender_num="+ me.getUser_num()+";", null);
+            msgCursor = db.rawQuery("SELECT * FROM message WHERE user_num="+you.getUser_num()+" AND sender_num="+ me.getUser_num()+";", null);
 
         }
         while (msgCursor.moveToNext()){
@@ -407,6 +405,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             Log.i("getMessageList","메세지: "+newMessage.toString());
             messageList.add(newMessage);
         }
+        msgCursor.close();
         return messageList;
     }
 
@@ -471,6 +470,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             Log.i("getScheduleByDate","일정: "+newSchedule.toString());
             scheduleDataList.add(newSchedule);
         }
+        scheduleCursor.close();
         return scheduleDataList;
     }
     // ----------------------------------------------------------------
@@ -498,6 +498,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             Log.i("getBelongingSetDataByUser","일정: "+newBelongingSet.toString());
             belongingSetDataList.add(newBelongingSet);
         }
+        belongingCursor.close();
         return belongingSetDataList;
     }
 
@@ -524,6 +525,27 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.delete("belongings", "belonging_id=?", new String[]{String.valueOf(delBelongingSet.getBelonging_id())});
 
     }
+    public void editBelongingSet(belongingSetData editBelongingSet){
+        Log.i("editBelongingSet", "수정할 소지품 세트: "+editBelongingSet.toString());
+        db.execSQL("UPDATE belongings " +
+                "SET set_name = '"+editBelongingSet.getSet_name() +
+                "', set_info = '" + editBelongingSet.getSet_info()+
+                "', stuff_list = '" + editBelongingSet.getStuff_list_str() +
+                "', activation = '" + editBelongingSet.getActivation() +
+                "' WHERE belonging_id = "+editBelongingSet.getBelonging_id()+
+                ";");
+        Log.i("editBelongingSet", "수정된 소지품 세트: "+editBelongingSet.toString());
+    }
+    public void setBelongingSetActiavted(belongingSetData activatedBelongingSet){
+        Log.i("setBelongingSetActivated", "수정할 소지품 세트 활성화: "+activatedBelongingSet.getActivation());
+        db.execSQL("UPDATE belongings " +
+                "SET activation = '" + activatedBelongingSet.getActivation() +
+                "' WHERE belonging_id = "+activatedBelongingSet.getBelonging_id()+
+                ";");
+        Log.i("setBelongingSetActivated", "수정된 소지품 세트 활성화: "+activatedBelongingSet.getActivation());
+
+    }
+
 
     // ----------------------------------------------------------------
 
