@@ -26,11 +26,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.AddAndSearchStockActivity;
 import com.cookandroid.smartmirror.adapter.BelongingSetRecyclerAdapter;
 import com.cookandroid.smartmirror.adapter.StockItemRecyclerAdapter;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
+import com.cookandroid.smartmirror.dataClass.interestedStockData;
+import com.cookandroid.smartmirror.dataClass.userData;
 
 import java.sql.Array;
 import java.util.ArrayList;
@@ -39,36 +43,41 @@ public class StockSetupFragment extends Fragment {
     RecyclerView stockItemRecyclerView;
     Context context;
     ImageView stockAddBtn;
-    ArrayList<String> stockList;
+    ArrayList<interestedStockData> stockList;
     EditText stockNameEditText;
     StockItemRecyclerAdapter mAdapter;
-    String addedStockName;
+    MirrorDBHelper sqlDB;
+    interestedStockData addedStock;
+    MyApplication myApp;
+    userData selectedUser;
     ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent intent = result.getData();
-                        addedStockName = intent.getStringExtra("stockName");
-                        mAdapter.addItem(addedStockName);
+                        addedStock = intent.getParcelableExtra("addStock");
+                        mAdapter.addItem(addedStock);
                     }else{
-                        addedStockName = "없음";
+                        addedStock = null;
                     }
                 }
             });
-    void getUserStockList(){
+    public ArrayList<interestedStockData> getUserStockList(MirrorDBHelper sqlDB, userData selectedUser){
         // DB에서 유저의 관심주식목록을 가져옵니다.
-        mAdapter.addItem("주식1");
-        mAdapter.addItem("주식2");
-        mAdapter.addItem("주식3");
 
+        ArrayList<interestedStockData> userStockList = sqlDB.getInterestedStockByUser(selectedUser);
+        return userStockList;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_stock_setup, container, false);
         context = rootView.getContext();
-        stockList = new ArrayList<>();
-        mAdapter = new StockItemRecyclerAdapter(stockList);
+        sqlDB = new MirrorDBHelper(rootView.getContext(), 1);
+        myApp = (MyApplication) getActivity().getApplicationContext();
+        selectedUser = myApp.getSelectedUser();
+        stockList = getUserStockList(sqlDB, selectedUser);
+        mAdapter = new StockItemRecyclerAdapter(stockList, sqlDB);
 
         stockItemRecyclerView = rootView.findViewById(R.id.stockItemRecyclerView);
         stockItemRecyclerView.setAdapter(mAdapter);
@@ -83,7 +92,6 @@ public class StockSetupFragment extends Fragment {
                 mStartForResult.launch(intent);
             }
         });
-        getUserStockList();
 
 
         return rootView;

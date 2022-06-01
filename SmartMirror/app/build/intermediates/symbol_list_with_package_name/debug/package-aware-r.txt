@@ -2454,6 +2454,7 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id status_bar_latest_event_content
+id stockAddAppBar
 id stockAddBtn
 id stockAddEndBtn
 id stockItemDelBtn

@@ -13,14 +13,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
+import com.cookandroid.smartmirror.dataClass.interestedStockData;
 
 import java.util.ArrayList;
 
 public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecyclerAdapter.ViewHolder> {
-    ArrayList<String> stockItemList = new ArrayList<>();
-    public StockItemRecyclerAdapter(ArrayList<String> stockItemList){
+    ArrayList<interestedStockData> stockItemList = new ArrayList<>();
+//    ArrayList<interestedStockData> stockDataList = new ArrayList<>();
+    MirrorDBHelper sqlDB;
+    public StockItemRecyclerAdapter(ArrayList<interestedStockData> stockItemList, MirrorDBHelper sqlDB){
         this.stockItemList = stockItemList;
+        this.sqlDB = sqlDB;
     }
     @NonNull
     @Override
@@ -34,30 +39,27 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
 
     @Override
     public void onBindViewHolder(@NonNull StockItemRecyclerAdapter.ViewHolder holder, int position) {
+        interestedStockData nowStock = stockItemList.get(holder.getAdapterPosition());
         holder.index = holder.getAdapterPosition();
-        holder.stockName = stockItemList.get(position);
-        holder.stockItemNameTextView.setText(holder.stockName);
+        holder.stockName = nowStock.getStock_name();
+        holder.stockItemNameTextView.setText(nowStock.getStock_name());
     }
 
     @Override
     public int getItemCount() {
         return stockItemList.size();
     }
-    public void addItem(String name){
-        Log.i("StockItemRecyclerAdapter", name+"아이템 추가");
-        stockItemList.add(name);
+    public void addItem(interestedStockData addStockData){
+        Log.i("StockItemRecyclerAdapter", addStockData+"아이템 추가");
+        sqlDB.addInterestedStock(addStockData);
+        stockItemList.add(addStockData);
         notifyItemInserted(stockItemList.size());
-        notifyItemRangeChanged(stockItemList.size()-1, stockItemList.size());
-        notifyDataSetChanged();
     }
-    public String getItemName(int index){
-        return stockItemList.get(index);
-    }
-    public void removeAt(int index){
-        Log.i("StockItemRecyclerAdapter", index+"번째 아이템 삭제");
+    public void removeAt(int index) {
+        Log.i("StockItemRecyclerAdapter", index + "번째 아이템 삭제");
+        sqlDB.delInterestedStock(stockItemList.get(index));
         stockItemList.remove(index);
         notifyItemRemoved(index);
-        notifyItemRangeChanged(index, stockItemList.size());
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         private Context context;

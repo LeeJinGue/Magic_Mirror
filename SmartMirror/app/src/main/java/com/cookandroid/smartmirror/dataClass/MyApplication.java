@@ -29,9 +29,11 @@ public class MyApplication extends Application {
         profileId = id*100;
         scheduleId = id * 1000;
         belongingId = id * 1000;
-        Log.i("MyApplication", "id setting - profileId: "+profileId+", msgId: "+msgId+", scheduleId: "+scheduleId);
+        stockId = id * 100;
+        Log.i("MyApplication", "id setting - profileId: "+profileId+", msgId: "+msgId+", scheduleId: "+scheduleId+", belongingId: "+belongingId+", stockId: "+stockId);
     }
     public int msgId = 1;
+    public int stockId = 1;
     public int profileId = 1;
     public int scheduleId = 1;
     public int belongingId = 1;

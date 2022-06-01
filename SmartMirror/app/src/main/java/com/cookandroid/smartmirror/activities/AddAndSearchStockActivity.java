@@ -1,7 +1,9 @@
 package com.cookandroid.smartmirror.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,19 +16,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.StockSearchRecyclerAdapter;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.interestedStockData;
 
 import java.util.ArrayList;
 
 public class AddAndSearchStockActivity extends AppCompatActivity implements StockSearchRecyclerAdapter.onItemListener{
     Button stockAddEndBtn;
     String selectedStockName;
+    interestedStockData addedStock;
     StockSearchRecyclerAdapter mAdapter;
     ArrayList<String> stockNameList;
     RecyclerView stockSearchResultRecyclerView;
     SearchView searchView;
+    MyApplication myApp;
     public void getStockNameList(){
         stockNameList = new ArrayList<>();
         stockNameList.add("주식1");
@@ -41,6 +49,20 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_and_search_stock);
+
+        // Add Coustom AppBar & Set Title Color Gradient
+        Toolbar toolbar = (Toolbar) findViewById(R.id.stockAddAppBar);
+        TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
+        tvTitle.setText("관심주 추가");
+        Methods methods = new Methods();
+        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowTitleEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
+        
+        
+        myApp = (MyApplication) getApplicationContext();
         getStockNameList();
         stockAddEndBtn = findViewById(R.id.stockAddEndBtn);
         stockSearchResultRecyclerView = findViewById(R.id.stockSearchResultRecyclerView);
@@ -48,8 +70,9 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
             @Override
             public void onClick(View v) {
                 selectedStockName = searchView.getQuery().toString();
+                interestedStockData addedStock = new interestedStockData(++myApp.stockId,myApp.getSelectedUser().getUser_num(), selectedStockName,"1");
                 Intent intent = new Intent();
-                intent.putExtra("stockName", selectedStockName);
+                intent.putExtra("addStock", addedStock);
                 setResult(RESULT_OK, intent);
                 finish();
             }

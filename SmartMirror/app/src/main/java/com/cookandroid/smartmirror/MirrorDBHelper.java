@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
+import com.cookandroid.smartmirror.dataClass.interestedStockData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.messageData;
@@ -91,6 +92,9 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         addSchedule(newData2);
         // 소지품리스트 데이터를 넣어봅니다.
         addBelongingSet(new belongingSetData(2, 3,"화요일","0", "Test Java", "신분증,물통,커피"));
+
+        // 관심주식 데이터를 넣어봅니다.
+        addInterestedStock(new interestedStockData(11, 0, "삼성전자", "1"));
         Log.i("DataBase", "DB초기화");
     }
     @Override
@@ -626,6 +630,46 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
 
     // ----------------------------------------------------------------
+    // --------------------------------관심주식목록----------------------
+    public ArrayList<interestedStockData> getInterestedStockByUser(userData selectedUser){
+        ArrayList<interestedStockData> interestedStockList = new ArrayList<>();
+        Cursor stockCursor = db.rawQuery("SELECT * " +
+                "FROM stock " +
+                "WHERE" +
+                " user_num="+ selectedUser.getUser_num() +
+                ";", null);
+        while (stockCursor.moveToNext()){
+            int stock_id = stockCursor.getInt(0);
+            int user_num = stockCursor.getInt(1);
+            String stock_name=stockCursor.getString(2);
+            String stock_code=stockCursor.getString(3);
+            interestedStockData newInterstedStock = new interestedStockData(stock_id, user_num, stock_name, stock_code);
+            Log.i("getStockDataByUser","관심주식: "+newInterstedStock.toString());
+            interestedStockList.add(newInterstedStock);
+        }
+        stockCursor.close();
+        return interestedStockList;
+    }
 
+    public void addInterestedStock(interestedStockData newInterestedStock){
+        Log.i("addInterestedStock", "DB에 추가할 stock 이름: "+newInterestedStock.getStock_name()+", 유저ID: "+newInterestedStock.getUser_num());
+        ContentValues values = new ContentValues();
+        values.put("stock_id", newInterestedStock.getStock_id());
+        values.put("user_num", newInterestedStock.getUser_num());
+        values.put("stock_name", newInterestedStock.getStock_name());
+        values.put("stock_code", newInterestedStock.getStock_code());
+        long result =db.insert("stock", null, values);
+        if(result != -1){
+            Log.i("addInterestedStock", newInterestedStock.toString() + ", id: "+ newInterestedStock.getStock_id()+" 관심주 추가");
+//            newBelongingSet.setBelonging_id(set_belongingSet_id);
+        }else{
+            Log.i("addInterestedStock", "db insert 오류");
+        }
+    }
+    public void delInterestedStock(interestedStockData delInterestedStock){
+        Log.i("delInterestedStock", "삭제할 관심주: "+delInterestedStock.toString());
+        db.delete("stock", "stock_id=?", new String[]{String.valueOf(delInterestedStock.getStock_id())});
+    }
+    // ----------------------------------------------------------------
 }
 
