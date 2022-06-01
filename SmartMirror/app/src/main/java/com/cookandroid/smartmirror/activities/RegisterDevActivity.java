@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,11 +22,26 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.*;
+
+import com.cookandroid.smartmirror.ExcelHelper;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.dataClass.stockData;
 
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
@@ -35,6 +51,8 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +65,8 @@ import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RegisterDevActivity extends AppCompatActivity {
     customEditText editSerial, editIP;
@@ -130,6 +150,35 @@ public class RegisterDevActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+//    public void getExcelFileToDB() {
+//        try {
+//            // Creating Input Stream
+//            String fileName = "stock_list.xlsx";
+//            AssetManager assetManager = getAssets();
+//            AssetFileDescriptor assetFileDescriptor = assetManager.openFd(fileName);
+//            FileDescriptor fileDescriptor = assetFileDescriptor.getFileDescriptor();
+//            FileInputStream file = new FileInputStream(fileDescriptor);
+//            sqlDB.addStockList(file);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+    public FileInputStream readExcelFileFromAssets() {
+        try {
+            // initialize asset manager
+            AssetManager assetManager = getAssets();
+            AssetFileDescriptor fileDescriptor = assetManager.openFd("stock_list.xlsx");
+            FileInputStream fileInputStream = fileDescriptor.createInputStream();
+            return fileInputStream;
+//            ExcelHelper excelHelper = new ExcelHelper(fileInputStream);
+//            ArrayList<stockData> stockList = excelHelper.readStockExcelFile();
+//            sqlDB.addStockList(stockList);
+
+        } catch (Exception e) {
+            Log.e("readExcelFileFromAssets", "error "+ e.toString());
+        }
+        return null;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +195,15 @@ public class RegisterDevActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(false);
 
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
-        sqlDB.getDevData();
+        sqlDB.initDBbeforeLogin(readExcelFileFromAssets());
+//        if(sqlDB.isExistStockList()){
+//            // 존재하면 읽기 자체 X
+//        }else{
+//            // 존재하지 않으면
+////            getExcelFileToDB();
+//            readExcelFileFromAssets();
+//        }
+//        sqlDB.getDevData();
 
         editSerial = findViewById(R.id.editSerial);
         editIP = findViewById(R.id.editWifi);
@@ -159,16 +216,22 @@ public class RegisterDevActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ConnectThread connectThread = new ConnectThread(dongIp);
-//                connectThread.start();
-//                httpMain();
+
                 // 입력받은 시리얼넘버, 아이피주소로 로그인
                 // 테스트값은 시리얼넘버1, 아이피주소1
                 try{
-                    int serialNo = Integer.parseInt(editSerial.getText().toString());
-                    String IPAddress = editIP.getText().toString();
+                    String serialNo = editSerial.getText().toString();
+//                    String IPAddress = editIP.getText().toString();
+                    String IPString = editIP.getText().toString();
+                    if(!IPString.contains(":")){
+                        Toast.makeText(getApplicationContext(), "아이피 주소를 올바른 형태로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String[] IPandPort = editIP.getText().toString().split(":");
+                    String IPAddress = IPandPort[0];
+                    int Port = Integer.parseInt(IPandPort[1]);
                     // IP주소, 시리얼넘버가 맞는지 확인합니다.
-                    if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo)){
+                    if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo,Port)){
                         Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
                         // 연결되었으므로 DB를 초기화
                         sqlDB.initDB();
@@ -183,7 +246,6 @@ public class RegisterDevActivity extends AppCompatActivity {
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });

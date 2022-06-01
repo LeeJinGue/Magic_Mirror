@@ -2,6 +2,7 @@ package com.cookandroid.smartmirror;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -14,8 +15,11 @@ import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.messageData;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
+import com.cookandroid.smartmirror.dataClass.stockData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -49,6 +53,18 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         networkHelper = new MirrorNetworkHelper();
         onCreate(db);
     }
+    public void initDBbeforeLogin(FileInputStream fileInputStream){
+        createDeviceTb(db);
+        // json파일을 받아와서 한다고 해보자
+        addDevData(networkHelper.getDeviceData());
+
+        createStockListTb(db);
+        if(!isExistStockList()){
+            // 만약 stocklist정보가 없으면
+            ExcelHelper excelHelper = new ExcelHelper(fileInputStream);
+            addStockList(excelHelper.readStockExcelFile());
+        }
+    }
 
     public void initDB(){
         createUserTb(db);
@@ -57,6 +73,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createScheduleTb(db);
         createStockTb(db);
         createBelongingsTb(db);
+
+        networkHelper.getUserTable();
 
         // 테스트를 위해 userData를 미리 넣어둡니다.
         addUser(networkHelper.getUserData());
@@ -84,6 +102,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createDeviceTb(db);
         // dev데이터를 미리 넣어둡니다.
         addDevData(networkHelper.getDevData());
+
+
     }
 
     @Override
@@ -189,6 +209,55 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 ");");
         Log.i("Create Table", "stock table 생성 완료");
     }
+
+    // ----------------------stockList 관련 --------------------------
+    public void addStockList(ArrayList<stockData> stockList){
+//        public void addStockList(FileInputStream stockListFile){
+//        ExcelHelper excelHelper = new ExcelHelper(stockListFile);
+//        ArrayList<stockData> stockList = excelHelper.readStockExcelFile();
+        // stock테이블에 xls파일 읽어서 넣어줌.
+        for(stockData nowStock:stockList){
+            ContentValues stockRow = new ContentValues();
+            stockRow.put("stock_code", nowStock.getStock_code());
+            stockRow.put("stock_name",nowStock.getStock_name());
+            long result =db.insert("stocklist", null, stockRow);
+            if(result != -1){
+//                Log.i("addStockList", "stock_code: "+nowStock.getStock_code() +", stock_name: "+ nowStock.getStock_name());
+            }else{
+                Log.i("addStockList", "db insert 오류, stockData: "+nowStock.toString());
+            }
+        }
+        Log.i("addStockList", "Excel값을 읽어와서 stocklist table에 추가 완료");
+    }
+    public boolean isExistStockList(){
+        // stocklist의 개수를 가져옵니다.
+        Cursor stockCursor = db.rawQuery("SELECT COUNT(*) FROM stocklist;", null);
+        stockCursor.moveToFirst();
+        int count = stockCursor.getInt(0);
+        Log.i("stockCursorTest","count: "+count);
+        if(count == 0){
+            // count가 0이면 없는거니까 false 리턴
+            return false;
+        }else{
+            // count가 1이상이면 하나라도 있으니까 true 리턴
+            return true;
+        }
+    }
+    // ----------------------------------------------------------------
+
+    public void createStockListTb(SQLiteDatabase db) {
+        // stocklist 테이블 생성
+//        db.execSQL("DROP TABLE IF EXISTS stocklist");
+        db.execSQL("CREATE TABLE IF NOT EXISTS stocklist " +
+                "(stock_code VARCHAR(50) PRIMARY KEY, " +
+                "stock_name VARCHAR(255) NOT NULL " +
+//                ", FOREIGN KEY(user_num)" +
+//                "REFERENCES user(user_num)" +
+                ");");
+
+        Log.i("Create Table", "stocklist table 생성 완료");
+    }
+
     // -----------------------User관련--------------------------------
     // userData List로 갖고오기
     public ArrayList<userData> getAllUserList(){
@@ -243,9 +312,9 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     // --------------------------Device 관련-------------------------
     // IP주소, 시리얼넘버가 맞는지 체크
-    public boolean checkIPAddressAndSerial(String IPAddress, int Serial){
+    public boolean checkIPAddressAndSerial(String IPAddress, String Serial, int port){
         // DB에 있는 Data 받아올 변수들
-        int db_serial = -1;
+        String db_serial = "";
         int db_port = -1;
         String db_ip = "";
 
@@ -254,19 +323,28 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
         // Cursor객체를 통해 DB에 저장된 데이터를 읽어옵니다.
         while(cs.moveToNext()){
-            db_serial = cs.getInt(0);
+            db_serial = cs.getString(0);
             db_ip = cs.getString(1);
             db_port = cs.getInt(2);
+            Log.i("checkIPAddressAndSerial", "\ndb_serial: "+db_serial+"\ndb_ip: "+db_ip+"\ndb_port: "+db_port);
+            Log.i("checkIPAddressAndSerial", "\nserial: "+Serial+"\nip: "+IPAddress+"\nport: "+port);
+
         }
         // 받아온 ip가 ""라면 -> DB에 저장된게 없다면 추가해야하는데?
-        if(db_ip ==""){
+        if(db_ip.equals("")){
             Log.i("DBHelper", "checkIPAddressAndSerial - 저장된 IP / Serial 정보가 없습니다.");
             return false;
         }
         if(db_ip.equals(IPAddress)){
-            if(db_serial == Serial){
-                // IP주소가 같고 시리얼넘버도 같다면
-                return true;
+            if(db_serial.equals(Serial)){
+                if(db_port == port){
+                    // IP주소가 같고 시리얼넘버도 같다면
+                    return true;
+
+                }else{
+                    Log.i("DBHelper", "checkIPAddressAndSerial - Port 정보가 일치하지 않습니다.");
+                    return false;
+                }
             }else{
                 // IP주소는 같지만 serial넘버가 다르다.
                 Log.i("DBHelper", "checkIPAddressAndSerial - Serial 정보가 일치하지 않습니다.");

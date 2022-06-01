@@ -1,9 +1,14 @@
 package com.cookandroid.smartmirror;
 
+import android.util.Log;
+
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.messageData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MirrorNetworkHelper {
     // Mirror Server와 통신을 도와주는 함수들
@@ -32,6 +38,96 @@ public class MirrorNetworkHelper {
     public messageData getMessageDate(){
         messageData msgData = new messageData(3, 2, 0, "안녕하쇼", 2022, 5, 27, 12, 30, true);
         return msgData;
+    }
+    public devData getDeviceData(){
+        String deviceJson = "{"
+                + "\"name\" : \"getDevice\", "
+                + "\"deviceTable\" : ["
+                + "{\"serial_no\": \"1\", \"ip\": \"1\", \"port\": \"5000\",\"location\":\"Seoul\",\"info\":\"정보없음\"}"
+                + "]"
+                + "}";
+        try{
+            JSONObject object = (JSONObject) new JSONTokener(deviceJson).nextValue();
+            String name = object.getString("name");
+            Log.i("jsonParsing", "name: "+name);
+            org.json.JSONArray deviceTable = object.getJSONArray("deviceTable");
+            JSONObject j = (JSONObject) deviceTable.get(0);
+//                Log.i("jsonParsing", "row"+i+": "+j.toString());
+            String serial_no = j.getString("serial_no");
+            String ip = j.getString("ip");
+            int port = j.getInt("port");
+            String location = j.getString("location");
+            String info = j.getString("info");
+//                Log.i("jsonParsing", "user_noL "+user_no+", serial_no: "+serial_no+", userName: "+userName+", user_image_pass: "+user_image_pass);
+            devData devData = new devData(serial_no, ip, port, location,info);
+            return devData;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//            Log.i("jsonParsing", "user_no: "+deviceTable.getJSONObject(0).getInt("user_no"));
+
+        return null;
+    }
+
+    public ArrayList<userData> getUserTable() {
+        String deviceJson = "{"
+                + "\"name\" : \"getDevice\", "
+                + "\"userTable\" : ["
+                + "{\"user_no\": 1, \"serial_no\": \"1\", \"name\": \"이진규\",\"user_image_pass\":\"\\lee\"},"
+                + "{\"user_no\": 2, \"serial_no\": \"1\", \"name\": \"박동호\",\"user_image_pass\":\"\\park\"},"
+                + "{\"user_no\": 3, \"serial_no\": \"1\", \"name\": \"전창민\",\"user_image_pass\":\"\\jeon\"}"
+                + "]"
+                + "}";
+
+        try{
+            ArrayList<userData> userDataList = new ArrayList<>();
+            JSONObject object = (JSONObject) new JSONTokener(deviceJson).nextValue();
+            String name = object.getString("name");
+            Log.i("jsonParsing", "name: "+name);
+            org.json.JSONArray deviceTable = object.getJSONArray("userTable");
+            for(int i=0; i<deviceTable.length(); i++){
+                JSONObject j = (JSONObject) deviceTable.get(i);
+//                Log.i("jsonParsing", "row"+i+": "+j.toString());
+                int user_no = j.getInt("user_no");
+                String serial_no = j.getString("serial_no");
+                String userName = j.getString("name");
+                String user_image_pass = j.getString("user_image_pass");
+//                Log.i("jsonParsing", "user_noL "+user_no+", serial_no: "+serial_no+", userName: "+userName+", user_image_pass: "+user_image_pass);
+                userData newUser = new userData(user_no, serial_no, userName, user_image_pass);
+                userDataList.add(newUser);
+            }
+            return userDataList;
+
+//            Log.i("jsonParsing", "user_no: "+deviceTable.getJSONObject(0).getInt("user_no"));
+
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+        }
+        return null;
+    }
+    public void syncAllTableJson(){
+        // 서버에서 syncAllTable를 통해 모든 Table 정보를 받아옵니다.
+        String syncAllTable = "{"
+                + " \"device\" : \"Pizza\", "
+                + " \"locations\" : [ 94043, 90210 ],"
+                + " \"tab1\" : [ 1, \"1\" ],"
+                + " \"tab2\" : [ 2, \"2\" ],"
+                + " \"tab3\" : [ 3, \"3\" ]"
+                + "}";
+        try{
+            JSONObject object = (JSONObject) new JSONTokener(syncAllTable).nextValue();
+            String query = object.getString("device");
+            org.json.JSONArray locations = object.getJSONArray("locations");
+            org.json.JSONArray tab3 = object.getJSONArray("tab3");
+
+            Log.i("jsonParsing", "query: "+query);
+            Log.i("jsonParsing", "locations: "+locations.toString());
+            Log.i("jsonParsing", "tab3: "+tab3.toString());
+
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+        }
     }
     public void httpMain(){
         System.out.println("[HttpURLConnection 사용해  post body json 방식 데이터 요청 및 응답 값 확인 실시]");
