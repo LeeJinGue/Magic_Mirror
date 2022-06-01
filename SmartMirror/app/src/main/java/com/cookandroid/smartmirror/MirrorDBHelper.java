@@ -247,6 +247,16 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public ArrayList<String> getAllStockNameList(){
+        ArrayList<String> stockNameList = new ArrayList<>();
+        Cursor stockNameCursor = db.rawQuery("SELECT stock_name FROM stocklist", null);
+        while (stockNameCursor.moveToNext()){
+            String stockName = stockNameCursor.getString(0);
+            stockNameList.add(stockName);
+//            Log.i("getAllStockNameList", stockName+"주식 추가");
+        }
+        return stockNameList;
+    }
     // ----------------------------------------------------------------
 
     public void createStockListTb(SQLiteDatabase db) {

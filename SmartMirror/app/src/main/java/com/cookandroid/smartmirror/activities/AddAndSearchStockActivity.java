@@ -1,5 +1,6 @@
 package com.cookandroid.smartmirror.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -13,12 +14,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.StockSearchRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -35,15 +39,20 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
     RecyclerView stockSearchResultRecyclerView;
     SearchView searchView;
     MyApplication myApp;
-    public void getStockNameList(){
-        stockNameList = new ArrayList<>();
-        stockNameList.add("주식1");
-        stockNameList.add("주식1");
-        stockNameList.add("주식2");
-        stockNameList.add("주식3");
-        stockNameList.add("Samsung");
-        stockNameList.add("LG전자");
-        stockNameList.add("Apple");
+    MirrorDBHelper sqlDB;
+    public ArrayList<String> getStockNameList(){
+        ArrayList<String> stockNameListFromDB = sqlDB.getAllStockNameList();
+        return stockNameListFromDB;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +70,29 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
         ab.setDisplayShowTitleEnabled(false);
         ab.setDisplayHomeAsUpEnabled(true);
         
-        
+        // 전역변수를 관리할 객체
         myApp = (MyApplication) getApplicationContext();
-        getStockNameList();
+        sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
         stockAddEndBtn = findViewById(R.id.stockAddEndBtn);
         stockSearchResultRecyclerView = findViewById(R.id.stockSearchResultRecyclerView);
         stockAddEndBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedStockName = searchView.getQuery().toString();
-                interestedStockData addedStock = new interestedStockData(++myApp.stockId,myApp.getSelectedUser().getUser_num(), selectedStockName,"1");
-                Intent intent = new Intent();
-                intent.putExtra("addStock", addedStock);
-                setResult(RESULT_OK, intent);
-                finish();
+                if(stockNameList.contains(selectedStockName)){
+                    interestedStockData addedStock = new interestedStockData(++myApp.stockId,myApp.getSelectedUser().getUser_num(), selectedStockName,"1");
+                    Intent intent = new Intent();
+                    intent.putExtra("addStock", addedStock);
+                    setResult(RESULT_OK, intent);
+                    finish();
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "주식 이름이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+        stockNameList = getStockNameList();
         mAdapter = new StockSearchRecyclerAdapter(stockNameList);
         mAdapter.setOnItemListener(this);
         stockSearchResultRecyclerView.setAdapter(mAdapter);
@@ -103,34 +118,6 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
         });
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-//            // 검색어는 SearchManager.QUERY라는 string extra로 보내집니다.
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            search(query);
-//        }
-//    }
-//    void search(String query){
-//        Log.i("AddAndSearchStockActivity", "Search중");
-//        ArrayList<String> stockNames = new ArrayList<>();
-//        stockNames.add("주식1");
-//        stockNames.add("주식2");
-//        stockNames.add("주식3");
-//        stockNames.add("삼성전자");
-//        stockNames.add("LG전자");
-//        stockNames.add("테슬라");
-//        for(String stockName: stockNames){
-//            if(stockName.toLowerCase().contains(query.toLowerCase())){
-//                selectedStockName = stockName;
-//                return;
-//            }
-//        }
-//
-//
-//
-//    }
 
     @Override
     public void onItemClicked(String name) {
