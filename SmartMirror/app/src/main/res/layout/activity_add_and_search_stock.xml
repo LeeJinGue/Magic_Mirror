@@ -8,7 +8,7 @@
     android:weightSum="10"
 
     tools:context=".activities.AddAndSearchStockActivity">
-    <include layout="@layout/custom_appbar"></include>
+    <include layout="@layout/custom_appbar" android:id="@+id/stockAddAppBar"></include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,14 +31,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
             android:id="@+id/stockSearchResultRecyclerView"></androidx.recyclerview.widget.RecyclerView>
-
-<!--        <EditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/test2"-->
-<!--            android:hint="회사명"></EditText>-->
-
     </LinearLayout>
 
     <Button

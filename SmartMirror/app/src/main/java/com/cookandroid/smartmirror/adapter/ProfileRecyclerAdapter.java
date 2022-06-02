@@ -30,46 +30,63 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     ActivityResultLauncher<Intent> StartForResultAddProfile;
     Context context;
     MirrorDBHelper sqlDB;
+    MyApplication myApp;
     public ProfileRecyclerAdapter(ArrayList<userData> mDataList, Context context,ActivityResultLauncher<Intent> StartForResultEditProfile, ActivityResultLauncher<Intent> StartForResultAddProfile ){
         this.StartForResultAddProfile = StartForResultAddProfile;
         this.StartForResultEditProfile = StartForResultEditProfile;
         this.mDataList = mDataList;
         this.context = context;
+        this.sqlDB = new MirrorDBHelper(context, 1);
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
-        userData last = new userData(2, -1, "추가하기", "없음");
-        mDataList.add(last);
+        myApp = (MyApplication) context.getApplicationContext();
+
     }
     public void addItem(userData newUser){
         // index랑 size는 1씩 차이가 나고 마지막엔 추가하기 버튼이므로 -2
-        mDataList.add(mDataList.size()-1, newUser);
-        sqlDB = new MirrorDBHelper(context, 1);
-        sqlDB.addUser(newUser);
+
         ArrayList<userData> newUserList = sqlDB.getAllUserList();
-        for(userData u:newUserList) Log.i("test", "newUser: "+u.toString());
+        for(userData u:newUserList) Log.i("addItem", "newUser: "+u.toString());
+        // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
+        // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
+        newUser.setUser_num(newUserList.size()+1);
+        sqlDB.addUser(newUser);
+        // Server에서 OK받고 추가함.
+        mDataList.add(mDataList.size()-1, newUser);
+
+
         notifyItemInserted(mDataList.size()-2);
     }
-    public void editItemNameAt(String name, int index){
-        mDataList.get(index).setName(name);
+    public void editItemNameAt(userData editUser, int index){
+        sqlDB.editUserName(editUser);
+        mDataList.get(index).setName(editUser.getName());
         notifyItemChanged(index);
+    }
+    public void delItemAt(userData delUser,int index){
+        sqlDB.delUser(delUser);
+        mDataList.remove(index);
+        imageViewArrayList.remove(index);
+        notifyItemRemoved(index);
+
     }
     public void changeImgViewList(boolean isSettingMode){
         // 데이터가 없으면 바꾸지않는다.
-        Log.i("ProfileRecyclerAdapter", "모드를 변경합니다.");
+        Log.i("ProfileRecyclerAdapter", "모드를 변경합니다. 이미지리스트 크기: "+imageViewArrayList.size());
         if(mDataList.size() == 1) return;
         if(isSettingMode){
             // 수정모드라면 프로필선택 모드로 바꾼다.
-            for(int i =0; i< imageViewArrayList.size(); i++){
+            for(int i =0; i< imageViewArrayList.size()-1; i++){
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_image_24);
                 imView.setTag("Select");
-
+                Log.i("test", "프로필 선택 모드로 변경");
             }
         }else{
             // 프로필 선택 모드라면 수정모드로 바꾼다.
-            for(int i =0; i< imageViewArrayList.size(); i++){
+            for(int i =0; i< imageViewArrayList.size()-1; i++){
                 ImageView imView = imageViewArrayList.get(i);
                 imView.setImageResource(R.drawable.ic_baseline_offline_pin_24);
                 imView.setTag("Edit");
+                Log.i("test", "프로필 수정 모드로 변경");
 
             }
         }
@@ -89,7 +106,8 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // 마지막 인덱스는 추가하기 버튼으로
-        if(mDataList.size()==1){
+        Log.i("position&size Test", "position: "+holder.getAdapterPosition()+", size: "+mDataList.size());
+        if(holder.getAdapterPosition() == mDataList.size()-1){
             holder.profileItemName.setText("추가하기");
             holder.profileItemImV.setImageResource(R.drawable.ic_baseline_add_photo_alternate_24);
             holder.profileItemImV.setOnClickListener(new View.OnClickListener() {
@@ -101,19 +119,24 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                     StartForResultAddProfile.launch(intent);
                 }
             });
+            imageViewArrayList.add(holder.profileItemImV);
+
         }else{
             // 마지막 인덱스가 아닐 경우
             holder.profileItemName.setText(mDataList.get(holder.getAdapterPosition()).getName());
-            imageViewArrayList.add(holder.profileItemImV);
+            holder.profileItemImV.setTag("Select");
             holder.profileItemImV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.i("ProfileSelectRecyclerAdapter", "태그내용: "+holder.profileItemImV.getTag().toString());
                     if(holder.profileItemImV.getTag() == "Select"){
                         // 선택모드에서 클릭시 프로필 정보를 갖고 메인 화면으로 간다.
+                        MyApplication myApp = (MyApplication)context.getApplicationContext();
+                        myApp.setSelectedUser(mDataList.get(holder.getAdapterPosition()));
                         Intent intent = new Intent(context, MainScreenActivity.class);
                         intent.putExtra("profileData",mDataList.get(holder.getAdapterPosition()));
                         Log.i("ProfileSelectRecyclerAdapter", mDataList.get(holder.getAdapterPosition()).getName()+"가 선택되었습니다..");
+                        myApp.setId(mDataList.get(holder.getAdapterPosition()).getUser_num());
                         holder.context.startActivity(intent);
                     }else if(holder.profileItemImV.getTag() == "Edit"){
                         // 수정모드에서 클릭시 프로필 정보를 갖고 프로필세팅 화면으로 간다.
@@ -128,6 +151,9 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
                     }
                 }
             });
+            // 맨뒤에는 추가하기가 들어가야되므로 size-2의 인덱스부분에 추가한다.
+            imageViewArrayList.add(holder.getAdapterPosition(),holder.profileItemImV);
+
 
         }
     }

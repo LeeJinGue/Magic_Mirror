@@ -6,6 +6,7 @@
 
     <application
         android:name=".dataClass.MyApplication"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,11 +16,7 @@
         <activity
             android:name=".activities.PutDevWifiAddress"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -63,9 +60,13 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.RegisterDevActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.MainActivity"

@@ -7761,7 +7761,7 @@
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="hintStyle">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">12pt</item>
+        <item name="android:textSize">10pt</item>
         <item name="fontFamily">@font/notosanskr_regular</item>
     </style><style name="scheduleTitle">
         <item name="android:textSize">7pt</item>
@@ -7787,6 +7787,11 @@
         
         <item name="android:statusBarColor" ns2:targetApi="l">?attr/colorPrimaryVariant</item>
         
+    </style><style name="delBtnStyle">
+        <item name="android:textColor">#E91E63</item>
+        <item name="backgroundColor">#FFFFFF</item>
+        <item name="android:textSize">10pt</item>
+        <item name="fontFamily">@font/notosanskr_regular</item>
     </style></file><file path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\values-night\themes.xml" qualifiers="night-v8"><style name="Theme.SmartMirror" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         
         <item name="colorPrimary">@color/purple_200</item>
@@ -7799,7 +7804,7 @@
         
         <item name="android:statusBarColor" ns2:targetApi="l">?attr/colorPrimaryVariant</item>
         
-    </style></file><file name="searchable" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\xml\searchable.xml" qualifiers="" type="xml"/></source><source path="C:\Capstone1\copyFolder\SmartMirror\app\build\generated\res\rs\debug"/><source path="C:\Capstone1\copyFolder\SmartMirror\app\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Capstone1\copyFolder\SmartMirror\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Capstone1\copyFolder\SmartMirror\app\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AlertDialog">
+    </style></file><file name="searchable" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\xml\searchable.xml" qualifiers="" type="xml"/><file name="ic_watch" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\drawable\ic_watch.png" qualifiers="" type="drawable"/><file name="rectangle_bgcolor" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\drawable\rectangle_bgcolor.xml" qualifiers="" type="drawable"/><file name="message_date_item" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\layout\message_date_item.xml" qualifiers="" type="layout"/><file name="message_left_item" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\layout\message_left_item.xml" qualifiers="" type="layout"/><file name="message_right_item" path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\layout\message_right_item.xml" qualifiers="" type="layout"/><file path="C:\Capstone1\copyFolder\SmartMirror\app\src\main\res\values\integer.xml" qualifiers=""><integer name="TYPE_DATE">0</integer><integer name="TYPE_MESSAGE_LEFT">1</integer><integer name="TYPE_MESSAGE_RIGHT">2</integer></file></source><source path="C:\Capstone1\copyFolder\SmartMirror\app\build\generated\res\rs\debug"/><source path="C:\Capstone1\copyFolder\SmartMirror\app\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Capstone1\copyFolder\SmartMirror\app\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Capstone1\copyFolder\SmartMirror\app\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AlertDialog">
         <attr name="android:layout"/>
         <attr format="reference" name="buttonPanelSideLayout"/>
         <attr format="reference" name="listLayout"/>

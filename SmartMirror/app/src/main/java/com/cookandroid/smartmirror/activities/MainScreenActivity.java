@@ -14,12 +14,14 @@ import androidx.appcompat.widget.Toolbar;
 import com.cookandroid.smartmirror.Methods;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.userData;
 import com.cookandroid.smartmirror.navigationFragment.CheckBelongingsFragment;
 import com.cookandroid.smartmirror.navigationFragment.MessageSendFragment;
 import com.cookandroid.smartmirror.navigationFragment.ScheduleFragment;
 import com.cookandroid.smartmirror.navigationFragment.StockSetupFragment;
 import com.cookandroid.smartmirror.navigationFragment.WindowSetupFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainScreenActivity extends AppCompatActivity {
     //하단 네비게이션 선택 시, 넘어갈 화면 변수
@@ -30,13 +32,19 @@ public class MainScreenActivity extends AppCompatActivity {
     CheckBelongingsFragment checkBelongingsFragment_frag;
     Toolbar toolbar;
     TextView tvTitle;
-
+    userData selectedUser;
+    BottomNavigationView bottomNavigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
+
+
         MyApplication app = (MyApplication)getApplicationContext();
-        Log.i("메인스크린", app.getSelectedProfileName()+"의 프로필이 선택되었습니다.");
+        selectedUser = app.getSelectedUser();
+        Log.i("MainScreenActivity", selectedUser.getName()+"의 프로필이 선택되었습니다.");
+
+
         // Add Coustom AppBar & Set Title Color Gradient\
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -60,42 +68,28 @@ public class MainScreenActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, windowSetupFragment_frag).commit();
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnItemSelectedListener(
+                new NavigationBarView.OnItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.tab1:
-                                Toast.makeText(getApplicationContext(), "화면설정", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, windowSetupFragment_frag).commit();
-
                                 return true;
-
                             case R.id.tab2:
-//                                Toast.makeText(getApplicationContext(), "메시지전송", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, messageSendFragment_frag).commit();
-
                                 return true;
-
                             case R.id.tab3:
-                                Toast.makeText(getApplicationContext(), "일정등록", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, scheduleFragment_frag).commit();
-
                                 return true;
-
                             case R.id.tab4:
-                                Toast.makeText(getApplicationContext(), "관심주설정", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, stockSetupFragment_frag).commit();
-
                                 return true;
                             case R.id.tab5:
-                                Toast.makeText(getApplicationContext(), "소지품확인", Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, checkBelongingsFragment_frag).commit();
-
                                 return true;
                         }
-
                         return false;
                     }
                 }

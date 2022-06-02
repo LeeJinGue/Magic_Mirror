@@ -77,9 +77,18 @@ public class ProfileSelectActivity extends AppCompatActivity {
                         userData editedUser = intent.getParcelableExtra("editUser");
                         int index = intent.getIntExtra("index", -1);
                         Log.i("ProfileSelectActivity", "수정된 프로필: "+editedUser.toString());
-                        userDataList.set(index, editedUser);
-                        mAdapter.editItemNameAt(editedUser.getName(), index);
-                        mAdapter.changeImgViewList(isSettingMode);
+//                        userDataList.set(index, editedUser);
+                        mAdapter.editItemNameAt(editedUser, index);
+                        mAdapter.changeImgViewList(true);
+                        isSettingMode = false;
+                    }else if(result.getResultCode() == 100){
+                        // 결과코드 100 == 해당 프로필을 삭제하려고 할 때
+                        Intent intent = result.getData();
+                        int index = intent.getIntExtra("index", -1);
+                        userData delUser = intent.getParcelableExtra("delUser");
+                        Log.i("ProfileSelectActivity", "삭제할 프로필"+delUser.toString());
+                        mAdapter.delItemAt(delUser, index);
+                        mAdapter.changeImgViewList(true);
                         isSettingMode = false;
                     }else{
 //                        addedStockName = "없음";
@@ -87,10 +96,13 @@ public class ProfileSelectActivity extends AppCompatActivity {
                 }
             });
 
-    public void getUserData(){
+    public ArrayList<userData> getUserData(){
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
-//        userDataList = sqlDB.getAllUserList();
-
+        ArrayList<userData> userDataList = sqlDB.getAllUserList();
+        // 초기값
+        userData last = new userData(2, "", "추가하기", "없음");
+        userDataList.add(last);
+        return userDataList;
     }
 
     @Override
@@ -114,6 +126,7 @@ public class ProfileSelectActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(false);
 
         // 프로필 RecyclerView 추가, 어댑터 추가
+        userDataList = getUserData();
         mAdapter = new ProfileRecyclerAdapter(userDataList, getApplicationContext(), StartForResultEditProfile, StartForResultAddProfile);
         profileRecyclerView.setAdapter(mAdapter);
         profileRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL,false));

@@ -84,12 +84,12 @@ public class StockSearchRecyclerAdapter extends RecyclerView.Adapter<StockSearch
         }else{
             for(String sName : arrayList){
                 if(sName.toLowerCase(Locale.getDefault()).contains(filter.toLowerCase(Locale.getDefault()))){
-                    Log.i("StockSearchRecyclerAdapter", "검색결과: "+sName);
+//                    Log.i("StockSearchRecyclerAdapter", "검색결과: "+sName);
                     stockSearchResult.add(sName);
                 }
             }
         }
-        Log.i("StockSearchRecyclerAdapter", "결과리스트: "+stockSearchResult.toString());
+//        Log.i("StockSearchRecyclerAdapter", "결과리스트: "+stockSearchResult.toString());
         notifyItemRangeChanged(0, stockSearchResult.size());
         notifyDataSetChanged();
     }

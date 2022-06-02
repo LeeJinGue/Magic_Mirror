@@ -55,7 +55,7 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
         Log.i("BelongingRecyclerAdapter", name+"아이템 추가");
         belongingItemList.add(name);
         notifyItemInserted(belongingItemList.size());
-        notifyItemRangeChanged(belongingItemList.size()-1, belongingItemList.size());
+//        notifyItemRangeChanged(belongingItemList.size()-1, belongingItemList.size());
     }
     public String getItemName(int index){
         return belongingItemList.get(index);
@@ -64,7 +64,7 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
         Log.i("BelongingRecyclerAdapter", index+"번째 아이템 삭제");
         belongingItemList.remove(index);
         notifyItemRemoved(index);
-        notifyItemRangeChanged(index, belongingItemList.size());
+//        notifyItemRangeChanged(index, belongingItemList.size());
     }
 
     @Override
