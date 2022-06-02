@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.cookandroid.smartmirror.dataClass.devData;
+import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.messageData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
@@ -115,34 +116,8 @@ public class MirrorNetworkHelper {
         }
         return null;
     }
-    public String addUserToServer(userData newUserData) {
-        // 서버에 새 유저를 추가하고 받아온 ID로 sqlDB에도 추가합니다.
-        String user_num="";
-        try{
 
-            JSONObject profileData = new JSONObject();
-            profileData.put("name", newUserData.getName());
-            profileData.put("serial_no", newUserData.getSerial_no());
-            String postJsonString = profileData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addProfile";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
-
-            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
-            user_num = object.getString("user_num");
-            Log.i("jsonParsing", "user_num: " + user_num);
-        }catch (JSONException jsonException){
-            jsonException.printStackTrace();
-            Log.i("addUserToServer", "Json파싱오류");
-        }catch (IOException ioException){
-            ioException.printStackTrace();
-            Log.i("addUserToServer", "커넥션 오류");
-        }finally {
-            return user_num;
-        }
-
-    }
-
+    // 연결할 URL과 서버에 넘겨줄 JsonString으로 서버에 전송 후 받은 데이터를 String으로 Return해주는 함수
     public String connectionAndReturnString(String urlString, String jsonString) throws IOException {
         URL url = new URL(urlString.trim().toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -180,6 +155,166 @@ public class MirrorNetworkHelper {
         return returnData;
     }
 
+    public String addUserToServer(userData newUserData) {
+        // 서버에 새 유저를 추가하고 받아온 ID로 sqlDB에도 추가합니다.
+        String user_num="";
+        try{
+
+            JSONObject profileData = new JSONObject();
+            profileData.put("name", newUserData.getName());
+            profileData.put("serial_no", newUserData.getSerial_no());
+            String postJsonString = profileData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addProfile";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            user_num = object.getString("user_num");
+            Log.i("jsonParsing", "user_num: " + user_num);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("addUserToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("addUserToServer", "커넥션 오류");
+        }finally {
+            return user_num;
+        }
+
+    }
+    public boolean editUserToServer(userData editUserData){
+        try{
+
+            JSONObject profileData = new JSONObject();
+            profileData.put("user_num", editUserData.getUser_num());
+            profileData.put("name", editUserData.getName());
+            String postJsonString = profileData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editProfile";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+            Log.i("jsonParsing", "ok | no: " + returnData);
+            if(returnData.equals("ok")){
+                return true;
+            }
+            
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("editUserToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("editUserToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public boolean delUserToServer(userData delUserData){
+        try{
+
+            JSONObject profileData = new JSONObject();
+            profileData.put("user_num", delUserData.getUser_num());
+            String postJsonString = profileData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delProfile";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+            Log.i("jsonParsing", "ok | no: " + returnData);
+            if(returnData.equals("ok")){
+                return true;
+            }
+
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("delUserToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("delUserToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public ArrayList<layoutData> layoutSetFromServer(ArrayList<layoutData> layoutArrayList){
+        JSONArray objectArray = null;
+        ArrayList<layoutData> returnLayoutList=new ArrayList<>();
+        try{
+
+            JSONArray layoutDataArray = new JSONArray();
+            for(layoutData l:layoutArrayList){
+                JSONObject layoutData = new JSONObject();
+                layoutData.put("user_num", l.getuser_num());
+                layoutData.put("loc", l.getLoc());
+                layoutData.put("type", l.getType());
+                layoutDataArray.put(layoutData);
+            }
+            String postJsonString = layoutDataArray.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/layoutSet";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+            objectArray = (JSONArray) new JSONTokener(returnData).nextValue();
+            for(int i=0; i<objectArray.length(); i++){
+                layoutData l = layoutArrayList.get(i);
+                l.setLayout_id(objectArray.getJSONObject(i).getInt("layout_id"));
+                returnLayoutList.add(l);
+//                Log.i("layoutSetFromServer", "레이아웃: "+layoutArrayList.get(i).toString());
+            }
+//            Log.i("jsonParsing", "returnArrayList: " + returnLayoutList.toString());
+            return returnLayoutList;
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("getAllTableFromServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("getAllTableFromServer", "커넥션 오류");
+        }
+        return returnLayoutList;
+    }
+
+    public String sendMessageToServer(messageData newMsgData){
+        String message_id="";
+        try{
+
+            JSONObject messageData = new JSONObject();
+            messageData.put("sender_num", newMsgData.getSender_num());
+            messageData.put("user_num", newMsgData.getUser_num());
+            messageData.put("text", newMsgData.getText());
+            messageData.put("date", newMsgData.getDate());
+            String postJsonString = messageData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/sendMessage";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            message_id = object.getString("message_id");
+            Log.i("jsonParsing", "message_id: " + message_id);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("addUserToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("addUserToServer", "커넥션 오류");
+        }finally {
+            return message_id;
+        }
+    }
+    public boolean delMessageToServer(messageData delMessageData){
+        try{
+
+            JSONObject messageData = new JSONObject();
+            messageData.put("message_id", delMessageData.getMessage_id());
+            String postJsonString = messageData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delMessage";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+            Log.i("jsonParsing", "ok | no: " + returnData);
+            if(returnData.equals("ok")){
+                return true;
+            }
+
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("delMessageToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("delMessageToServer", "커넥션 오류");
+        }
+        return false;
+    }
     public JSONObject getAllTableFromServer(SQLiteDatabase db){
         JSONObject object = null;
         try{
@@ -192,123 +327,17 @@ public class MirrorNetworkHelper {
             String returnData = connectionAndReturnString(urlString, postJsonString);
 
             object = (JSONObject) new JSONTokener(returnData).nextValue();
-//            JSONArray userArray = object.getJSONArray("user");
-//            Log.i("jsonParsing", "받은데이터: " + userArray.get(0).toString());
         }catch (JSONException jsonException){
             jsonException.printStackTrace();
-            Log.i("addUserToServer", "Json파싱오류");
+            Log.i("getAllTableFromServer", "Json파싱오류");
         }catch (IOException ioException){
             ioException.printStackTrace();
-            Log.i("addUserToServer", "커넥션 오류");
+            Log.i("getAllTableFromServer", "커넥션 오류");
         }finally {
             return object;
         }
     }
-    public void addProfile() throws JSONException {
-        JSONObject addProfileJson = new JSONObject();
-        // DB에서 가져와야하긴하는데 일단 패스
-        String IP="192.168.0.6";
-        String Port = "8000";
-        String funcName = "addProfile";
-        addProfileJson.put("name", "이진규");
-        addProfileJson.put("serial_no", "1");
-        // server에 전송할 Json->String으로 파싱한 Data
-        String postJsonString = addProfileJson.toString();
-        // 연결할 server의 URL
-        String urlString = "http://"+IP+":"+Port+funcName;
-        httpPostBodyConnection(urlString, postJsonString);
-    }
 
-//    public void syncAllTableJson(String IP, String Port){
-//        // 서버에서 syncAllTable를 통해 모든 Table 정보를 받아옵니다.
-//        // 서버에 연결할 IP:Port/함수이름
-//        String urlString = "http://192.168.0.6:8000/syncAllTable";
-//        //http 요청 시 필요한 url 주소를 변수 선언
-//        String totalUrl = "";
-//        totalUrl = urlString.trim().toString();
-//
-//        //http 통신을 하기위한 객체 선언 실시
-//        URL url = null;
-//        HttpURLConnection conn = null;
-//
-//        //http 통신 요청 후 응답 받은 데이터를 담기 위한 변수
-//        String responseData = "";
-//        BufferedReader br = null;
-//        StringBuffer sb = null;
-//
-//        //메소드 호출 결과값을 반환하기 위한 변수
-//        String returnData = "";
-//        try {
-//            //파라미터로 들어온 url을 사용해 connection 실시
-//            url = new URL(totalUrl);
-//            conn = (HttpURLConnection) url.openConnection();
-//
-//            //http 요청에 필요한 타입 정의 실시
-//            conn.setRequestMethod("POST");
-//            conn.setRequestProperty("Content-Type", "application/json; utf-8"); //post body json으로 던지기 위함
-//            conn.setRequestProperty("Accept", "application/json");
-//            conn.setDoOutput(true); //OutputStream을 사용해서 post body 데이터 전송
-//            try (OutputStream os = conn.getOutputStream()) {
-//                byte request_data[] = ParamData.getBytes("utf-8");
-//                os.write(request_data);
-//                os.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            //http 요청 실시
-//            conn.connect();
-//            Log.i("addProfileFromDB", "요청주소: "+UrlData+", 보낸데이터: "+ParamData);
-//
-//            //http 요청 후 응답 받은 데이터를 버퍼에 쌓는다
-//            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-//            sb = new StringBuffer();
-//            while ((responseData = br.readLine()) != null) {
-//                sb.append(responseData); //StringBuffer에 응답받은 데이터 순차적으로 저장 실시
-//            }
-//
-//            //메소드 호출 완료 시 반환하는 변수에 버퍼 데이터 삽입 실시
-//            //sb에는 서버로부터 받은 json 형식 데이터가 저장되어 있음, 문자열로 변환하여 사용
-//            returnData = sb.toString();
-//
-//            //http 요청 응답 코드 확인 실시
-//            String responseCode = String.valueOf(conn.getResponseCode());
-//            System.out.println("http 응답 코드 : " + responseCode);
-//            System.out.println("http 응답 데이터 : " + returnData);
-//
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
-//                String user_num = object.getString("user_num");
-//                Log.i("jsonParsing", "user_num: " + user_num);
-////                JSONArray deviceTable = object.getJSONArray("deviceTable");
-////                JSONObject j = (JSONObject) deviceTable.get(0);
-//////                Log.i("jsonParsing", "row"+i+": "+j.toString());
-////                String serial_no = j.getString("serial_no");
-////                String ip = j.getString("ip");
-////                int port = j.getInt("port");
-////                String location = j.getString("location");
-////                String info = j.getString("info");
-////                Log.i("jsonParsing", "user_noL "+user_no+", serial_no: "+serial_no+", userName: "+userName+", user_image_pass: "+user_image_pass);
-////                userData newUser = new userData(user_num, );
-////                devData devData = new devData(serial_no, ip, port, location, info);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            //http 요청 및 응답 완료 후 BufferedReader, conn을 닫아줍니다
-//            conn.disconnect();
-//            try {
-//                if (br != null) {
-//                    br.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     public void httpMain() throws JSONException {
         System.out.println("[HttpURLConnection 사용해  post body json 방식 데이터 요청 및 응답 값 확인 실시]");

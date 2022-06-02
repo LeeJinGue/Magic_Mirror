@@ -11,6 +11,7 @@ import java.util.Date;
 
 public class messageData implements Parcelable {
     private int message_id, user_num, sender_num, year, month, day, hour, minute;
+    private String hourString, minuteString;
     private String text, date;
 //    private String date;
     private LocalDateTime localDateTime;
@@ -25,6 +26,8 @@ public class messageData implements Parcelable {
         day = in.readInt();
         hour = in.readInt();
         minute = in.readInt();
+        hourString = in.readString();
+        minuteString = in.readString();
         text = in.readString();
         date = in.readString();
         viewType = in.readInt();
@@ -57,8 +60,11 @@ public class messageData implements Parcelable {
         this.year = Integer.parseInt(Methods.getYearFromDateString(date));
         this.month = Integer.parseInt(Methods.getMonthFromDateString(date));
         this.day = Integer.parseInt(Methods.getDayFromDateString(date));
-        this.hour = Integer.parseInt(Methods.getHourFromDateString(date));
-        this.minute = Integer.parseInt(Methods.getMonthFromDateString(date));
+        this.hourString = Methods.getHourFromDateString(date);
+        this.hour = Integer.parseInt(this.hourString);
+        this.minuteString = Methods.getMonthFromDateString(date);
+        this.minute = Integer.parseInt(minuteString);
+
         if(isReceived){ this.viewType = R.integer.TYPE_MESSAGE_LEFT;
         }else{ this.viewType = R.integer.TYPE_MESSAGE_RIGHT; }
         this.localDateTime = LocalDateTime.of(year, month, day, hour, minute);
@@ -77,9 +83,9 @@ public class messageData implements Parcelable {
 
     public String toString(){
         if(viewType != R.integer.TYPE_DATE){
-            return "보낸사람: "+sender_num+", 받는사람: "+user_num+", 메시지 내용: "+text+", 날짜: "+year+"년 "+month+"월 "+date+"일 "+hour+"시 "+minute+"분"+", LocalDateTime: "+localDateTime.toString();
+            return "보낸사람: "+sender_num+", 받는사람: "+user_num+", 메시지 내용: "+text+", 날짜: "+year+"년 "+month+"월 "+day+"일 "+hour+"시 "+minute+"분"+", LocalDateTime: "+localDateTime.toString();
         }else{
-            return "날짜: "+year+"년 "+month+"월 "+date+"일";
+            return "날짜: "+year+"년 "+month+"월 "+day+"일";
 
         }
     }
@@ -110,6 +116,8 @@ public class messageData implements Parcelable {
         return viewType;
     }
     public String getDate(){return date;}
+    public String getHourString(){return hourString;}
+    public String getMinuteString(){return minuteString;}
 
     @Override
     public int describeContents() {
@@ -126,6 +134,8 @@ public class messageData implements Parcelable {
         dest.writeInt(day);
         dest.writeInt(hour);
         dest.writeInt(minute);
+        dest.writeString(hourString);
+        dest.writeString(minuteString);
         dest.writeString(text);
         dest.writeString(date);
         dest.writeInt(viewType);

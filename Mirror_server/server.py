@@ -64,7 +64,7 @@ def editProfile():
 @app.route('/delProfile', methods=['GET','POST'])
 def delProfile():
     params = json.loads(request.get_data())
-    data = server_db_access.edit_profile(params)
+    data = server_db_access.del_profile(params)
     if data == 0:
         return 'ok'
     else:
@@ -75,6 +75,7 @@ def delProfile():
 def layoutSet():
     params = json.loads(request.get_data())
     data = server_db_access.layout_set(params)
+    print(data)
     return jsonify(data)
 
 #메시지 수신

@@ -106,7 +106,7 @@ def del_profile(input):
 def layout_set(input):
     db = db_connect()
     layout_del_sql = "DELETE FROM layoutsetting where user_num = %s"
-    layout_set_sql = "INSERT INTO layoutsetting(user_num, type, loc) VALUES (%s, %s, %s);"
+    layout_set_sql = "INSERT INTO layoutsetting(user_num, loc, type) VALUES (%s, %s, %s);"
     get_layout_id_sql = 'SELECT layout_id FROM layoutsetting WHERE user_num = %s'
     
     try: 

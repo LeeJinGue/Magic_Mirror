@@ -144,6 +144,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             if(layoutsettingArray.length()>0){
                 for(int i=0; i< layoutsettingArray.length(); i++){
                     JSONObject layoutsettingJson = layoutsettingArray.getJSONObject(i);
+                    Log.i("indexTest","json: "+layoutsettingJson.toString());
                     layoutData newLayoutData = new layoutData(layoutsettingJson.getInt("layout_id"),layoutsettingJson.getInt("user_num"),layoutsettingJson.getInt("loc"),layoutsettingJson.getInt("type"));
                     addLayoutSet(newLayoutData);
                 }
@@ -161,15 +162,14 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                     JSONObject messageJson = messageArray.getJSONObject(i);
                     String messageJsonString = messageJson.getString("date");
                     Log.i("messageTest", "받은 메세지: "+messageJsonString);
-                    // 메세지 생성할 때 시간을 년월일로 주는게 아니라 DateTime 이런형식으로 주도록 수정해야함
-//                    messageData newMessageData = new messageData(
-//                            messageJson.getInt("message_id"),
-//                            messageJson.getInt("user_num"),
-//                            messageJson.getInt("sender_num"),
-//                            messageJson.getString("text"),
-//                            messageJson.getString("date"),
-//                            false);
-//                    addMessage(newMessageData);
+                    messageData newMessageData = new messageData(
+                            messageJson.getInt("message_id"),
+                            messageJson.getInt("user_num"),
+                            messageJson.getInt("sender_num"),
+                            messageJson.getString("text"),
+                            messageJson.getString("date"),
+                            false);
+                    addMessage(newMessageData);
                 }
 
             }
@@ -182,13 +182,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             if(scheduleArray.length()>0){
                 for(int i=0; i< scheduleArray.length(); i++){
                     JSONObject scheduleJson = scheduleArray.getJSONObject(i);
-//                    scheduleData newscheduleData = new scheduleData(
-//                            scheduleJson.getInt("schedule_id"),
-//                            scheduleJson.getInt("user_num"),
-//                            scheduleJson.getString("start_time"),
-//                            scheduleJson.getString("end_time"),
-//                            scheduleJson.getString("text"));
-//                    addSchedule(newscheduleData);
+                    scheduleData newscheduleData = new scheduleData(
+                            scheduleJson.getInt("schedule_id"),
+                            scheduleJson.getInt("user_num"),
+                            scheduleJson.getString("start_time"),
+                            scheduleJson.getString("end_time"),
+                            scheduleJson.getString("text"));
+                    addSchedule(newscheduleData);
                 }
 
             }
@@ -519,11 +519,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     public void layoutSet(ArrayList<layoutData> layoutDataList, userData selectedUser){
 
         // layoutsetting 테이블에서 받은 userData에 있는 user_num와 같은 user_num인 Row들 삭제
-        db.delete("layoutsetting", "user_num=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        int isDel = db.delete("layoutsetting", "user_num=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        Log.i("layoutSet", "삭제여부: "+isDel);
         // 새 layoutData들 모아서 추가
         for(layoutData layoutData:layoutDataList){
+            Log.i("layoutSet", "삭제할 레이아웃 데이터: "+layoutData.toString());
             ContentValues values = new ContentValues();
-            values.put("layout_id", ++set_layout_id);
+            values.put("layout_id", layoutData.getLayout_id());
             values.put("user_num", selectedUser.getUser_num());
             values.put("type", layoutData.getType());
             values.put("loc", layoutData.getLoc());
@@ -593,8 +595,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 ", " + newMessage.getUser_num() +
                 ", " + newMessage.getSender_num() +
                 ", '" + newMessage.getText() +
-                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDay()+"일 "+
-                newMessage.getHour()+"시 "+newMessage.getMinute()+ "분"+
+                "', '" + newMessage.getDate()+
                 "');");
         newMessage.setMessage_id(set_message_id);
         Log.i("addMessage", "새 메세지 "+newMessage.toString()+" 추가");

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.WindowAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -49,6 +50,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
     String[] nowWidgetResTag;
     DragListener dragListener;
     LongCliskListnener longCliskListnener;
+    MirrorNetworkHelper networkHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 //        initUI(rootView);
         // DB Init
         sqlDB = new MirrorDBHelper(rootView.getContext(),2);
+        networkHelper = new MirrorNetworkHelper();
         myApp = (MyApplication) getActivity().getApplicationContext();
         // 현재 선택된 유저
         selectedUser = myApp.getSelectedUser();
@@ -127,6 +130,9 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
                 int type = -1;
                 // resTag를 돌면서
                 for(int i=0; i< nowWidgetResTag.length; i++){
+                    // 위아래가 같은 위젯이면 위에꺼만 추가한다.
+                    if(i==2 && nowWidgetResTag[2].equals(nowWidgetResTag[1])) continue;
+                    if(i==3 && nowWidgetResTag[3].equals(nowWidgetResTag[0])) continue;
                     for(int j=0; j<layoutData.TYPE_RES_ID.length; j++){
                         //
                         if(Integer.parseInt(nowWidgetResTag[i]) == layoutData.TYPE_RES_ID[j]){
@@ -138,15 +144,16 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
                         }
                     }
                 }
-                sqlDB.layoutSet(layoutSetList,selectedUser);
+                layoutSetList = networkHelper.layoutSetFromServer(layoutSetList);
+                if(layoutSetList != null){
+                    sqlDB.layoutSet(layoutSetList,selectedUser);
+                }
             }
         });
         initUI(rootView, layoutSetList);
         return rootView;
     }
-//    public layoutData getLayoutDataAndLoc(){
-//
-//    }
+
     private void initUI(ViewGroup rootView, ArrayList<layoutData> layoutSetList) {
         //DB로부터 사용자가 기존에 설정한 화면설정정보가 있다면, 읽어들여 초기화면 적용
         //없다면, default 화면
@@ -157,14 +164,30 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
         ImageView initbottomright = (ImageView)rootView.findViewById(R.id.imageView_bottomright);
         for(int i=0; i<layoutSetList.size();i++){
             layoutData nowLayout = layoutSetList.get(i);
+            int layoutSize = 1;
+            if(nowLayout.getType() == 0 || nowLayout.getType() == 3){
+                layoutSize = 2;
+            }
             switch(nowLayout.getLoc()){
                 case 0:
+                    if(layoutSize==2){
+                        initbottomleft.setImageResource(nowLayout.getImageResId());
+                        initbottomleft.setTag(String.valueOf(nowLayout.getImageResId()));
+                        widgets[3] = String.valueOf(nowLayout.getImageResId());
+                        Log.i("initUI", "왼쪽 아래 레이아웃: "+nowLayout.toString());
+                    }
                     inittopleft.setImageResource(nowLayout.getImageResId());
                     inittopleft.setTag(String.valueOf(nowLayout.getImageResId()));
                     widgets[0] = String.valueOf(nowLayout.getImageResId());
                     Log.i("initUI", "왼쪽 위 레이아웃: "+nowLayout.toString());
                     break;
                 case 1:
+                    if(layoutSize==2){
+                        initbottomright.setImageResource(nowLayout.getImageResId());
+                        initbottomright.setTag(String.valueOf(nowLayout.getImageResId()));
+                        widgets[2] = String.valueOf(nowLayout.getImageResId());
+                        Log.i("initUI", "오른쪽 아래 레이아웃: "+nowLayout.toString());
+                    }
                     inittopright.setImageResource(nowLayout.getImageResId());
                     inittopright.setTag(String.valueOf(nowLayout.getImageResId()));
                     widgets[1] = String.valueOf(nowLayout.getImageResId());
