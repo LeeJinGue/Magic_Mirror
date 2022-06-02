@@ -25,7 +25,7 @@ class Thread1(QThread):
         self.parent = parent
         self.days  =["월","화","수", '목','금','토', '일']
     def run(self):
-      while True:
+      while True :
         try:
           now = datetime.datetime.now()
           tstr = str(now.hour).zfill(2) + " : " + str(now.minute).zfill(2)
@@ -45,6 +45,7 @@ class Thread1(QThread):
 class clock(QWidget):
   def __init__(self):
     self.days  =["월","화","수", '목','금','토', '일']
+
     super().__init__()
   def setupUi(self, Form, x, y):
       self.widget_border = QtWidgets.QLabel(Form)
@@ -115,6 +116,8 @@ class clock(QWidget):
     self.date.setText(mdstr)
     self.week_day.setText(self.days[now.weekday()])
 
+  def off_clock(self):
+    self.twork = 0
 
   def timer_init(self,Form): #시계 작동 타이머 이벤트
       # self.timer = QTimer(Form)

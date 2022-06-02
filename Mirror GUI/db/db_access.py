@@ -24,6 +24,8 @@ def get_user_layoutsetting(user_id):
 
     return result
 
+print(get_user_layoutsetting(2))
+
 #스케쥴 호출 함수
 def get_schedule(user_id):
     db = db_connect()
@@ -37,6 +39,7 @@ def get_schedule(user_id):
 
     return result    
 
+#소지품 호출 함수
 def get_belongings(user_id):
     db = db_connect()
     try: 
@@ -44,12 +47,13 @@ def get_belongings(user_id):
             sql = 'SELECT stuff_list FROM belongings where user_num = %s AND activation = %s'
             cursor.execute(sql,[user_id,1])
             result = cursor.fetchall()
-            print(result)
+            #print(result)
     finally:
         db.close()
 
     return result
 
+#메시지 호출 함수
 def get_message(user_id):
     db = db_connect()
     try: 
@@ -62,6 +66,7 @@ def get_message(user_id):
 
     return result
 
+#주식 호출 함수
 def get_stock(user_id):
     db = db_connect()
     try: 
@@ -72,7 +77,25 @@ def get_stock(user_id):
     finally:
         db.close()
 
-    return result   
+    return result
+
+
+#유저 리스트 호출 함수
+def get_name():
+    db = db_connect()
+    r = {}
+    try: 
+        with db.cursor() as cursor:
+            sql = 'SELECT name, user_num FROM user'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+    finally:
+        db.close()
+    for i in result:
+        r[i[0]] = i
+    return r
+
+#print(get_name())
 
 # print(get_user_layoutsetting(1))
 # data = get_schedule(1)

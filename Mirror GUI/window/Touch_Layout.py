@@ -7,24 +7,44 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import (QApplication, QWidget
-, QLineEdit, QTextBrowser, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
 from widget import widget_weather , widget_time, widget_camera , widget_schedule , widget_stock, widget_message, widget_belonging
 from db import db_access
+import time
+
+
+class T_wait(QThread):
+    #parent = MainWidget을 상속 받음.
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+    def run(self):
+      while True:
+        time.sleep(1)
+        self.parent.wait-=1
+        if(self.parent.wait < 0):
+          self.parent.exit()
+          break
+        else:
+          self.parent.wait_b.setText(str(self.parent.wait)+" 초")
+      
+      print("사용자 레이아웃 종료")
 
 
 class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, 
 widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_belonging.belonging):
 
   loc_xy = [[0,0],[504,0],[504,270],[0,270]] # 1좌상, 2우상, 3우하, 4좌하
-  user_id = 1
   def __init__(self):
+    self.wait = 20
     super().__init__()
 
-  def setupUi(self, Form):
+  def setupUi(self, Form,user_num):
         self.Form = Form
+        self.user_id = user_num
         Form.setObjectName("Form")
         Form.resize(1024, 600)
         Form.setWindowFlags(Qt.FramelessWindowHint)
@@ -165,6 +185,41 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_bel
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
+
+        self.topBar = QtWidgets.QLabel(Form)
+        self.topBar.setGeometry(QtCore.QRect(5, 5, 1014, 45))
+        self.topBar.setFrameShape(QtWidgets.QFrame.Box)
+        self.topBar.setText("")
+        self.topBar.setObjectName("frame")
+
+        self.exit1 = QtWidgets.QPushButton(Form)
+        self.exit1.setGeometry(QtCore.QRect(912, 13, 100, 30))
+        self.exit1.setObjectName("btn_d1")
+        self.exit1.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 15pt """)
+
+        self.wait_b = QtWidgets.QPushButton(Form)
+        self.wait_b.setGeometry(QtCore.QRect(800, 13, 100, 30))
+        self.wait_b.setObjectName("wait_b")
+        self.wait_b.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 15pt """)
+
+        self.exit1.setText("나가기")
+        self.exit1.clicked.connect(self.exit)
+
+        self.wait_b.setText("20 초")
+        self.wait_b.clicked.connect(self.reset_wait)
+
         #위젯 작동 테스트
         #
         
@@ -176,7 +231,17 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_bel
         ##위치 3
         #widget_belonging.belonging.setupUi(self,Form,self.loc_xy[3][0],self.loc_xy[3][1])
         self.drawWidget()
+
         QtCore.QMetaObject.connectSlotsByName(Form)
+        t1 = T_wait(self)
+        t1.start()
+  
+  def exit(self):        
+       self.Form.close()
+
+  def reset_wait(self):
+    self.wait = 21
+  
 
   def drawWidget(self):
     print("위젯 그림")
@@ -184,7 +249,7 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_bel
     #print(setting)
     #0:날씨, 1:시계, 2: 카메라, 3: 스케쥴, 4: 주식, 5: 메시지, 6: 소지품
     functions = [self.draw_weather, self.draw_clock, self.draw_camera, self.draw_schedule, self.draw_stock, self.draw_message, self.draw_belongings]
-  
+
     for set in setting:
       print(set[2])
       functions[set[2]](set[3])

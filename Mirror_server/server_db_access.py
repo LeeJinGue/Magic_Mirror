@@ -1,5 +1,8 @@
 from matplotlib.pyplot import get
 import pymysql
+import time
+
+from sympy import re
 
 #데이터 베이스 연결 함수
 def db_connect():
@@ -25,12 +28,25 @@ def get_all_table():
                 cursor.execute(sql)
                 result = cursor.fetchall()
                 #print(result)
+                if(s == table_name[3]):
+                    for i in range(len(result)):
+                        result[i]['start_time'] = str(result[i]['start_time'])
+                        result[i]['end_time'] = str(result[i]['end_time'])
+                        print(result[i])
+                
+                if(s == table_name[2]):
+                    for i in range(len(result)):
+                        result[i]['date'] = str(result[i]['date'])
+                        print(result[i])
+                 
                 all_table_json[s] = result
     finally:
         db.close()
 
     #print(all_table_json)
     return all_table_json
+
+print(get_all_table())
 
 #프로필 추가 함수
 def add_profile(input):
