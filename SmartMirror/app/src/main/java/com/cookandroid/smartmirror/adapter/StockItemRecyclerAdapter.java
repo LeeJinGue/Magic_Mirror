@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.interestedStockData;
 
@@ -23,9 +24,11 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
     ArrayList<interestedStockData> stockItemList = new ArrayList<>();
 //    ArrayList<interestedStockData> stockDataList = new ArrayList<>();
     MirrorDBHelper sqlDB;
+    MirrorNetworkHelper networkHelper;
     public StockItemRecyclerAdapter(ArrayList<interestedStockData> stockItemList, MirrorDBHelper sqlDB){
         this.stockItemList = stockItemList;
         this.sqlDB = sqlDB;
+        this.networkHelper = new MirrorNetworkHelper();
     }
     @NonNull
     @Override
@@ -51,15 +54,21 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
     }
     public void addItem(interestedStockData addStockData){
         Log.i("StockItemRecyclerAdapter", addStockData+"아이템 추가");
+        String stock_id = networkHelper.addStockToServer(addStockData);
+        addStockData.setStock_id(Integer.parseInt(stock_id));
         sqlDB.addInterestedStock(addStockData);
         stockItemList.add(addStockData);
         notifyItemInserted(stockItemList.size());
     }
     public void removeAt(int index) {
         Log.i("StockItemRecyclerAdapter", index + "번째 아이템 삭제");
-        sqlDB.delInterestedStock(stockItemList.get(index));
-        stockItemList.remove(index);
-        notifyItemRemoved(index);
+        if(networkHelper.delStockToServer(stockItemList.get(index))){
+            sqlDB.delInterestedStock(stockItemList.get(index));
+            stockItemList.remove(index);
+            notifyItemRemoved(index);
+        }else{
+            Log.i("StockItemRecyclerAdapter", "아이템 삭제 실패");
+        }
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         private Context context;

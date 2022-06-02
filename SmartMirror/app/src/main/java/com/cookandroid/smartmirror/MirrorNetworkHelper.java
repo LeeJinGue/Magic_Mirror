@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.cookandroid.smartmirror.dataClass.devData;
+import com.cookandroid.smartmirror.dataClass.interestedStockData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.messageData;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
@@ -390,6 +391,55 @@ public class MirrorNetworkHelper {
         }catch (IOException ioException){
             ioException.printStackTrace();
             Log.i("delScheduleToServer", "커넥션 오류");
+        }
+        return false;
+    }
+
+    public String addStockToServer(interestedStockData addStockData){
+        String stock_id="";
+        try{
+
+            JSONObject stockData = new JSONObject();
+            stockData.put("user_num", addStockData.getUser_num());
+            stockData.put("stock_code", addStockData.getStock_code());
+            stockData.put("stock_name", addStockData.getStock_name());
+            String postJsonString = stockData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addStock";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            stock_id = object.getString("stock_id");
+            Log.i("jsonParsing", "stock_id: " + stock_id);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("addScheduleToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("addScheduleToServer", "커넥션 오류");
+        }finally {
+            return stock_id;
+        }
+    }
+    public boolean delStockToServer(interestedStockData delStockData){
+        try{
+            JSONObject stockData = new JSONObject();
+            stockData.put("stock_id", delStockData.getStock_id());
+            String postJsonString = stockData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delStock";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            Log.i("jsonParsing", "okOrNo: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("delStockToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("delStockToServer", "커넥션 오류");
         }
         return false;
     }

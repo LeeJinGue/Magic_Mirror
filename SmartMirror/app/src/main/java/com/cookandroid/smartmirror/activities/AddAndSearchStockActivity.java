@@ -80,7 +80,7 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
             public void onClick(View v) {
                 selectedStockName = searchView.getQuery().toString();
                 if(stockNameList.contains(selectedStockName)){
-                    interestedStockData addedStock = new interestedStockData(++myApp.stockId,myApp.getSelectedUser().getUser_num(), selectedStockName,"1");
+                    interestedStockData addedStock = new interestedStockData(1,myApp.getSelectedUser().getUser_num(), selectedStockName,"1");
                     Intent intent = new Intent();
                     intent.putExtra("addStock", addedStock);
                     setResult(RESULT_OK, intent);
