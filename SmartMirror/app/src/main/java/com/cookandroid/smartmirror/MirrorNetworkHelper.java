@@ -6,6 +6,7 @@ import android.util.Log;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
 import com.cookandroid.smartmirror.dataClass.messageData;
+import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
 import org.json.JSONException;
@@ -312,6 +313,83 @@ public class MirrorNetworkHelper {
         }catch (IOException ioException){
             ioException.printStackTrace();
             Log.i("delMessageToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public String addScheduleToServer(scheduleData addScheduleData){
+        String schedule_id="";
+        try{
+
+            JSONObject scheduleData = new JSONObject();
+            scheduleData.put("user_num", addScheduleData.getUser_num());
+            scheduleData.put("start_time", addScheduleData.getStartTime());
+            scheduleData.put("end_time", addScheduleData.getEndTime());
+            scheduleData.put("text", addScheduleData.getTitle());
+            String postJsonString = scheduleData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addSchedule";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            schedule_id = object.getString("schedule_id");
+            Log.i("jsonParsing", "schedule_id: " + schedule_id);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("addScheduleToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("addScheduleToServer", "커넥션 오류");
+        }finally {
+            return schedule_id;
+        }
+    }
+    public boolean editScheduleToServer(scheduleData editScheduleData){
+        try{
+
+            JSONObject scheduleData = new JSONObject();
+            scheduleData.put("schedule_id", editScheduleData.getSchedule_id());
+            scheduleData.put("user_num", editScheduleData.getUser_num());
+            scheduleData.put("start_time", editScheduleData.getStartTime());
+            scheduleData.put("end_time", editScheduleData.getEndTime());
+            scheduleData.put("text", editScheduleData.getTitle());
+            String postJsonString = scheduleData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editSchedule";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+//            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            Log.i("jsonParsing", "okOrNO: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("editScheduleToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("editScheduleToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public boolean delScheduleToServer(scheduleData delSchedule){
+        try{
+            JSONObject scheduleData = new JSONObject();
+            scheduleData.put("schedule_id", delSchedule.getUser_num());
+            String postJsonString = scheduleData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delSchedule";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            Log.i("jsonParsing", "okOrNo: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("delScheduleToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("delScheduleToServer", "커넥션 오류");
         }
         return false;
     }

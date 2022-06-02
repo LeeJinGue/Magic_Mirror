@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.ScheduleTypeDialog;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -33,6 +34,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
     userData selectedUser;
     MirrorDBHelper sqlDB;
     MyApplication myApp;
+    MirrorNetworkHelper networkHelper;
     static int[] iconResArray = {R.drawable.ic_schedule_black, R.drawable.ic_schedule_blue, R.drawable.ic_schedule_green, R.drawable.ic_schedule_orange, R.drawable.ic_schedule_purple};
     public void sortItems(){
         Collections.sort(mData, new Comparator<scheduleData>() {
@@ -47,8 +49,11 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         this.selectedUser = myApp.getSelectedUser();
         this.sqlDB = sqlDB;
         this.myApp = myApp;
+        this.networkHelper = new MirrorNetworkHelper();
     }
     public void addItem(scheduleData sData){
+        String schedule_id = networkHelper.addScheduleToServer(sData);
+        sData.setSchedule_id(Integer.parseInt(schedule_id));
         sqlDB.addSchedule(sData);
         mData.add(sData);
         sortItems();
@@ -56,18 +61,25 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
 //        notifyItemInserted(mData.size()-1);
     }
     public void editItem(int index, scheduleData data){
-        sqlDB.editSchedule(data);
-        mData.set(index, data);
-        sortItems();
-        notifyDataSetChanged();
+        if(networkHelper.editScheduleToServer(data)){
+            sqlDB.editSchedule(data);
+            mData.set(index, data);
+            sortItems();
+            notifyDataSetChanged();
+        }else{
+            Log.i("ScheduleRecyclerAdapter", "일정 수정 실패");
+        }
         //        notifyItemChanged(index);
     }
     public void removeAt(int index){
-        sqlDB.delSchedule(mData.get(index));
-        mData.remove(index);
-//        notifyItemRemoved(index);
-        sortItems();
-        notifyDataSetChanged();
+        if(networkHelper.delScheduleToServer(mData.get(index))){
+            sqlDB.delSchedule(mData.get(index));
+            mData.remove(index);
+            sortItems();
+            notifyDataSetChanged();
+        }else{
+            Log.i("ScheduleRecyclerAdapter", "일정 삭제 실패");
+        }
 
     }
     public void reset(ArrayList<scheduleData> mList){
