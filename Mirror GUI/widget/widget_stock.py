@@ -17,6 +17,7 @@ class stock(QWidget):
   def __init__(self):
     super().__init__()
   def setupUi(self, Form, x, y,user_id):
+        self.user_id = user_id
         self.widget_border = QtWidgets.QLabel(Form)
         self.widget_border.setGeometry(QtCore.QRect(x+20, y+60, 480, 250))
         self.widget_border.setFrameShape(QtWidgets.QFrame.Box)
@@ -40,14 +41,14 @@ class stock(QWidget):
       _translate = QtCore.QCoreApplication.translate
 
   def get_stock(self):
-    data = stock_module.get_stock(1)
+    data = stock_module.get_stock(self.user_id)
     for i in data:
       self.addStock(i)
     pass
 
   def addStock(self,data):
    print("아이템 추가")
-   print(data)
+  #  print(data)
    def get_item_wight():
     layout_main = QHBoxLayout()
     map1 = QLabel()

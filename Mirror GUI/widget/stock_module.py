@@ -23,14 +23,14 @@ def get_stock(user_num):
     else:
         yd = now - datetime.timedelta(days=1)
     mydate = str(now.year)+str(now.month).zfill(2)+ str(now.day).zfill(2)
-    print(mydate)
+    #print(mydate)
     r = db_access.get_stock(user_num)
-    print(r)
+    #print(r)
     for i in r:
         data = stock.get_market_ohlcv_by_date(fromdate=yd, todate=mydate, ticker=i[2])
-        print(data)
+        #print(data)
         result.append((data.iloc[0]['종가'],data.iloc[1]['종가'], i[3]))
-        print(result)
+        #print(result)
     return result
 
 

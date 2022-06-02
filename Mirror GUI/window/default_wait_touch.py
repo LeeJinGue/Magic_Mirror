@@ -10,11 +10,13 @@
 
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import Qt
-from widget import widget_weather , widget_time, widget_camera
+from PyQt5 import QtCore, QtGui, QtWidgets
+from widget import widget_weather , widget_time, widget_camera, widget_user
 
 
-class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera):
+class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera, widget_user.user):
     def setupUi(self, Form):
+        self.Form = Form
         Form.setObjectName("Form")
         Form.resize(1024, 600)
         Form.setWindowFlags(Qt.FramelessWindowHint)
@@ -155,14 +157,35 @@ class Ui_Form(widget_weather.weather, widget_time.clock,widget_camera.camera):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
         Form.setPalette(palette)
+        self.topBar = QtWidgets.QLabel(Form)
+        self.topBar.setGeometry(QtCore.QRect(5, 5, 1014, 45))
+        self.topBar.setFrameShape(QtWidgets.QFrame.Box)
+        self.topBar.setText("")
+        self.topBar.setObjectName("frame")
+
+
+        self.exit1 = QtWidgets.QPushButton(Form)
+        self.exit1.setGeometry(QtCore.QRect(912, 13, 100, 30))
+        self.exit1.setObjectName("btn_d1")
+        self.exit1.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 15pt """)
+
+        self.exit1.setText("나가기")
+        self.exit1.clicked.connect(self.exit)
 
         #위젯 배치
         widget_time.clock.setupUi(self,Form,504,0)
         widget_weather.weather.setupUi(self,Form,0,0)
-        widget_camera.camera.setupUi(self, Form, 504, 270)
+        widget_user.user.setupUi(self, Form, 504, 270)
 
         QtCore.QMetaObject.connectSlotsByName(Form)
-
+    def exit(self):
+        self.Form.close()
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
 
