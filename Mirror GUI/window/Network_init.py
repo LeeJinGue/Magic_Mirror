@@ -14,6 +14,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QSize
 from window import Network_subclass
 import os
+from db import db_access
 os.environ["QT_IM_MODULE"] = "qtvirtualkeyboard"
 
 
@@ -467,6 +468,10 @@ class Ui_Form(object):
         self.SerialNo.setGeometry(QtCore.QRect(650, 450, 321, 51))
         self.SerialNo.setObjectName("SerialNo")
 
+        self.ip = QtWidgets.QTextBrowser(Form)
+        self.ip.setGeometry(QtCore.QRect(677, 500, 321, 51))
+        self.ip.setObjectName("ip")
+
         #나가기 버튼
         self.net_exit = QtWidgets.QPushButton(Form)
         self.net_exit.setGeometry(QtCore.QRect(850, 20, 150, 40))
@@ -501,7 +506,30 @@ class Ui_Form(object):
         
 
         self.retranslateUi(Form)
+        self.set_info()
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def set_info(self):
+            info = db_access.get_device_info()
+            self.SerialNo.setText('S/N: '+ info['serial_no'])
+            self.SerialNo.setStyleSheet("""color: #FFFFFF; 
+                        background-color: #000000;
+                        border-style: solid; 
+                        border-width: 0px; 
+                        border-color: #FFFFFF; 
+                        border-radius: 0px; 
+                        font: 25pt """)
+
+
+            self.ip.setText('IP: ' + info['ip'])
+            self.ip.setStyleSheet("""color: #FFFFFF; 
+                        background-color: #000000;
+                        border-style: solid; 
+                        border-width: 0px; 
+                        border-color: #FFFFFF; 
+                        border-radius: 0px; 
+                        font: 25pt """)
+            pass
 
     def net_list_click(self):
             s = self.NetListView.currentItem()
@@ -533,24 +561,20 @@ class Ui_Form(object):
                                 border-radius: 0px; """)        
         
         
-        self.Text1.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Gulim\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">네트워크 설정을</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">해주세요</span></p></body></html>"))
+        
         self.Text1.setStyleSheet("""color: #FFFFFF; 
                                 background-color: #000000;
                                 border-style: solid; 
                                 border-width: 0px; 
                                 border-color: #FFFFFF; 
-                                border-radius: 0px; """)
-        #self.Text1.setText("네트워크 설정을\n해주세요")
+                                border-radius: 0px; 
+                                font: 30pt""")
+        self.Text1.setText("네트워크 설정을\n해주세요")
         
         self.SerialNo.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Gulim\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'Gulim\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600;\">S/N: XXXX-XXXX-XXXX</span></p></body></html>"))
         self.SerialNo.setStyleSheet("""color: #FFFFFF; 
                         background-color: #000000;
@@ -558,6 +582,14 @@ class Ui_Form(object):
                         border-width: 0px; 
                         border-color: #FFFFFF; 
                         border-radius: 0px; """)
+        self.ip.setStyleSheet("""color: #FFFFFF; 
+                        background-color: #000000;
+                        border-style: solid; 
+                        border-width: 0px; 
+                        border-color: #FFFFFF; 
+                        border-radius: 0px; 
+                        font: 15pt """)
+        self.ip.setText("aaaaaaaaaaa")
         
         self.net_exit.setText(_translate("Form", "나가기"))
         self.net_exit.clicked.connect(self.exit_fun)

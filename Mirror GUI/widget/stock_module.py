@@ -2,9 +2,10 @@ from pykrx import stock
 import os
 import sys
 import datetime
-#sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from db import db_access
 
+#주식정보 호출 함수
 def get_stock(user_num):
     result =[]
     now = datetime.datetime.now()
@@ -27,11 +28,16 @@ def get_stock(user_num):
     r = db_access.get_stock(user_num)
     #print(r)
     for i in r:
-        data = stock.get_market_ohlcv_by_date(fromdate=yd, todate=mydate, ticker=i[2])
-        #print(data)
+        for j in range(5):
+            data = stock.get_market_ohlcv_by_date(fromdate=yd, todate=mydate, ticker=i[2])
+            if(len(data)==2):
+                break
+            else:
+                 yd = yd - datetime.timedelta(days=1)
+    
         result.append((data.iloc[0]['종가'],data.iloc[1]['종가'], i[3]))
         #print(result)
     return result
 
 
-#get_stock(1)
+#print(get_stock(1))
