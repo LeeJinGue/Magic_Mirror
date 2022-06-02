@@ -212,7 +212,7 @@ class Ui_Form():
 
 
     def no(self):        
-       print("비밀번호 입력창 종료")
+       #print("비밀번호 입력창 종료")
        self.form.close()
 
 
