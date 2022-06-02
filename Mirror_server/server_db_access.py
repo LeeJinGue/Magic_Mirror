@@ -114,7 +114,7 @@ def layout_set(input):
             db.commit()
             #신규설정 등록
             for s in input:
-                cursor.execute(layout_set_sql, [s['user_num'],s['loc'], s['type']])
+                cursor.execute(layout_set_sql, [s['user_num'],s['type'], s['loc']])
                 db.commit()
             #id 요청
             cursor.execute(get_layout_id_sql, input[0]['user_num'])            
