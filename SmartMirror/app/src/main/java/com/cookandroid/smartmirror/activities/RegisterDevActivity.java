@@ -34,10 +34,12 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.JSONException;
 import org.json.simple.*;
 
 import com.cookandroid.smartmirror.ExcelHelper;
 import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
 import com.cookandroid.smartmirror.MirrorDBHelper;
@@ -196,14 +198,6 @@ public class RegisterDevActivity extends AppCompatActivity {
 
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
         sqlDB.initDBbeforeLogin(readExcelFileFromAssets());
-//        if(sqlDB.isExistStockList()){
-//            // 존재하면 읽기 자체 X
-//        }else{
-//            // 존재하지 않으면
-////            getExcelFileToDB();
-//            readExcelFileFromAssets();
-//        }
-//        sqlDB.getDevData();
 
         editSerial = findViewById(R.id.editSerial);
         editIP = findViewById(R.id.editWifi);
@@ -212,11 +206,16 @@ public class RegisterDevActivity extends AppCompatActivity {
         manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         editTest = findViewById(R.id.editTest);
 
-//        getJsonData();
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+//                MirrorNetworkHelper networkHelper = new MirrorNetworkHelper();
+//                try {
+//                    networkHelper.httpMain();
+//                } catch (JSONException jsonException) {
+//                    jsonException.printStackTrace();
+//                }
                 // 입력받은 시리얼넘버, 아이피주소로 로그인
                 // 테스트값은 시리얼넘버1, 아이피주소1
                 try{
@@ -234,7 +233,8 @@ public class RegisterDevActivity extends AppCompatActivity {
                     if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo,Port)){
                         Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
                         // 연결되었으므로 DB를 초기화
-                        sqlDB.initDB();
+                        sqlDB.addAllTable();
+//                        sqlDB.initDB();
                         Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
                         startActivity(intent);
 

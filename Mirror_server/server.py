@@ -6,6 +6,15 @@ import server_db_access
 app = Flask(__name__)
 @app.route('/')
 
+# #테스트 요청 응답
+# @app.route('/addProfileTest', methods=['GET','POST'])
+# def addProfileTest():
+#     # data = server_db_access.get_all_table()
+#     params = json.loads(request.get_data())
+#     print("받은프로필: "+params)
+#     data2 = {'user_num':1}
+#     return jsonify(data2)
+
 #임시 테스트 코드
 # @app.route('/syncAllTable')
 
@@ -20,12 +29,12 @@ app = Flask(__name__)
 #     a = [{'i': 4, 'j':4},{'i': 5, 'j':10}]
 #     return jsonify(a)
 
-# @app.route('/getData', methods=['GET','POST'])
-# def create():
-#     params = json.loads(request.get_data())
-#     print(params)
-#     a = [{'i': 4, 'j':4},{'i': 5, 'j':10}]
-#     return jsonify(a)
+@app.route('/getData', methods=['GET','POST'])
+def create():
+    params = json.loads(request.get_data())
+    print(params)
+    a = {'user_num':1}
+    return jsonify(a)
 
 
 #테이블 요청 응답
@@ -168,5 +177,5 @@ def delBelongingSet():
         return 'no'
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0',port=80)
-    app.run() 
+    app.run(host='0.0.0.0',port=8000)
+    # app.run() 

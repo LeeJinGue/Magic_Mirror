@@ -34,6 +34,7 @@ import com.cookandroid.smartmirror.dataClass.userData;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -123,9 +124,10 @@ public class MessageCheckActivity extends AppCompatActivity {
                 String messageText = messageEditText.getText().toString();
                 long now = System.currentTimeMillis();
                 Date date = new Date(now);
-                SimpleDateFormat sdf = new SimpleDateFormat("MM:dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 LocalDateTime nowTime = LocalDateTime.now();
-                messageData newMsg = new messageData(++myapp.msgId, messageReceiverUser.getUser_num(), selectedUser.getUser_num(), messageText, nowTime.getYear(), nowTime.getMonthValue(), nowTime.getDayOfMonth(), nowTime.getHour(), nowTime.getMinute(), false);
+                String dateTimeString = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                messageData newMsg = new messageData(++myapp.msgId, messageReceiverUser.getUser_num(), selectedUser.getUser_num(), messageText, dateTimeString, false);
                 mAdapter.addMessage(newMsg);
                 messageEditText.setText("");
                 Log.i("MessageCheckActivity", "메시지 전송");
@@ -148,19 +150,19 @@ public class MessageCheckActivity extends AppCompatActivity {
         allMessageList.sort(new MessageDateTimeComparator());
         if(allMessageList.isEmpty()) return;
         // 날짜가 달라지면 날짜객체를 추가합니다.
-        messageData firstDate = new messageData(allMessageList.get(0).getYear(), allMessageList.get(0).getMonth(), allMessageList.get(0).getDate());
+        messageData firstDate = new messageData(allMessageList.get(0).getDate());
         allMessageList.add(0, firstDate);
         String msgTest = "allMessageList(처음거추가): \n";
         for(messageData sendedMsg : allMessageList){
             msgTest+= sendedMsg.toString()+"\n";
         }
         Log.i("msgTest", msgTest);
-        Log.i("날짜데이터",firstDate.getYear()+"년 "+ firstDate.getMonth()+"월 "+ firstDate.getDate()+"일 추가");
+        Log.i("날짜데이터",firstDate.getYear()+"년 "+ firstDate.getMonth()+"월 "+ firstDate.getDay()+"일 추가");
         for(int i=1; i<allMessageList.size()-1; i++){
             messageData now = allMessageList.get(i);
             messageData next = allMessageList.get(i+1);
             if(now.getDate() != next.getDate()){
-                messageData dateData = new messageData(next.getYear(), next.getMonth(), next.getDate());
+                messageData dateData = new messageData(next.getDate());
                 allMessageList.add(i+1, dateData);
                 i++;
                 Log.i("날짜데이터",next.getYear()+"년 "+ next.getMonth()+"월 "+ next.getDate()+"일 추가");
@@ -183,9 +185,9 @@ public class MessageCheckActivity extends AppCompatActivity {
                     return -1;
                 }else{
                     // 일비교
-                    if(o1.getDate() > o2.getDate()){
+                    if(o1.getDay() > o2.getDay()){
                         return 1;
-                    }else if(o1.getDate() < o2.getDate()){
+                    }else if(o1.getDay() < o2.getDay()){
                         return -1;
                     }else{
                         // 연월일 다 같은데 뒤에꺼가 날짜 텍스트뷰다 -> 뒤에꺼를 앞으로
@@ -224,9 +226,9 @@ public class MessageCheckActivity extends AppCompatActivity {
                 }else if(o1.getMonth() < o2.getMonth()){
                     return -1;
                 }else{
-                    if(o1.getDate() > o2.getDate()){
+                    if(o1.getDay() > o2.getDay()){
                         return 1;
-                    }else if(o1.getDate() < o2.getDate()){
+                    }else if(o1.getDay() < o2.getDay()){
                         return -1;
                     }else{
                         // 아예 같다면 1

@@ -6,7 +6,7 @@ def db_connect():
   db = pymysql.connect(
   host='127.0.0.1', 
   port=3306, 
-  user='root', passwd='1234', 
+  user='root', passwd='wlsdn153', 
   db='mirror_db', charset='utf8')
   print(db)
   return db
@@ -24,12 +24,14 @@ def get_all_table():
                 sql += s
                 cursor.execute(sql)
                 result = cursor.fetchall()
-                #print(result)
+                if(s=='belongings'):
+                    print(result)
+                
                 all_table_json[s] = result
     finally:
         db.close()
 
-    #print(all_table_json)
+    # print(all_table_json)
     return all_table_json
 
 #프로필 추가 함수

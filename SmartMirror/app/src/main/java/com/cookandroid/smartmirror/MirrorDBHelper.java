@@ -19,6 +19,10 @@ import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.stockData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Array;
@@ -51,8 +55,9 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         super(context, "groupDB", null, 1);
         dbVersion = version;
         db = getWritableDatabase();
-        networkHelper = new MirrorNetworkHelper();
+
         onCreate(db);
+        networkHelper = new MirrorNetworkHelper();
     }
     public void initDBbeforeLogin(FileInputStream fileInputStream){
         createDeviceTb(db);
@@ -65,6 +70,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             ExcelHelper excelHelper = new ExcelHelper(fileInputStream);
             addStockList(excelHelper.readStockExcelFile());
         }
+
     }
 
     public void initDB(){
@@ -80,8 +86,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // 테스트를 위해 userData를 미리 넣어둡니다.
         addUser(networkHelper.getUserData());
         addMessage(networkHelper.getMessageDate());
-        messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", 2022, 5, 20, 11, 30, true);
-        messageData receive = new messageData(2, 2, 0, "상대가 보낸메세지", 2022, 5, 20, 10, 30, true);
+        messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", "2022-05-20 11:30:00", true);
+        messageData receive = new messageData(2, 2, 0, "상대가 보낸메세지", "2022-05-20 10:30:00",true);
         // 상대메시지 내매시지 잘나오나 확인
         addMessage(receive);
         addMessage(send);
@@ -106,8 +112,129 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createDeviceTb(db);
         // dev데이터를 미리 넣어둡니다.
         addDevData(networkHelper.getDevData());
+    }
+    // Mirror로부터 모든 Data를 받아옵니다.
+    public void addAllTable(){
+        // device를 제외한 모든 테이블 데이터를 지워줍니다.
+        db.execSQL("DELETE FROM user;");
+        db.execSQL("DELETE FROM layoutsetting;");
+        db.execSQL("DELETE FROM message;");
+        db.execSQL("DELETE FROM schedule;");
+        db.execSQL("DELETE FROM stock;");
+        db.execSQL("DELETE FROM belongings;");
+        //
+        JSONObject allTableJsonData = networkHelper.getAllTableFromServer(db);
+        Log.i("jsonParsing", "받은데이터: " + allTableJsonData.toString());
+        try {
+            JSONArray userArray = allTableJsonData.getJSONArray("user");
+            if(userArray.length()>0){
+                for(int i=0; i< userArray.length(); i++){
+                    JSONObject userJson = userArray.getJSONObject(i);
+                    userData newUser = new userData(userJson.getInt("user_num"),userJson.getString("serial_no"),userJson.getString("name"),userJson.getString("user_image_pass"));
+                    addUser(newUser);
+                }
 
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "userArray 에러");
+        }
+        try {
+            JSONArray layoutsettingArray = allTableJsonData.getJSONArray("layoutsetting");
+            if(layoutsettingArray.length()>0){
+                for(int i=0; i< layoutsettingArray.length(); i++){
+                    JSONObject layoutsettingJson = layoutsettingArray.getJSONObject(i);
+                    layoutData newLayoutData = new layoutData(layoutsettingJson.getInt("layout_id"),layoutsettingJson.getInt("user_num"),layoutsettingJson.getInt("loc"),layoutsettingJson.getInt("type"));
+                    addLayoutSet(newLayoutData);
+                }
 
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "userArray 에러");
+        }
+
+        try {
+            JSONArray messageArray = allTableJsonData.getJSONArray("message");
+            if(messageArray.length()>0){
+                for(int i=0; i< messageArray.length(); i++){
+                    JSONObject messageJson = messageArray.getJSONObject(i);
+                    String messageJsonString = messageJson.getString("date");
+                    Log.i("messageTest", "받은 메세지: "+messageJsonString);
+                    // 메세지 생성할 때 시간을 년월일로 주는게 아니라 DateTime 이런형식으로 주도록 수정해야함
+//                    messageData newMessageData = new messageData(
+//                            messageJson.getInt("message_id"),
+//                            messageJson.getInt("user_num"),
+//                            messageJson.getInt("sender_num"),
+//                            messageJson.getString("text"),
+//                            messageJson.getString("date"),
+//                            false);
+//                    addMessage(newMessageData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "messageJsonArray 에러");
+        }
+        try {
+            JSONArray scheduleArray = allTableJsonData.getJSONArray("schedule");
+            if(scheduleArray.length()>0){
+                for(int i=0; i< scheduleArray.length(); i++){
+                    JSONObject scheduleJson = scheduleArray.getJSONObject(i);
+//                    scheduleData newscheduleData = new scheduleData(
+//                            scheduleJson.getInt("schedule_id"),
+//                            scheduleJson.getInt("user_num"),
+//                            scheduleJson.getString("start_time"),
+//                            scheduleJson.getString("end_time"),
+//                            scheduleJson.getString("text"));
+//                    addSchedule(newscheduleData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "scheduleJsonArray 에러");
+        }
+        try {
+            JSONArray stockArray = allTableJsonData.getJSONArray("stock");
+            if(stockArray.length()>0){
+                for(int i=0; i< stockArray.length(); i++){
+                    JSONObject stockJson = stockArray.getJSONObject(i);
+                    interestedStockData newsInterestedStockData = new interestedStockData(
+                            stockJson.getInt("stock_id"),
+                            stockJson.getInt("user_num"),
+                            stockJson.getString("stock_name"),
+                            stockJson.getString("stock_code"));
+                    addInterestedStock(newsInterestedStockData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "stockJsonArray 에러");
+        }
+//        JSONArray belongingsArray = allTableJsonData.getJSONArray("belongings");
+        try {
+            JSONArray belongingArray = allTableJsonData.getJSONArray("belongings");
+            if(belongingArray.length()>0){
+                for(int i=0; i< belongingArray.length(); i++){
+                    JSONObject belongingJson = belongingArray.getJSONObject(i);
+                    belongingSetData newBelongingSetData = new belongingSetData(
+                            belongingJson.getInt("belonging_id"),
+                            belongingJson.getInt("user_num"),
+                            belongingJson.getString("set_name"),
+                            belongingJson.getString("activation"),
+                            belongingJson.getString("set_info"),
+                            belongingJson.getString("stuff_list"));
+                    addBelongingSet(newBelongingSetData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "belongingJsonArray 에러");
+        }
     }
 
     @Override
@@ -297,6 +424,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     // user추가
     public void addUser(userData newUser){
+        // Server에 user를 추가 후 ID(user_num)를 받아옵니다.
         db.execSQL("INSERT INTO user VALUES(" +
                 newUser.getUser_num() +
                 ", "+ newUser.getSerial_no()+
@@ -410,6 +538,19 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addLayoutSet(layoutData newLayoutData){
+        // 레이아웃아이디,
+        Log.i("addLayoutSet", "레이아웃아이디 체크: "+newLayoutData.getLayout_id());
+        db.execSQL("INSERT INTO layoutsetting VALUES(" +
+                newLayoutData.getLayout_id()+
+                ", " + newLayoutData.getuser_num() +
+                ", " + newLayoutData.getType() +
+                ", " + newLayoutData.getLoc() +
+                ");");
+        Log.i("addLayoutSet", "새 레이아웃세팅 "+newLayoutData.toString()+" 추가");
+    }
+
+
     public ArrayList<layoutData> getLayoutDataListByUser(userData selectedUser){
         ArrayList<layoutData> layoutDataArrayList = new ArrayList<>();
         Cursor layoutCursor = db.rawQuery("SELECT * FROM layoutsetting WHERE user_num="+selectedUser.getUser_num()+";", null);
@@ -452,7 +593,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 ", " + newMessage.getUser_num() +
                 ", " + newMessage.getSender_num() +
                 ", '" + newMessage.getText() +
-                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDate()+"일 "+
+                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDay()+"일 "+
                 newMessage.getHour()+"시 "+newMessage.getMinute()+ "분"+
                 "');");
         newMessage.setMessage_id(set_message_id);
@@ -486,14 +627,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             int sender_num = msgCursor.getInt(2);
             String text = msgCursor.getString(3);
             String dateTime = msgCursor.getString(4);
-            String[] year = dateTime.split("년 ");
-            String[] month = year[1].split("월 ");
-            String[] date = month[1].split("일 ");
-            String[] hour = date[1].split("시 ");
-            String[] minute = hour[1].split("분");
             messageData newMessage = new messageData(message_id, receiver_num, sender_num, text,
-                    Integer.parseInt(year[0]), Integer.parseInt(month[0]),Integer.parseInt(date[0]),
-                    Integer.parseInt(hour[0]), Integer.parseInt(minute[0]), isReceived);
+                    dateTime, isReceived);
             Log.i("getMessageList","메세지: "+newMessage.toString());
             messageList.add(newMessage);
         }

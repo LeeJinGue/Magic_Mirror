@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
 import com.cookandroid.smartmirror.activities.ProfileSelectActivity;
@@ -48,7 +49,14 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         for(userData u:newUserList) Log.i("addItem", "newUser: "+u.toString());
         // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
         // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
-        newUser.setUser_num(newUserList.size()+1);
+        MirrorNetworkHelper networkHelper = new MirrorNetworkHelper();
+        String user_num_string = networkHelper.addUserToServer(newUser);
+        try{
+            int user_num = Integer.parseInt(user_num_string);
+            newUser.setUser_num(user_num);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
         sqlDB.addUser(newUser);
         // Server에서 OK받고 추가함.
         mDataList.add(mDataList.size()-1, newUser);
