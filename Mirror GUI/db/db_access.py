@@ -24,7 +24,7 @@ def get_user_layoutsetting(user_id):
 
     return result
 
-print(get_user_layoutsetting(2))
+# print(get_user_layoutsetting(2))
 
 #스케쥴 호출 함수
 def get_schedule(user_id):
@@ -94,6 +94,21 @@ def get_name():
     for i in result:
         r[i[0]] = i
     return r
+
+#네트워크 초기화 화면 호출 함수
+def get_device_info():
+    db = db_connect()
+    try: 
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = 'SELECT * FROM device'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+    finally:
+        db.close()
+
+    return result[0]
+
+#print(get_device_info())
 
 #print(get_name())
 

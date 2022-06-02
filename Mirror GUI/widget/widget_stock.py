@@ -55,7 +55,13 @@ class stock(QWidget):
     map1.setStyleSheet( "QLabel{color: white;}")
     map1.setFixedWidth(150)
     map1.setFixedHeight(60)
-    map1.setFrameShape(QtWidgets.QFrame.Box)
+    map1.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
     map1.setText(data[2])
     layout_main.addWidget(map1)
     
@@ -63,7 +69,13 @@ class stock(QWidget):
     map2.setStyleSheet( "QLabel{color: white;}")
     map2.setFixedWidth(150)
     map2.setFixedHeight(60)
-    map2.setFrameShape(QtWidgets.QFrame.Box)
+    map2.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
     map2.setText(str(data[1]))
     layout_main.addWidget(map2)
 
@@ -71,7 +83,13 @@ class stock(QWidget):
     map3.setStyleSheet( "QLabel{color: white;}")
     map3.setFixedWidth(150)
     map3.setFixedHeight(60)
-    map3.setFrameShape(QtWidgets.QFrame.Box)
+    map3.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
     if data[0] <= data[1]:
       p = round((data[1]-data[0])/data[1]*100,2)
       map3.setText("▲"+str(data[1]-data[0]) + '\n'+ str(p) +'%')
