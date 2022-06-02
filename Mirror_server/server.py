@@ -55,7 +55,7 @@ def editProfile():
 @app.route('/delProfile', methods=['GET','POST'])
 def delProfile():
     params = json.loads(request.get_data())
-    data = server_db_access.edit_profile(params)
+    data = server_db_access.del_profile(params)
     if data == 0:
         return 'ok'
     else:

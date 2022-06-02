@@ -247,8 +247,8 @@ widget_schedule.schedule, widget_stock.stock, widget_message.message, widget_bel
     print("위젯 그림")
     setting = db_access.get_user_layoutsetting(self.user_id)
     #print(setting)
-    #0:날씨, 1:시계, 2: 카메라, 3: 스케쥴, 4: 주식, 5: 메시지, 6: 소지품
-    functions = [self.draw_weather, self.draw_clock, self.draw_camera, self.draw_schedule, self.draw_stock, self.draw_message, self.draw_belongings]
+    #0:날씨, 1:시계, 2: 소지품, 3: 스케쥴, 4: 주식, 5: 메시지, 6: 카메라
+    functions = [self.draw_weather, self.draw_clock, self.draw_belongings, self.draw_schedule, self.draw_stock, self.draw_message, self.draw_camera]
 
     for set in setting:
       print(set[2])
