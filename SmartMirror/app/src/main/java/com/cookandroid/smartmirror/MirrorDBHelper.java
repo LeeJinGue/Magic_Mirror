@@ -816,6 +816,30 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         Log.i("delInterestedStock", "삭제할 관심주: "+delInterestedStock.toString());
         db.delete("stock", "stock_id=?", new String[]{String.valueOf(delInterestedStock.getStock_id())});
     }
+    public String getStockNameByCode(String stockCode){
+        Log.i("getStockNameByCOde", "가져올 주식의 코드: "+stockCode);
+        String stock_name="";
+        Cursor stockCursor = db.rawQuery("SELECT stock_name FROM stocklist " +
+                        "WHERE stock_code='"+
+                stockCode+"';"
+                ,null);
+        while(stockCursor.moveToNext()){
+            stock_name=stockCursor.getString(0);
+        }
+        return stock_name;
+    }
+    public String getStockCodeByName(String stockName){
+        Log.i("getStockNameByCOde", "가져올 주식의 이름: "+stockName);
+        String stock_code="";
+        Cursor stockCursor = db.rawQuery("SELECT stock_code FROM stocklist " +
+                        "WHERE stock_name='"+
+                        stockName+"';"
+                ,null);
+        while(stockCursor.moveToNext()){
+            stock_code=stockCursor.getString(0);
+        }
+        return stock_code;
+    }
     // ----------------------------------------------------------------
 }
 

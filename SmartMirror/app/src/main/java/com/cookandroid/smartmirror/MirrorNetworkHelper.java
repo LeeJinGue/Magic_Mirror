@@ -137,24 +137,31 @@ public class MirrorNetworkHelper {
             e.printStackTrace();
         }
 
-        //http 요청 실시
-        conn.connect();
-        Log.i("serverConnection", "요청주소: "+urlString+", 보낸데이터: "+jsonString);
-        //http 요청 후 응답 받은 데이터를 버퍼에 쌓는다
-        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        StringBuffer sb = new StringBuffer();
-        String responseData = "";
-        while ((responseData = br.readLine()) != null) {
-            sb.append(responseData); //StringBuffer에 응답받은 데이터 순차적으로 저장 실시
-        }
+        try{
 
-        //메소드 호출 완료 시 반환하는 변수에 버퍼 데이터 삽입 실시
-        //sb에는 서버로부터 받은 json 형식 데이터가 저장되어 있음, 문자열로 변환하여 사용
-        String returnData = sb.toString();
-        // 응답이 잘 왔는지 확인
-        String responseCode = String.valueOf(conn.getResponseCode());
-        Log.i("serverConnection","http 응답 코드 : " + responseCode+ "\nhttp 응답 데이터: "+returnData);
-        return returnData;
+            //http 요청 실시
+            conn.connect();
+            Log.i("serverConnection", "요청주소: "+urlString+", 보낸데이터: "+jsonString);
+            //http 요청 후 응답 받은 데이터를 버퍼에 쌓는다
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuffer sb = new StringBuffer();
+            String responseData = "";
+            while ((responseData = br.readLine()) != null) {
+                sb.append(responseData); //StringBuffer에 응답받은 데이터 순차적으로 저장 실시
+            }
+
+            //메소드 호출 완료 시 반환하는 변수에 버퍼 데이터 삽입 실시
+            //sb에는 서버로부터 받은 json 형식 데이터가 저장되어 있음, 문자열로 변환하여 사용
+            String returnData = sb.toString();
+            // 응답이 잘 왔는지 확인
+            String responseCode = String.valueOf(conn.getResponseCode());
+            conn.disconnect();
+            Log.i("serverConnection","http 응답 코드 : " + responseCode+ "\nhttp 응답 데이터: "+returnData);
+            return returnData;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public String addUserToServer(userData newUserData) {
@@ -417,9 +424,9 @@ public class MirrorNetworkHelper {
         }catch (IOException ioException){
             ioException.printStackTrace();
             Log.i("addScheduleToServer", "커넥션 오류");
-        }finally {
-            return stock_id;
         }
+        return stock_id;
+
     }
     public boolean delStockToServer(interestedStockData delStockData){
         try{

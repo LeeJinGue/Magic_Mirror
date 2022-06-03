@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +54,14 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
         return stockItemList.size();
     }
     public void addItem(interestedStockData addStockData){
+        for(interestedStockData i: stockItemList ){
+            // 주식이름이 중복일 때
+            if(i.getStock_name().equals(addStockData.getStock_name())){
+                Log.i("StockItemRecyclerAdapter", addStockData+"는 중복입니다.");
+                return;
+            }
+        }
+        // 중복이 아닐 때
         Log.i("StockItemRecyclerAdapter", addStockData+"아이템 추가");
         String stock_id = networkHelper.addStockToServer(addStockData);
         addStockData.setStock_id(Integer.parseInt(stock_id));
