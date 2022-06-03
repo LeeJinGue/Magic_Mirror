@@ -166,6 +166,15 @@ def activationBelongingSet():
         return 'ok'
     else:
         return 'no'
+#소지품 비활성화
+@app.route('/deactivationBelongingSet', methods=['GET','POST'])
+def deactivationBelongingSet():
+    params = json.loads(request.get_data())
+    data = server_db_access.deactivation_belongings(params)
+    if data == 0:
+        return 'ok'
+    else:
+        return 'no'
 
 #소지품 삭제
 @app.route('/delBelongingSet', methods=['GET','POST'])
@@ -176,6 +185,7 @@ def delBelongingSet():
         return 'ok'
     else:
         return 'no'
+#시리얼넘버 체크
 @app.route('/checkSerial', methods=['GET', 'POST'])
 def checkSerial():
     params = json.loads(request.get_data())
