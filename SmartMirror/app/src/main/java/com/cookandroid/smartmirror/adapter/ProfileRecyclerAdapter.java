@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
-import com.cookandroid.smartmirror.activities.ProfileSelectActivity;
 import com.cookandroid.smartmirror.activities.ProfileSettingActivity;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
@@ -31,12 +31,15 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     Context context;
     MirrorDBHelper sqlDB;
     MyApplication myApp;
+    MirrorNetworkHelper networkHelper;
     public ProfileRecyclerAdapter(ArrayList<userData> mDataList, Context context,ActivityResultLauncher<Intent> StartForResultEditProfile, ActivityResultLauncher<Intent> StartForResultAddProfile ){
         this.StartForResultAddProfile = StartForResultAddProfile;
         this.StartForResultEditProfile = StartForResultEditProfile;
         this.mDataList = mDataList;
         this.context = context;
         this.sqlDB = new MirrorDBHelper(context, 1);
+        this.networkHelper = new MirrorNetworkHelper();
+
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
         myApp = (MyApplication) context.getApplicationContext();
 
@@ -48,7 +51,14 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         for(userData u:newUserList) Log.i("addItem", "newUser: "+u.toString());
         // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
         // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
-        newUser.setUser_num(newUserList.size()+1);
+        MirrorNetworkHelper networkHelper = new MirrorNetworkHelper();
+        String user_num_string = networkHelper.addUserToServer(newUser);
+        try{
+            int user_num = Integer.parseInt(user_num_string);
+            newUser.setUser_num(user_num);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
         sqlDB.addUser(newUser);
         // Server에서 OK받고 추가함.
         mDataList.add(mDataList.size()-1, newUser);
@@ -57,15 +67,27 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         notifyItemInserted(mDataList.size()-2);
     }
     public void editItemNameAt(userData editUser, int index){
-        sqlDB.editUserName(editUser);
-        mDataList.get(index).setName(editUser.getName());
-        notifyItemChanged(index);
+        if(networkHelper.editUserToServer(editUser)){
+            // 수정성공
+            Log.i("editItemNameAt", "프로필 수정 성공");
+            sqlDB.editUserName(editUser);
+            mDataList.get(index).setName(editUser.getName());
+            notifyItemChanged(index);
+        }else{
+            Log.i("editItemNameAt", "프로필 수정 실패");
+            // 수정실패
+        }
     }
     public void delItemAt(userData delUser,int index){
-        sqlDB.delUser(delUser);
-        mDataList.remove(index);
-        imageViewArrayList.remove(index);
-        notifyItemRemoved(index);
+        if(networkHelper.delUserToServer(delUser)){
+            Log.i("delItemAt", "프로필 삭제 성공");
+            sqlDB.delUser(delUser);
+            mDataList.remove(index);
+            imageViewArrayList.remove(index);
+            notifyItemRemoved(index);
+        }else{
+            Log.i("delItemAt", "프로필 삭제 실패");
+        }
 
     }
     public void changeImgViewList(boolean isSettingMode){
@@ -97,7 +119,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.profile_item, parent, false);
+        View view = inflater.inflate(R.layout.item_profile, parent, false);
         ProfileRecyclerAdapter.ViewHolder vh = new ProfileRecyclerAdapter.ViewHolder(view);
         
         return vh;

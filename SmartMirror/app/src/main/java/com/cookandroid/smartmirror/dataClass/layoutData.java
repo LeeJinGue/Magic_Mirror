@@ -15,9 +15,9 @@ public class layoutData {
     }
     // type 값에 맞는 인덱스로
     // 날씨, 시계, 스케쥴, 주식, 메세지, 소지품 순서 -> imageResId
-    public static int[] TYPE_RES_ID = {R.drawable.ic_weather, R.drawable.ic_watch, R.drawable.ic_calendar, R.drawable.ic_stock, R.drawable.ic_message,R.drawable.ic_belonging};
+    public static int[] TYPE_RES_ID = {R.drawable.ic_weather, R.drawable.ic_watch,R.drawable.ic_belonging, R.drawable.ic_calendar, R.drawable.ic_stock, R.drawable.ic_message,R.drawable.ic_schedule_black};
     // 날씨, 시계, 일정, 관심주, 메시지, 소지품세트 순서 -> layoutName
-    public static String[] LAYOUT_NAME = {"날씨", "시계", "일정", "관심주", "메시지", "소지품세트"};
+    public static String[] LAYOUT_NAME = {"날씨", "시계","소지품세트", "일정", "관심주", "메시지", "카메라"};
     // 좌상단, 우상단, 우하단, 좌하단 순서
     private static String[] LAYOUT_LOCATION = {"LEFT_UP", "RIGHT_UP", "RIGHT_DOWN", "LEFT_DOWN"};
     public layoutData(int layout_id, int user_num, int loc, int type) {
@@ -57,4 +57,6 @@ public class layoutData {
     public int getType() {
         return type;
     }
+
+    public void setLayout_id(int layout_id) { this.layout_id = layout_id; }
 }

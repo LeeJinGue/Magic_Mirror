@@ -76,7 +76,7 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                     String endTime = endHourString+":"+endMinuteString+":00";
                     String endDateTime = date + " " + endTime;
                     scheduleData newData = new scheduleData(
-                            3000, selectedUser.getUser_num()
+                            1, selectedUser.getUser_num()
                             , startDateTime, endDateTime,
                             titleEditText.getText().toString());
                     if(isAdd) {
@@ -87,6 +87,7 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                     }else{
                         // 일정 수정일 때
                         newData.setIconRes(data.getIconRes());
+                        newData.setSchedule_id(data.getSchedule_id());
                         listener.onFinishedEditDialog(index, newData);
                         dialog.dismiss();
                     }
@@ -173,7 +174,7 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                     String startDateTime = selectedDate + " " +startTime;
                     String endDateTime = selectedDate + " " + endTime;
                     scheduleData newData = new scheduleData(
-                            3000, selectedUser.getUser_num()
+                            1, selectedUser.getUser_num()
                             , startDateTime, endDateTime,
                             titleEditText.getText().toString());
                     if(isAdd) {
@@ -184,6 +185,7 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                     }else{
                         // 일정 수정일 때
                         newData.setIconRes(data.getIconRes());
+                        newData.setSchedule_id(data.getSchedule_id());
                         listener.onFinishedEditDialog(index, newData);
                         dialog.dismiss();
                     }

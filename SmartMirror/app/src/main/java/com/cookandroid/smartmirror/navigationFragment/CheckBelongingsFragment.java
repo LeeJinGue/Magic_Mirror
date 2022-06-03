@@ -36,7 +36,6 @@ import java.util.ArrayList;
 public class CheckBelongingsFragment extends Fragment {
     RecyclerView belongingSetRecyclerView;
     Context context;
-//    Button belongingAddBtn;
     ImageView belongingSetAddBtn;
     ArrayList<belongingSetData> mList;
     BelongingSetRecyclerAdapter mAdapter;
@@ -48,13 +47,13 @@ public class CheckBelongingsFragment extends Fragment {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    Log.i("CheckBelongingsFragment", "onActivityResult 호출 - 추가");
+                    Log.i("result체크", "result: "+result.toString()+", resultCode: "+result.getResultCode());
 
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent intent = result.getData();
                         addedBelongingSet = intent.getParcelableExtra("belongingSet");
                         mAdapter.addItem(addedBelongingSet);
-                        Log.i("CheckBelongingsFragment", "소지품세트 추가, 소지품정보:\n"+addedBelongingSet.toString());
+//                        Log.i("CheckBelongingsFragment", "소지품세트 추가, 소지품정보:\n"+addedBelongingSet.toString());
 
                     }else{
                         addedBelongingSet = null;
@@ -65,14 +64,14 @@ public class CheckBelongingsFragment extends Fragment {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    Log.i("CheckBelongingsFragment", "onActivityResult 호출 - 수정");
+//                    Log.i("CheckBelongingsFragment", "onActivityResult 호출 - 수정");
 
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent intent = result.getData();
                         editedBelongingSet = intent.getParcelableExtra("belongingSet");
                         int index = intent.getIntExtra("index", -1);
                         if(index != -1){
-                            Log.i("CheckBelongingsFragment", index+"번째 소지품세트 수정, 소지품정보:\n"+editedBelongingSet.toString());
+//                            Log.i("CheckBelongingsFragment", index+"번째 소지품세트 수정, 소지품정보:\n"+editedBelongingSet.toString());
                             mAdapter.editItem(index, editedBelongingSet);
                         }else{
                             Log.i("CheckBelongingsFragment", index+"번째, 수정할 인덱스가 -1?"+editedBelongingSet.toString());
@@ -90,7 +89,6 @@ public class CheckBelongingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i("CheckBelongingsFragment", "뷰생성");
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_check_belongings, container, false);
@@ -118,22 +116,6 @@ public class CheckBelongingsFragment extends Fragment {
         belongingSetRecyclerView.setAdapter(mAdapter);
         belongingSetRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext(), RecyclerView.VERTICAL, false));
         belongingSetRecyclerView.addItemDecoration(new DividerItemDecoration(rootView.getContext(), LinearLayoutManager.VERTICAL));
-//        ArrayList<String> belongItemList = new ArrayList<>();
-//        belongItemList.add("지갑");
-//        belongItemList.add("핸드폰");
-//        belongItemList.add("핸드크림");
-//        belongItemList.add("립밤");
-//        belongItemList.add("USB");
-//        mAdapter.addItem(new belongingSetData(1, selectedUser.getUser_num(),"월요일","0", "수업 때 챙길 물품", Methods.getStringFromStuffArrayList(belongItemList)));
-//        belongItemList.remove(4);
-//        belongItemList.add("노트북");
-//        mAdapter.addItem(new belongingSetData(2, selectedUser.getUser_num(),"화요일","0", "Java", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.addItem(new belongingSetData(3, selectedUser.getUser_num(),"수요일","0", "C++", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.addItem(new belongingSetData(4, selectedUser.getUser_num(),"목요일","0", "공강", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.addItem(new belongingSetData(5, selectedUser.getUser_num(),"금요일","0", "블록체인", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.addItem(new belongingSetData(6, selectedUser.getUser_num(),"토요일","0", "휴식", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.addItem(new belongingSetData(7, selectedUser.getUser_num(),"일요일","0", "교회", Methods.getStringFromStuffArrayList(belongItemList)));
-//        mAdapter.notifyDataSetChanged();
         return rootView;
     }
 }

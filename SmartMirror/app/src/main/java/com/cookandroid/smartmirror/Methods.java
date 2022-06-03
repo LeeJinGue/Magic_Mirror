@@ -151,6 +151,10 @@ public class Methods {
 
     // ----------------------stuff_list <--> ArrayList<String>---------------------
     public static ArrayList<String> getStuffArrayListFromString(String stuff_list){
+        if(stuff_list.equals("")){
+            // 만약 공백이라면(소지품세트가 없다면)
+            return new ArrayList<String>();
+        }
         // ,로 stuff_list를 쪼갭니다.
         String[] stringArray = stuff_list.split(",");
         ArrayList<String> stuffList_arr = new ArrayList<String>(Arrays.asList(stringArray));

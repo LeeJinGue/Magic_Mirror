@@ -59,6 +59,7 @@ public class StockSetupFragment extends Fragment {
                         addedStock = intent.getParcelableExtra("addStock");
                         mAdapter.addItem(addedStock);
                     }else{
+                        Log.i("resultCode", "resultCode: "+result.getResultCode()+" String: "+result.toString());
                         addedStock = null;
                     }
                 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -34,6 +35,7 @@ public class MainScreenActivity extends AppCompatActivity {
     TextView tvTitle;
     userData selectedUser;
     BottomNavigationView bottomNavigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +48,15 @@ public class MainScreenActivity extends AppCompatActivity {
 
 
         // Add Coustom AppBar & Set Title Color Gradient\
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.mainAppbar);
 
-        tvTitle = (TextView) findViewById(R.id.toolbarTv);
+        tvTitle = (TextView) toolbar.findViewById(R.id.toolbarTv);
         Methods methods = new Methods();
         methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
-//        ActionBar ab = getSupportActionBar();
-//        ab.setDisplayShowTitleEnabled(false);
-//        ab.setDisplayHomeAsUpEnabled(false);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayShowTitleEnabled(false);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         /*  //Custom ActionBar - title_smartmirror.xml
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -103,19 +105,23 @@ public class MainScreenActivity extends AppCompatActivity {
     일정 아이콘 : https://www.flaticon.com/kr/free-icon/schedule_6825897?related_id=6825897&origin=search
     주식 아이콘 : https://www.flaticon.com/kr/free-icon/stocks_1606566?related_id=1606566&origin=search
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_profile_select,menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_profile_select,menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.menu_settings:
-                Toast.makeText(this,"설정메뉴",Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.menu_settings:
+//                Toast.makeText(this,"설정메뉴",Toast.LENGTH_SHORT).show();
+//                break;
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
             default:
                 break;
         }

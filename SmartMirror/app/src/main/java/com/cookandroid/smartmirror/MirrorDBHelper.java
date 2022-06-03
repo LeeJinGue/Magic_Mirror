@@ -19,6 +19,10 @@ import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.stockData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Array;
@@ -51,8 +55,9 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         super(context, "groupDB", null, 1);
         dbVersion = version;
         db = getWritableDatabase();
-        networkHelper = new MirrorNetworkHelper();
+
         onCreate(db);
+        networkHelper = new MirrorNetworkHelper();
     }
     public void initDBbeforeLogin(FileInputStream fileInputStream){
         createDeviceTb(db);
@@ -65,6 +70,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             ExcelHelper excelHelper = new ExcelHelper(fileInputStream);
             addStockList(excelHelper.readStockExcelFile());
         }
+
     }
 
     public void initDB(){
@@ -80,8 +86,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // 테스트를 위해 userData를 미리 넣어둡니다.
         addUser(networkHelper.getUserData());
         addMessage(networkHelper.getMessageDate());
-        messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", 2022, 5, 20, 11, 30, true);
-        messageData receive = new messageData(2, 2, 0, "상대가 보낸메세지", 2022, 5, 20, 10, 30, true);
+        messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", "2022-05-20 11:30:00", true);
+        messageData receive = new messageData(2, 2, 0, "상대가 보낸메세지", "2022-05-20 10:30:00",true);
         // 상대메시지 내매시지 잘나오나 확인
         addMessage(receive);
         addMessage(send);
@@ -106,8 +112,129 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         createDeviceTb(db);
         // dev데이터를 미리 넣어둡니다.
         addDevData(networkHelper.getDevData());
+    }
+    // Mirror로부터 모든 Data를 받아옵니다.
+    public void addAllTable(){
+        // device를 제외한 모든 테이블 데이터를 지워줍니다.
+        db.execSQL("DELETE FROM user;");
+        db.execSQL("DELETE FROM layoutsetting;");
+        db.execSQL("DELETE FROM message;");
+        db.execSQL("DELETE FROM schedule;");
+        db.execSQL("DELETE FROM stock;");
+        db.execSQL("DELETE FROM belongings;");
+        //
+        JSONObject allTableJsonData = networkHelper.getAllTableFromServer(db);
+        Log.i("jsonParsing", "받은데이터: " + allTableJsonData.toString());
+        try {
+            JSONArray userArray = allTableJsonData.getJSONArray("user");
+            if(userArray.length()>0){
+                for(int i=0; i< userArray.length(); i++){
+                    JSONObject userJson = userArray.getJSONObject(i);
+                    userData newUser = new userData(userJson.getInt("user_num"),userJson.getString("serial_no"),userJson.getString("name"),userJson.getString("user_image_pass"));
+                    addUser(newUser);
+                }
 
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "userArray 에러");
+        }
+        try {
+            JSONArray layoutsettingArray = allTableJsonData.getJSONArray("layoutsetting");
+            if(layoutsettingArray.length()>0){
+                for(int i=0; i< layoutsettingArray.length(); i++){
+                    JSONObject layoutsettingJson = layoutsettingArray.getJSONObject(i);
+                    Log.i("indexTest","json: "+layoutsettingJson.toString());
+                    layoutData newLayoutData = new layoutData(layoutsettingJson.getInt("layout_id"),layoutsettingJson.getInt("user_num"),layoutsettingJson.getInt("loc"),layoutsettingJson.getInt("type"));
+                    addLayoutSet(newLayoutData);
+                }
 
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "userArray 에러");
+        }
+
+        try {
+            JSONArray messageArray = allTableJsonData.getJSONArray("message");
+            if(messageArray.length()>0){
+                for(int i=0; i< messageArray.length(); i++){
+                    JSONObject messageJson = messageArray.getJSONObject(i);
+                    String messageJsonString = messageJson.getString("date");
+                    Log.i("messageTest", "받은 메세지: "+messageJsonString);
+                    messageData newMessageData = new messageData(
+                            messageJson.getInt("message_id"),
+                            messageJson.getInt("user_num"),
+                            messageJson.getInt("sender_num"),
+                            messageJson.getString("text"),
+                            messageJson.getString("date"),
+                            false);
+                    addMessage(newMessageData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "messageJsonArray 에러");
+        }
+        try {
+            JSONArray scheduleArray = allTableJsonData.getJSONArray("schedule");
+            if(scheduleArray.length()>0){
+                for(int i=0; i< scheduleArray.length(); i++){
+                    JSONObject scheduleJson = scheduleArray.getJSONObject(i);
+                    scheduleData newscheduleData = new scheduleData(
+                            scheduleJson.getInt("schedule_id"),
+                            scheduleJson.getInt("user_num"),
+                            scheduleJson.getString("start_time"),
+                            scheduleJson.getString("end_time"),
+                            scheduleJson.getString("text"));
+                    addSchedule(newscheduleData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "scheduleJsonArray 에러");
+        }
+        try {
+            JSONArray stockArray = allTableJsonData.getJSONArray("stock");
+            if(stockArray.length()>0){
+                for(int i=0; i< stockArray.length(); i++){
+                    JSONObject stockJson = stockArray.getJSONObject(i);
+                    interestedStockData newsInterestedStockData = new interestedStockData(
+                            stockJson.getInt("stock_id"),
+                            stockJson.getInt("user_num"),
+                            stockJson.getString("stock_name"),
+                            stockJson.getString("stock_code"));
+                    addInterestedStock(newsInterestedStockData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "stockJsonArray 에러");
+        }
+//        JSONArray belongingsArray = allTableJsonData.getJSONArray("belongings");
+        try {
+            JSONArray belongingArray = allTableJsonData.getJSONArray("belongings");
+            if(belongingArray.length()>0){
+                for(int i=0; i< belongingArray.length(); i++){
+                    JSONObject belongingJson = belongingArray.getJSONObject(i);
+                    belongingSetData newBelongingSetData = new belongingSetData(
+                            belongingJson.getInt("belonging_id"),
+                            belongingJson.getInt("user_num"),
+                            belongingJson.getString("set_name"),
+                            belongingJson.getString("activation"),
+                            belongingJson.getString("set_info"),
+                            belongingJson.getString("stuff_list"));
+                    addBelongingSet(newBelongingSetData);
+                }
+
+            }
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+            Log.i("allTable", "belongingJsonArray 에러");
+        }
     }
 
     @Override
@@ -297,6 +424,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     // user추가
     public void addUser(userData newUser){
+        // Server에 user를 추가 후 ID(user_num)를 받아옵니다.
         db.execSQL("INSERT INTO user VALUES(" +
                 newUser.getUser_num() +
                 ", "+ newUser.getSerial_no()+
@@ -391,11 +519,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     public void layoutSet(ArrayList<layoutData> layoutDataList, userData selectedUser){
 
         // layoutsetting 테이블에서 받은 userData에 있는 user_num와 같은 user_num인 Row들 삭제
-        db.delete("layoutsetting", "user_num=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        int isDel = db.delete("layoutsetting", "user_num=?", new String[]{String.valueOf(selectedUser.getUser_num())});
+        Log.i("layoutSet", "삭제여부: "+isDel);
         // 새 layoutData들 모아서 추가
         for(layoutData layoutData:layoutDataList){
+            Log.i("layoutSet", "삭제할 레이아웃 데이터: "+layoutData.toString());
             ContentValues values = new ContentValues();
-            values.put("layout_id", ++set_layout_id);
+            values.put("layout_id", layoutData.getLayout_id());
             values.put("user_num", selectedUser.getUser_num());
             values.put("type", layoutData.getType());
             values.put("loc", layoutData.getLoc());
@@ -409,6 +539,19 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             }
         }
     }
+
+    public void addLayoutSet(layoutData newLayoutData){
+        // 레이아웃아이디,
+        Log.i("addLayoutSet", "레이아웃아이디 체크: "+newLayoutData.getLayout_id());
+        db.execSQL("INSERT INTO layoutsetting VALUES(" +
+                newLayoutData.getLayout_id()+
+                ", " + newLayoutData.getuser_num() +
+                ", " + newLayoutData.getType() +
+                ", " + newLayoutData.getLoc() +
+                ");");
+        Log.i("addLayoutSet", "새 레이아웃세팅 "+newLayoutData.toString()+" 추가");
+    }
+
 
     public ArrayList<layoutData> getLayoutDataListByUser(userData selectedUser){
         ArrayList<layoutData> layoutDataArrayList = new ArrayList<>();
@@ -452,8 +595,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
                 ", " + newMessage.getUser_num() +
                 ", " + newMessage.getSender_num() +
                 ", '" + newMessage.getText() +
-                "', '" + newMessage.getYear()+"년 "+ newMessage.getMonth()+"월 "+ newMessage.getDate()+"일 "+
-                newMessage.getHour()+"시 "+newMessage.getMinute()+ "분"+
+                "', '" + newMessage.getDate()+
                 "');");
         newMessage.setMessage_id(set_message_id);
         Log.i("addMessage", "새 메세지 "+newMessage.toString()+" 추가");
@@ -486,14 +628,8 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             int sender_num = msgCursor.getInt(2);
             String text = msgCursor.getString(3);
             String dateTime = msgCursor.getString(4);
-            String[] year = dateTime.split("년 ");
-            String[] month = year[1].split("월 ");
-            String[] date = month[1].split("일 ");
-            String[] hour = date[1].split("시 ");
-            String[] minute = hour[1].split("분");
             messageData newMessage = new messageData(message_id, receiver_num, sender_num, text,
-                    Integer.parseInt(year[0]), Integer.parseInt(month[0]),Integer.parseInt(date[0]),
-                    Integer.parseInt(hour[0]), Integer.parseInt(minute[0]), isReceived);
+                    dateTime, isReceived);
             Log.i("getMessageList","메세지: "+newMessage.toString());
             messageList.add(newMessage);
         }
@@ -595,7 +731,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     public void addBelongingSet(belongingSetData newBelongingSet){
-        Log.i("addBelongingSetWithUser", "DB에 추가할 belongingSet 이름: "+newBelongingSet.getSet_name()+", 유저ID: "+newBelongingSet.getUser_num());
+        Log.i("addBelongingSet", "DB에 추가할 belongingSet 이름: "+newBelongingSet.getSet_name()+", 유저ID: "+newBelongingSet.getUser_num());
         ContentValues values = new ContentValues();
         values.put("belonging_id", newBelongingSet.getBelonging_id());
         values.put("set_name", newBelongingSet.getSet_name());
@@ -605,10 +741,10 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         values.put("stuff_list", newBelongingSet.getStuff_list_str());
         long result =db.insert("belongings", null, values);
         if(result != -1){
-            Log.i("addBelongingSetWithUser", newBelongingSet.toString() + ", id: "+ newBelongingSet.getBelonging_id()+" 소지품세트 추가");
+            Log.i("addBelongingSet", newBelongingSet.toString() + ", id: "+ newBelongingSet.getBelonging_id()+" 소지품세트 추가");
 //            newBelongingSet.setBelonging_id(set_belongingSet_id);
         }else{
-            Log.i("addBelongingSetWithUser", "db insert 오류");
+            Log.i("addBelongingSet", "db insert 오류");
         }
     }
     public void delBelongingSet(belongingSetData delBelongingSet){
@@ -679,6 +815,30 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     public void delInterestedStock(interestedStockData delInterestedStock){
         Log.i("delInterestedStock", "삭제할 관심주: "+delInterestedStock.toString());
         db.delete("stock", "stock_id=?", new String[]{String.valueOf(delInterestedStock.getStock_id())});
+    }
+    public String getStockNameByCode(String stockCode){
+        Log.i("getStockNameByCOde", "가져올 주식의 코드: "+stockCode);
+        String stock_name="";
+        Cursor stockCursor = db.rawQuery("SELECT stock_name FROM stocklist " +
+                        "WHERE stock_code='"+
+                stockCode+"';"
+                ,null);
+        while(stockCursor.moveToNext()){
+            stock_name=stockCursor.getString(0);
+        }
+        return stock_name;
+    }
+    public String getStockCodeByName(String stockName){
+        Log.i("getStockNameByCOde", "가져올 주식의 이름: "+stockName);
+        String stock_code="";
+        Cursor stockCursor = db.rawQuery("SELECT stock_code FROM stocklist " +
+                        "WHERE stock_name='"+
+                        stockName+"';"
+                ,null);
+        while(stockCursor.moveToNext()){
+            stock_code=stockCursor.getString(0);
+        }
+        return stock_code;
     }
     // ----------------------------------------------------------------
 }

@@ -9,7 +9,7 @@ def db_connect():
   db = pymysql.connect(
   host='127.0.0.1', 
   port=3306, 
-  user='root', passwd='1234', 
+  user='root', passwd='wlsdn153', 
   db='mirror_db', charset='utf8')
   print(db)
   return db
@@ -43,7 +43,7 @@ def get_all_table():
     finally:
         db.close()
 
-    #print(all_table_json)
+    # print(all_table_json)
     return all_table_json
 
 #프로필 추가 함수
@@ -104,7 +104,7 @@ def del_profile(input):
 def layout_set(input):
     db = db_connect()
     layout_del_sql = "DELETE FROM layoutsetting where user_num = %s"
-    layout_set_sql = "INSERT INTO layoutsetting(user_num, type, loc) VALUES (%s, %s, %s);"
+    layout_set_sql = "INSERT INTO layoutsetting(user_num, loc, type) VALUES (%s, %s, %s);"
     get_layout_id_sql = 'SELECT layout_id FROM layoutsetting WHERE user_num = %s'
     
     try: 

@@ -38,7 +38,7 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.window_item, viewGroup,false);
+        View itemView = inflater.inflate(R.layout.item_window, viewGroup,false);
 
         return new ViewHolder(itemView);
     }

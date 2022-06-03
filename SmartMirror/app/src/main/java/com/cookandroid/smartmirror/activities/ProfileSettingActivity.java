@@ -1,6 +1,8 @@
 package com.cookandroid.smartmirror.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -142,12 +144,32 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     // 프로필을 삭제합니다. 삭제할 프로필 객체와 인덱스를 함꼐 보냅니다.
                     // 결과 코드는 100
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                    alertDialog.create();
+                    alertDialog
+                            .setTitle("정말 삭제 하시겠습니까?")
+                            .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.i("profileDelDialog", editProfile.getName()+"유저 삭제");
+                                    dialog.dismiss();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("delUser", editProfile);
+                                    intent.putExtra("index", index);
+                                    setResult(100, intent);
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.i("messageDelDialog", "취소");
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                     Log.i("test", "삭제버튼 클릭");
-                    Intent intent = new Intent();
-                    intent.putExtra("delUser", editProfile);
-                    intent.putExtra("index", index);
-                    setResult(100, intent);
-                    finish();
+
 
 
                 }

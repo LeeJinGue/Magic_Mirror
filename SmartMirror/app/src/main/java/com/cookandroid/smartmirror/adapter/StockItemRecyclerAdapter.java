@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.interestedStockData;
 
@@ -23,16 +24,18 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
     ArrayList<interestedStockData> stockItemList = new ArrayList<>();
 //    ArrayList<interestedStockData> stockDataList = new ArrayList<>();
     MirrorDBHelper sqlDB;
+    MirrorNetworkHelper networkHelper;
     public StockItemRecyclerAdapter(ArrayList<interestedStockData> stockItemList, MirrorDBHelper sqlDB){
         this.stockItemList = stockItemList;
         this.sqlDB = sqlDB;
+        this.networkHelper = new MirrorNetworkHelper();
     }
     @NonNull
     @Override
     public StockItemRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.stock_item, parent, false);
+        View view = inflater.inflate(R.layout.item_stock, parent, false);
         StockItemRecyclerAdapter.ViewHolder vh = new StockItemRecyclerAdapter.ViewHolder(view);
         return vh;
     }
@@ -50,16 +53,30 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
         return stockItemList.size();
     }
     public void addItem(interestedStockData addStockData){
+        for(interestedStockData i: stockItemList ){
+            // 주식이름이 중복일 때
+            if(i.getStock_name().equals(addStockData.getStock_name())){
+                Log.i("StockItemRecyclerAdapter", addStockData+"는 중복입니다.");
+                return;
+            }
+        }
+        // 중복이 아닐 때
         Log.i("StockItemRecyclerAdapter", addStockData+"아이템 추가");
+        String stock_id = networkHelper.addStockToServer(addStockData);
+        addStockData.setStock_id(Integer.parseInt(stock_id));
         sqlDB.addInterestedStock(addStockData);
         stockItemList.add(addStockData);
         notifyItemInserted(stockItemList.size());
     }
     public void removeAt(int index) {
         Log.i("StockItemRecyclerAdapter", index + "번째 아이템 삭제");
-        sqlDB.delInterestedStock(stockItemList.get(index));
-        stockItemList.remove(index);
-        notifyItemRemoved(index);
+        if(networkHelper.delStockToServer(stockItemList.get(index))){
+            sqlDB.delInterestedStock(stockItemList.get(index));
+            stockItemList.remove(index);
+            notifyItemRemoved(index);
+        }else{
+            Log.i("StockItemRecyclerAdapter", "아이템 삭제 실패");
+        }
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         private Context context;

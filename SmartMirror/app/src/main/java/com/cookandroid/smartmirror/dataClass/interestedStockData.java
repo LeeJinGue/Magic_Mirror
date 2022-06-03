@@ -43,6 +43,8 @@ public class interestedStockData implements Parcelable {
 
     public String getStock_name() { return stock_name; }
 
+    public void setStock_id(int stock_id) { this.stock_id = stock_id; }
+
     @Override
     public int describeContents() {
         return 0;

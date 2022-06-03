@@ -34,6 +34,7 @@ import com.cookandroid.smartmirror.dataClass.userData;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -90,18 +91,12 @@ public class MessageCheckActivity extends AppCompatActivity {
         // 현재 로그인되어있는 유저
         selectedUser = myapp.getSelectedUser();
 
-        allMessageList = new ArrayList<>();
+        allMessageList = getMessageDataList();
         messageEditText = findViewById(R.id.messageEditText);
         msgRecyclerView = findViewById(R.id.messageRecyclerView);
-        getMessageDataList();
         mAdapter = new MessageRecyclerAdapter(context, allMessageList);
         msgRecyclerView.setAdapter(mAdapter);
         msgRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false));
-        String msgTest = "sendedMsgList: \n";
-        for(messageData sendedMsg : allMessageList){
-            msgTest+= sendedMsg.toString()+"\n";
-        }
-        Log.i("msgTest", msgTest);
 
 
         // Add Coustom AppBar & Set Title Color Gradient
@@ -121,11 +116,10 @@ public class MessageCheckActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String messageText = messageEditText.getText().toString();
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdf = new SimpleDateFormat("MM:dd");
+
                 LocalDateTime nowTime = LocalDateTime.now();
-                messageData newMsg = new messageData(++myapp.msgId, messageReceiverUser.getUser_num(), selectedUser.getUser_num(), messageText, nowTime.getYear(), nowTime.getMonthValue(), nowTime.getDayOfMonth(), nowTime.getHour(), nowTime.getMinute(), false);
+                String dateTimeString = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                messageData newMsg = new messageData(1, messageReceiverUser.getUser_num(), selectedUser.getUser_num(), messageText, dateTimeString, false);
                 mAdapter.addMessage(newMsg);
                 messageEditText.setText("");
                 Log.i("MessageCheckActivity", "메시지 전송");
@@ -133,39 +127,37 @@ public class MessageCheckActivity extends AppCompatActivity {
         });
         Log.i("MessageCheckActivity", "선택된 프로필 명: "+messageReceiverUser.getName());
 
-
     }
 
     // 보낸 사람, 받는 사람에 따른 메시지 데이터를 받아온다.
-    public void getMessageDataList(){
+    public ArrayList<messageData> getMessageDataList(){
         // 1. 보낸사람, 받는사람, 날짜에 따른 메시지 데이터를 받아온다.
         // 2. 메시지를 시간 순으로 정렬한다.
 
         // 내가 보낸 리스트, 상대한테 받은 리스트 다 받아옴
-        allMessageList = sqlDB.getMeesageList(selectedUser, messageReceiverUser, false);
-        allMessageList.addAll(sqlDB.getMeesageList(selectedUser, messageReceiverUser, true));
+        ArrayList<messageData> messageDataList = new ArrayList<messageData>();
+        messageDataList = sqlDB.getMeesageList(selectedUser, messageReceiverUser, false);
+        messageDataList.addAll(sqlDB.getMeesageList(selectedUser, messageReceiverUser, true));
         // 받아온 메시지 데이터를 시간순으로 정렬합니다.
-        allMessageList.sort(new MessageDateTimeComparator());
-        if(allMessageList.isEmpty()) return;
+        messageDataList.sort(new MessageDateTimeComparator());
+        // 메시지가 없으면 추가X
+        if(messageDataList.isEmpty()) return messageDataList;
+
         // 날짜가 달라지면 날짜객체를 추가합니다.
-        messageData firstDate = new messageData(allMessageList.get(0).getYear(), allMessageList.get(0).getMonth(), allMessageList.get(0).getDate());
-        allMessageList.add(0, firstDate);
-        String msgTest = "allMessageList(처음거추가): \n";
-        for(messageData sendedMsg : allMessageList){
-            msgTest+= sendedMsg.toString()+"\n";
-        }
-        Log.i("msgTest", msgTest);
-        Log.i("날짜데이터",firstDate.getYear()+"년 "+ firstDate.getMonth()+"월 "+ firstDate.getDate()+"일 추가");
-        for(int i=1; i<allMessageList.size()-1; i++){
-            messageData now = allMessageList.get(i);
-            messageData next = allMessageList.get(i+1);
-            if(now.getDate() != next.getDate()){
-                messageData dateData = new messageData(next.getYear(), next.getMonth(), next.getDate());
-                allMessageList.add(i+1, dateData);
+        messageData firstDate = new messageData(messageDataList.get(0).getDate());
+        messageDataList.add(0, firstDate);
+        for(int i=1; i<messageDataList.size()-1; i++){
+            messageData now = messageDataList.get(i);
+            messageData next = messageDataList.get(i+1);
+            // 년/월/일 중 하나라도 다르면 다른날짜임
+            if(now.getYear() != next.getYear() && now.getMonth() != next.getMonth() && now.getDay() != next.getDay()){
+                messageData dateData = new messageData(next.getDate());
+                messageDataList.add(i+1, dateData);
                 i++;
                 Log.i("날짜데이터",next.getYear()+"년 "+ next.getMonth()+"월 "+ next.getDate()+"일 추가");
             }
         }
+        return messageDataList;
     }
     public class MessageDateTimeComparator implements Comparator<messageData>{
         @Override
@@ -183,9 +175,9 @@ public class MessageCheckActivity extends AppCompatActivity {
                     return -1;
                 }else{
                     // 일비교
-                    if(o1.getDate() > o2.getDate()){
+                    if(o1.getDay() > o2.getDay()){
                         return 1;
-                    }else if(o1.getDate() < o2.getDate()){
+                    }else if(o1.getDay() < o2.getDay()){
                         return -1;
                     }else{
                         // 연월일 다 같은데 뒤에꺼가 날짜 텍스트뷰다 -> 뒤에꺼를 앞으로
@@ -224,9 +216,9 @@ public class MessageCheckActivity extends AppCompatActivity {
                 }else if(o1.getMonth() < o2.getMonth()){
                     return -1;
                 }else{
-                    if(o1.getDate() > o2.getDate()){
+                    if(o1.getDay() > o2.getDay()){
                         return 1;
-                    }else if(o1.getDate() < o2.getDate()){
+                    }else if(o1.getDay() < o2.getDay()){
                         return -1;
                     }else{
                         // 아예 같다면 1
