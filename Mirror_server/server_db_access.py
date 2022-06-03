@@ -33,12 +33,12 @@ def get_all_table():
                     for i in range(len(result)):
                         result[i]['start_time'] = str(result[i]['start_time'])
                         result[i]['end_time'] = str(result[i]['end_time'])
-                        print(result[i])
+                        #print(result[i])
                 
                 if(s == table_name[2]):
                     for i in range(len(result)):
                         result[i]['date'] = str(result[i]['date'])
-                        print(result[i])
+                        #print(result[i])
                  
                 all_table_json[s] = result
     finally:
@@ -134,7 +134,7 @@ def layout_set(input):
             db.commit()
             #신규설정 등록
             for s in input:
-                cursor.execute(layout_set_sql, [s['user_num'],s['loc'], s['type']])
+                cursor.execute(layout_set_sql, [s['user_num'],s['type'], s['loc']])
                 db.commit()
             #id 요청
             cursor.execute(get_layout_id_sql, input[0]['user_num'])            
