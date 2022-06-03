@@ -555,6 +555,28 @@ public class MirrorNetworkHelper {
         }
         return false;
     }
+    public boolean deactivationBelongingSetToServer(belongingSetData deactivationBelongingSetData){
+        try{
+            JSONObject belongingSetData = new JSONObject();
+            belongingSetData.put("belonging_id", deactivationBelongingSetData.getBelonging_id());
+            String postJsonString = belongingSetData.toString();
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/activationBelongingSet";
+            String funcString = "/deactivationBelongingSet";
+
+            String returnData = connectionAndReturnString(funcString, postJsonString);
+            Log.i("jsonParsing", "okOrNO: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("deactivationBelongingSetToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("deactivationBelongingSetToServer", "커넥션 오류");
+        }
+        return false;
+    }
     public boolean delBelongingSetToServer(belongingSetData delBelongingSetData){
         try{
             JSONObject belongingSetData = new JSONObject();
