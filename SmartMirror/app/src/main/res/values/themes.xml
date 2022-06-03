@@ -48,12 +48,19 @@
     <!--    스케줄 시간 텍스트 스타일-->
     <style name="scheduleTime">
         <item name="android:textSize">5pt</item>
+    </style>
+    <style name="splashText">
+        <item name="android:textSize">20pt</item>
         <item name="fontFamily">@font/notosanskr_bold</item>
-        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textColor">@color/black</item>
+
     </style>
     <style name="colorMainBg">#0D1AE9E3</style>
 
-
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
     <style name="Theme.SmartMirror" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
