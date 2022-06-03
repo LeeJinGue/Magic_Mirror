@@ -62,7 +62,7 @@ public class Methods {
 
     public static String DATE_FORMAT = "yyyy-MM-dd";
     public static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
+    public static String DEFAULT_PORT = "8000";
     // String(yyyy-mm-dd) -> date로 변환
     public static Date getConvertStringToDate(String dateString){
         DateFormat format = new SimpleDateFormat(DATE_FORMAT);
@@ -144,6 +144,26 @@ public class Methods {
             int i = Integer.parseInt(strNum);
         }catch(NumberFormatException nfe){
             return false;
+        }
+        return true;
+    }
+    public static boolean isIP(String strIP){
+        if(strIP == null){
+            return false;
+        }
+        Log.i("isIP","받은문자열: "+strIP);
+        String[] splitIp = strIP.split("\\.");
+        // 문자열이 4개로 나눠지지 않으면 뭔가 이상한것
+        if(splitIp.length!=4){
+            Log.i("isIP", "문자열 길이가 4가 아님. 길이: "+splitIp.length);
+            return false;
+        }
+        // .으로 나눈 문자열에 문자가 포함되어 있을 때
+        for(String s: splitIp){
+            if(!isInteger(s)) {
+                Log.i("isIP", "문자열에 문자가 있음");
+                return false;
+            }
         }
         return true;
     }

@@ -43,6 +43,8 @@ import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.dataClass.MyApplication;
+import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.stockData;
 
 import org.json.JSONObject;
@@ -81,57 +83,12 @@ public class RegisterDevActivity extends AppCompatActivity {
     AssetManager assetManager;
     JSONObject obj;
     Handler handler = new Handler();
-    String sdcard = Environment.getExternalStorageState()+"/AP/";
+    devData nowDevData;
 
-    File dir = new File(sdcard);
-    private static final int port = 8080;
     private static final String dongIp = "192.168.43.180";
     private static final String myIp = "192.168.0.6";
 
-    public String getJsonWithFileName(String fileName){
-        assetManager = getResources().getAssets();
-        try{
-            // assets 폴더 안에 있는 JSON 파일을 열어 InputStream 객체 생성
-            InputStream inputStream = assetManager.open(fileName);
-            InputStreamReader isr = new InputStreamReader(inputStream);
-            BufferedReader reader = new BufferedReader(isr);
 
-            StringBuffer buffer = new StringBuffer();
-            String line = reader.readLine();
-            while(line!= null){
-                buffer.append(line+"\n");
-                line=reader.readLine();
-            }
-            String jsonData = buffer.toString();
-            inputStream.close();
-            isr.close();
-            reader.close();
-            return jsonData;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-
-    public void getJsonData(){
-         assetManager = getResources().getAssets();
-        try{
-            String jsonData = getJsonWithFileName("test.json");
-            JSONObject jsonObject = new JSONObject(jsonData);
-            String name = jsonObject.getString("name");
-            int id = jsonObject.getInt("id");
-            int code = jsonObject.getInt("code");
-            JSONObject main = jsonObject.getJSONObject("main");
-            double main_temp = main.getDouble("temp");
-            Log.i("jsonTest", "id: "+id+", code:"+code+", name:"+name+", temp:"+main_temp);
-            JSONObject jsonObject1 = new JSONObject();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
     public void checkIPandSerial(String IPAddress, String SerialNo){
 
     }
@@ -152,19 +109,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-//    public void getExcelFileToDB() {
-//        try {
-//            // Creating Input Stream
-//            String fileName = "stock_list.xlsx";
-//            AssetManager assetManager = getAssets();
-//            AssetFileDescriptor assetFileDescriptor = assetManager.openFd(fileName);
-//            FileDescriptor fileDescriptor = assetFileDescriptor.getFileDescriptor();
-//            FileInputStream file = new FileInputStream(fileDescriptor);
-//            sqlDB.addStockList(file);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+
     public FileInputStream readExcelFileFromAssets() {
         try {
             // initialize asset manager
@@ -181,6 +126,53 @@ public class RegisterDevActivity extends AppCompatActivity {
         }
         return null;
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if(nowDevData!=null){
+//            // 받아온 데이터가 있으면 서버에 Serial넘버가 맞는지 확인합니다.
+//            Log.i("nowDevData", "DB에 있던 디바이스 정보: "+nowDevData.toString());
+//            if(sqlDB.getNetworkHelper().checkSerialFromServer(nowDevData)){
+//                // 맞으면 다음 화면으로 넘어갑니다.
+//                Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
+//                // 연결되었으므로 DB를 초기화
+//                sqlDB.addAllTable();
+//                MyApplication myApp = (MyApplication) getApplicationContext();
+//                myApp.setAddress(nowDevData.getIp());
+//                Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
+//                startActivity(intent);
+//            }
+//        }
+//    }
+
+
+
+    //    public boolean checkSerialIPFromServer(String serialNo, String IPAddress){
+//        try{
+//            // DB에서 devData를 가져옵니다.
+//            devData DBDevData = sqlDB.getDBDevData();
+//
+//            if(sqlDB.getNetworkHelper().checkSerialFromServer(DBDevData)){
+//                Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
+//                // 연결되었으므로 DB를 초기화
+//                sqlDB.addAllTable();
+//                MyApplication myApp = (MyApplication) getApplicationContext();
+//                myApp.setAddress(IPAddress);
+////                        sqlDB.initDB();
+//                Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
+//                startActivity(intent);
+//
+//            }else{
+//                Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치하지 않습니다.");
+//                Toast.makeText(getApplicationContext(), "시리얼넘버 또는 아이피주소를 잘못 입력하셨습니다.", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }catch (NumberFormatException e){
+//            e.printStackTrace();
+//            Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
+//        }
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,7 +190,7 @@ public class RegisterDevActivity extends AppCompatActivity {
 
         sqlDB = new MirrorDBHelper(getApplicationContext(), 1);
         sqlDB.initDBbeforeLogin(readExcelFileFromAssets());
-
+        nowDevData = sqlDB.getDBDevData();
         editSerial = findViewById(R.id.editSerial);
         editIP = findViewById(R.id.editWifi);
         btn = findViewById(R.id.testBtnRegister);
@@ -206,34 +198,35 @@ public class RegisterDevActivity extends AppCompatActivity {
         manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         editTest = findViewById(R.id.editTest);
 
+
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                MirrorNetworkHelper networkHelper = new MirrorNetworkHelper();
-//                try {
-//                    networkHelper.httpMain();
-//                } catch (JSONException jsonException) {
-//                    jsonException.printStackTrace();
-//                }
                 // 입력받은 시리얼넘버, 아이피주소로 로그인
                 // 테스트값은 시리얼넘버1, 아이피주소1
                 try{
                     String serialNo = editSerial.getText().toString();
-//                    String IPAddress = editIP.getText().toString();
-                    String IPString = editIP.getText().toString();
-                    if(!IPString.contains(":")){
-                        Toast.makeText(getApplicationContext(), "아이피 주소를 올바른 형태로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    String IPAddress = editIP.getText().toString();
+                    if(!Methods.isInteger(serialNo)){
+                        Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else if(!Methods.isIP(IPAddress)){
+                        Toast.makeText(getApplicationContext(), "아이피 주소를 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    String[] IPandPort = editIP.getText().toString().split(":");
-                    String IPAddress = IPandPort[0];
-                    int Port = Integer.parseInt(IPandPort[1]);
+                    nowDevData = new devData(serialNo, IPAddress);
+
                     // IP주소, 시리얼넘버가 맞는지 확인합니다.
-                    if(sqlDB.checkIPAddressAndSerial(IPAddress, serialNo,Port)){
+                    if(sqlDB.getNetworkHelper().checkSerialFromServer(nowDevData)){
+                        sqlDB.updateDevData(nowDevData);
+                        sqlDB.getNetworkHelper().setIPString(nowDevData.getIp());
                         Log.i("RegisterDevActivity", "IP주소, 시리얼넘버가 일치합니다.");
                         // 연결되었으므로 DB를 초기화
                         sqlDB.addAllTable();
+                        MyApplication myApp = (MyApplication) getApplicationContext();
+                        myApp.setAddress(nowDevData.getIp());
 //                        sqlDB.initDB();
                         Intent intent = new Intent(getApplicationContext(), ProfileSelectActivity.class);
                         startActivity(intent);
@@ -275,6 +268,10 @@ public class RegisterDevActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if(nowDevData!=null){
+            editIP.setText(nowDevData.getIp());
+            editSerial.setText(nowDevData.getSerial_no());
+        }
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
 
         if (SDK_INT > 8){
@@ -282,86 +279,5 @@ public class RegisterDevActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
     }
-    class ConnectThread extends Thread{
-        String hostname;
 
-        public ConnectThread(String addr){
-            hostname = addr;
-        }
-        public void run(){
-
-            try {
-                // JSON 데이터를 파싱해서 String형태로 가져옵니다.
-                String jsonData = getJsonWithFileName("test.json");
-//                JSONObject jsonObject = new JSONObject(jsonData);
-                Socket sock = new Socket(myIp, 8080);
-                Log.i("Connect Test", "실행");
-                Log.i("Connect Test", "서버 접속");
-//                ObjectOutputStream outputStream = new ObjectOutputStream(sock.getOutputStream());
-//                outputStream.writeChars("안녕하세요");
-//                outputStream.flush();
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(sock.getOutputStream());
-                outputStreamWriter.write("안녕하십니까");
-                outputStreamWriter.flush();
-                Log.i("Connect Test", "서버로 보낼 메시지 : " + outputStreamWriter.getEncoding());
-//                sock.close();
-            }catch (UnknownHostException e){
-                e.printStackTrace();
-                Log.i("Connect Test", "호스트의 IP주소 식별불가");
-            }catch (IOException e){
-                e.printStackTrace();
-                Log.i("Connect Test", "네트워크응답없음");
-            }catch (SecurityException e){
-                e.printStackTrace();
-                Log.i("Connect Test", "보안에러");
-            }catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                Log.i("Connect Test", "포트번호 오버됨");
-            }
-//            }catch (JSONException e){
-//                e.printStackTrace();
-//                Log.i("Connect Test", "JSON 에러");
-//            }
-
-
-
-        }
-    }
-    class ListenThread extends Thread{
-        String hostname;
-        public ListenThread(String addr){
-            hostname = addr;
-        }
-        Writer output = null;
-        public void run(){
-            try{
-                while(true){
-                    int port = 11002;
-                    Socket sock = new Socket(hostname, port);
-                    ObjectInputStream inputStream = new ObjectInputStream(sock.getInputStream());
-                    obj = (JSONObject) inputStream.readObject();
-                    final String jsonData = obj.toString();
-                    Log.i("Listen Test", "서버에서 받은 메시지 : "+jsonData);
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try{
-                                File file = new File(dir+"/data.json");
-                                output = new BufferedWriter(new FileWriter(file));
-                                output.write(obj.toString());
-                                output.close();;
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(getApplicationContext(), dir+"/data.json에 저장했습니다.", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(), jsonData, Toast.LENGTH_SHORT).show();
-                            Log.i("Listen Test", "받은 데이터 : "+jsonData);
-                        }
-                    });
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -49,7 +49,7 @@ public class ScheduleRecyclerAdapter extends RecyclerView.Adapter<ScheduleRecycl
         this.selectedUser = myApp.getSelectedUser();
         this.sqlDB = sqlDB;
         this.myApp = myApp;
-        this.networkHelper = new MirrorNetworkHelper();
+        this.networkHelper = sqlDB.getNetworkHelper();
     }
     public void addItem(scheduleData sData){
         String schedule_id = networkHelper.addScheduleToServer(sData);

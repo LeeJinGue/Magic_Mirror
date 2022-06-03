@@ -171,7 +171,6 @@ public class BelongingSetAddActivity extends AppCompatActivity {
                 }else{
                     // 수정모드
                     belongingSetData editBelongingSet = new belongingSetData(forEditData.getBelonging_id(), myApp.getSelectedUser().getUser_num(), setName,forEditData.getActivation(), setInfo, stuff_list_str);
-//                    newBelongingSet.setActiavted(isActiavted);
                     Intent intent = new Intent();
                     intent.putExtra("belongingSet", editBelongingSet);
                     intent.putExtra("index", index);

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
 import com.cookandroid.smartmirror.dataClass.interestedStockData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
@@ -35,7 +36,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     private int dbVersion;
     private SQLiteDatabase db;
     private MirrorNetworkHelper networkHelper;
-
+    private MyApplication myApp;
     // 더미데이터 - 레이아웃 ID
     private int set_layout_id = 1;
     public void setLayout_id(int user_num){
@@ -57,13 +58,25 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db = getWritableDatabase();
 
         onCreate(db);
-        networkHelper = new MirrorNetworkHelper();
+        this.myApp = (MyApplication)context.getApplicationContext();
+        networkHelper = new MirrorNetworkHelper(myApp.getIPString(),myApp.getPortString());
     }
+
+    public MirrorNetworkHelper getNetworkHelper() { return networkHelper; }
+
     public void initDBbeforeLogin(FileInputStream fileInputStream){
         createDeviceTb(db);
+//        check();
+//        addDevData(networkHelper.getDevData());
+//        check();
         // json파일을 받아와서 한다고 해보자
-        addDevData(networkHelper.getDeviceData());
-
+//        addDevData(networkHelper.getDeviceData());
+        createUserTb(db);
+        createLayoutSettingTb(db);
+        createMessageTb(db);
+        createScheduleTb(db);
+        createStockTb(db);
+        createBelongingsTb(db);
         createStockListTb(db);
         if(!isExistStockList()){
             // 만약 stocklist정보가 없으면
@@ -74,12 +87,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     public void initDB(){
-        createUserTb(db);
-        createLayoutSettingTb(db);
-        createMessageTb(db);
-        createScheduleTb(db);
-        createStockTb(db);
-        createBelongingsTb(db);
+
 
         networkHelper.getUserTable();
 
@@ -113,6 +121,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // dev데이터를 미리 넣어둡니다.
         addDevData(networkHelper.getDevData());
     }
+
     // Mirror로부터 모든 Data를 받아옵니다.
     public void addAllTable(){
         // device를 제외한 모든 테이블 데이터를 지워줍니다.
@@ -122,8 +131,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM schedule;");
         db.execSQL("DELETE FROM stock;");
         db.execSQL("DELETE FROM belongings;");
-        //
+
         JSONObject allTableJsonData = networkHelper.getAllTableFromServer(db);
+        if(allTableJsonData==null){
+            Log.i("networkError", "연결에 실패하였습니다.");
+            return;
+        }
         Log.i("jsonParsing", "받은데이터: " + allTableJsonData.toString());
         try {
             JSONArray userArray = allTableJsonData.getJSONArray("user");
@@ -243,7 +256,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createDeviceTb(SQLiteDatabase db){
         // device 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS device");
+//        db.execSQL("DROP TABLE IF EXISTS device");
         db.execSQL("CREATE TABLE IF NOT EXISTS device " +
                 "(serial_no VARCHAR(50) PRIMARY KEY, " +
                 "ip VARCHAR(20) DEFAULT NULL, " +
@@ -453,8 +466,36 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     // ---------------------------------------------------------------
 
     // --------------------------Device 관련-------------------------
+
+    // devData를 지우고 새 devData를 넣습니다.
+    public void updateDevData(devData newDevData){
+        db.execSQL("DELETE FROM device;");
+        addDevData(newDevData);
+    }
+    public devData getDBDevData(){
+        Cursor cs = db.rawQuery("SELECT serial_no, ip, port FROM device;", null);
+        System.out.println("cs.moveToNext: "+cs.moveToNext());
+
+        if(cs.getCount()==0){
+            return null;
+        }else{
+            devData DBDevData = new devData(cs.getString(0), cs.getString(1));
+            cs.close();
+            return DBDevData;
+        }
+    }
+    public void check(){
+        Cursor cs = db.rawQuery("SELECT serial_no, ip, port FROM device;", null);
+        System.out.println(cs.toString());
+    }
+//    public boolean checkDevDataDBandServer(){
+//
+//        networkHelper.checkSerialFromServer(getDBDevData());
+//    }
+
     // IP주소, 시리얼넘버가 맞는지 체크
-    public boolean checkIPAddressAndSerial(String IPAddress, String Serial, int port){
+    public boolean checkIPAddressAndSerial(String IPAddress, String Serial){
+//        networkHelper.checkSerialFromServer();
         // DB에 있는 Data 받아올 변수들
         String db_serial = "";
         int db_port = -1;
@@ -469,7 +510,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
             db_ip = cs.getString(1);
             db_port = cs.getInt(2);
             Log.i("checkIPAddressAndSerial", "\ndb_serial: "+db_serial+"\ndb_ip: "+db_ip+"\ndb_port: "+db_port);
-            Log.i("checkIPAddressAndSerial", "\nserial: "+Serial+"\nip: "+IPAddress+"\nport: "+port);
+            Log.i("checkIPAddressAndSerial", "\nserial: "+Serial+"\nip: "+IPAddress+"\nport: "+R.string.portstring);
 
         }
         // 받아온 ip가 ""라면 -> DB에 저장된게 없다면 추가해야하는데?
@@ -479,14 +520,13 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         }
         if(db_ip.equals(IPAddress)){
             if(db_serial.equals(Serial)){
-                if(db_port == port){
-                    // IP주소가 같고 시리얼넘버도 같다면
-                    return true;
+                // IP주소가 같고 시리얼넘버도 같다면
+                return true;
 
-                }else{
-                    Log.i("DBHelper", "checkIPAddressAndSerial - Port 정보가 일치하지 않습니다.");
-                    return false;
-                }
+//                }else{
+//                    Log.i("DBHelper", "checkIPAddressAndSerial - Port 정보가 일치하지 않습니다.");
+//                    return false;
+//                }
             }else{
                 // IP주소는 같지만 serial넘버가 다르다.
                 Log.i("DBHelper", "checkIPAddressAndSerial - Serial 정보가 일치하지 않습니다.");

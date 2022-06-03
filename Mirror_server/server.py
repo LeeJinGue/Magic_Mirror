@@ -176,6 +176,14 @@ def delBelongingSet():
         return 'ok'
     else:
         return 'no'
+@app.route('/checkSerial', methods=['GET', 'POST'])
+def checkSerial():
+    params = json.loads(request.get_data())
+    data = server_db_access.checkSerial(params)
+    if data == 0:
+        return 'ok'
+    else: 
+        return 'no'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8000)

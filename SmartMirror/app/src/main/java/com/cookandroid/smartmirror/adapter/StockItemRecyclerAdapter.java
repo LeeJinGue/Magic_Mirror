@@ -28,7 +28,7 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
     public StockItemRecyclerAdapter(ArrayList<interestedStockData> stockItemList, MirrorDBHelper sqlDB){
         this.stockItemList = stockItemList;
         this.sqlDB = sqlDB;
-        this.networkHelper = new MirrorNetworkHelper();
+        this.networkHelper = sqlDB.getNetworkHelper();
     }
     @NonNull
     @Override

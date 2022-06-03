@@ -38,7 +38,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         this.mDataList = mDataList;
         this.context = context;
         this.sqlDB = new MirrorDBHelper(context, 1);
-        this.networkHelper = new MirrorNetworkHelper();
+        this.networkHelper = sqlDB.getNetworkHelper();
 
         // 처음 생성할 때, 마지막 부분에 "추가하기"를 넣어둔다.
         myApp = (MyApplication) context.getApplicationContext();
@@ -51,7 +51,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         for(userData u:newUserList) Log.i("addItem", "newUser: "+u.toString());
         // User Id는 Mirror Server에서 받아오므로 OK되면 추가합니다.
         // 테스트용으로 현재 전체 유저리스트 길이 +1로 아이디 지정해뒀음.
-        MirrorNetworkHelper networkHelper = new MirrorNetworkHelper();
+        MirrorNetworkHelper networkHelper = sqlDB.getNetworkHelper();
         String user_num_string = networkHelper.addUserToServer(newUser);
         try{
             int user_num = Integer.parseInt(user_num_string);

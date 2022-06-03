@@ -1,8 +1,9 @@
+import sys
 from matplotlib.pyplot import get
 import pymysql
 import time
 
-from sympy import re
+# from sympy import re
 
 #데이터 베이스 연결 함수
 def db_connect():
@@ -45,6 +46,25 @@ def get_all_table():
 
     # print(all_table_json)
     return all_table_json
+
+#print(get_all_table())
+
+#시리얼넘버 체크 함수
+def checkSerial(input):
+    db = db_connect()
+    try:
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = "SELECT serial_no FROM device;"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for i in range(len(result)):
+                print(result[i])
+                print(input)
+                if(result[i]['serial_no'] == input['serial_no']):
+                    return 0
+    finally:
+        db.close()
+    return 1
 
 #프로필 추가 함수
 def add_profile(input):

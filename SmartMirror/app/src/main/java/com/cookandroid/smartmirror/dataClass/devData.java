@@ -1,5 +1,7 @@
 package com.cookandroid.smartmirror.dataClass;
 
+import com.cookandroid.smartmirror.R;
+
 // 디바이스 정보 객체
 public class devData {
     private String serial_no;
@@ -16,6 +18,14 @@ public class devData {
         this.port = port;
         this.location = location;
         this.info = info;
+
+    }
+    public devData(String serial_no, String ip){
+        this.serial_no = serial_no;
+        this.ip = ip;
+        this.port = 8000;
+        this.location="";
+        this.info="";
     }
 
     public String getSerial_no() {
