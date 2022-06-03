@@ -33,11 +33,16 @@ public class MirrorNetworkHelper {
     public static int PORTNUMBER = 8000;
     public static String LOCATION = "Seoul";
     public static String INFO = "none";
-    private String IP, Port;
-//    public MirrorNetworkHelper(String IP, String Port){
-//        this.IP = IP;
-//        this.Port = Port;
-//    }
+    private String IPString, PortString;
+    public MirrorNetworkHelper(String IPString, String PortStrng){
+        this.IPString = IPString;
+        this.PortString = PortStrng;
+    }
+
+    public void setIPString(String IPString) {
+        this.IPString = IPString;
+        this.PortString=Methods.DEFAULT_PORT;
+    }
 
     public devData getDevData(){
         // 시리얼넘버1, ip주소1
@@ -121,7 +126,9 @@ public class MirrorNetworkHelper {
     }
 
     // 연결할 URL과 서버에 넘겨줄 JsonString으로 서버에 전송 후 받은 데이터를 String으로 Return해주는 함수
-    public String connectionAndReturnString(String urlString, String jsonString) throws IOException {
+    public String connectionAndReturnString(String funcString, String jsonString) throws IOException {
+        String urlString = "http://"+IPString+":"+PortString+funcString;
+        Log.i("connectionAndReturnString", "연결주소: "+urlString);
         URL url = new URL(urlString.trim().toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -136,6 +143,8 @@ public class MirrorNetworkHelper {
             os.close();
         } catch (Exception e) {
             e.printStackTrace();
+            conn.disconnect();
+            return "";
         }
 
         try{
@@ -175,9 +184,9 @@ public class MirrorNetworkHelper {
             profileData.put("name", newUserData.getName());
             profileData.put("serial_no", newUserData.getSerial_no());
             String postJsonString = profileData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addProfile";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.1.101"+":"+"8000"+"/addProfile";
+            String funcString = "/addProfile";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             user_num = object.getString("user_num");
@@ -201,8 +210,8 @@ public class MirrorNetworkHelper {
             profileData.put("name", editUserData.getName());
             String postJsonString = profileData.toString();
             String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editProfile";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String funcString = "/editProfile";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
             Log.i("jsonParsing", "ok | no: " + returnData);
             if(returnData.equals("ok")){
                 return true;
@@ -223,9 +232,9 @@ public class MirrorNetworkHelper {
             JSONObject profileData = new JSONObject();
             profileData.put("user_num", delUserData.getUser_num());
             String postJsonString = profileData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delProfile";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delProfile";
+            String funcString = "/delProfile";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
             Log.i("jsonParsing", "ok | no: " + returnData);
             if(returnData.equals("ok")){
                 return true;
@@ -257,9 +266,9 @@ public class MirrorNetworkHelper {
                 layoutDataArray.put(layoutData);
             }
             String postJsonString = layoutDataArray.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/layoutSet";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.1.101"+":"+"8000"+"/layoutSet";
+            String funcString = "/layoutSet";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
             objectArray = (JSONArray) new JSONTokener(returnData).nextValue();
             for(int i=0; i<objectArray.length(); i++){
                 layoutData l = layoutArrayList.get(i);
@@ -291,9 +300,9 @@ public class MirrorNetworkHelper {
             messageData.put("text", newMsgData.getText());
             messageData.put("date", newMsgData.getDate());
             String postJsonString = messageData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/sendMessage";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/sendMessage";
+            String funcString = "/sendMessage";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             message_id = object.getString("message_id");
@@ -314,9 +323,9 @@ public class MirrorNetworkHelper {
             JSONObject messageData = new JSONObject();
             messageData.put("message_id", delMessageData.getMessage_id());
             String postJsonString = messageData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delMessage";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delMessage";
+            String funcString = "/delMessage";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
             Log.i("jsonParsing", "ok | no: " + returnData);
             if(returnData.equals("ok")){
                 return true;
@@ -344,9 +353,9 @@ public class MirrorNetworkHelper {
             scheduleData.put("end_time", addScheduleData.getEndTime());
             scheduleData.put("text", addScheduleData.getTitle());
             String postJsonString = scheduleData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addSchedule";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addSchedule";
+            String funcString = "/addSchedule";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             schedule_id = object.getString("schedule_id");
@@ -370,9 +379,9 @@ public class MirrorNetworkHelper {
             scheduleData.put("end_time", editScheduleData.getEndTime());
             scheduleData.put("text", editScheduleData.getTitle());
             String postJsonString = scheduleData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editSchedule";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editSchedule";
+            String funcString = "/editSchedule";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
 //            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             Log.i("jsonParsing", "okOrNO: " + returnData);
@@ -393,9 +402,9 @@ public class MirrorNetworkHelper {
             JSONObject scheduleData = new JSONObject();
             scheduleData.put("schedule_id", delSchedule.getUser_num());
             String postJsonString = scheduleData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delSchedule";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delSchedule";
+            String funcString = "/delSchedule";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             Log.i("jsonParsing", "okOrNo: " + returnData);
             if(returnData.contains("ok")){
@@ -422,9 +431,9 @@ public class MirrorNetworkHelper {
             stockData.put("stock_code", addStockData.getStock_code());
             stockData.put("stock_name", addStockData.getStock_name());
             String postJsonString = stockData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addStock";
-
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addStock";
+            String funcString = "/addStock";
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             stock_id = object.getString("stock_id");
@@ -444,9 +453,10 @@ public class MirrorNetworkHelper {
             JSONObject stockData = new JSONObject();
             stockData.put("stock_id", delStockData.getStock_id());
             String postJsonString = stockData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delStock";
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delStock";
+            String funcString = "/delStock";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             Log.i("jsonParsing", "okOrNo: " + returnData);
             if(returnData.contains("ok")){
@@ -475,9 +485,10 @@ public class MirrorNetworkHelper {
             belongingSetData.put("activation", addBelongingSetData.getActivation());
 
             String postJsonString = belongingSetData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addBelongingSet";
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addBelongingSet";
+            String funcString = "/addBelongingSet";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
             JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             belonging_id = object.getString("belonging_id");
@@ -500,9 +511,10 @@ public class MirrorNetworkHelper {
             belongingSetData.put("stuff_list", editBelongingSetData.getStuff_list_str());
             belongingSetData.put("activation", editBelongingSetData.getActivation());
             String postJsonString = belongingSetData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editBelongingSet";
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editBelongingSet";
+            String funcString = "/editBelongingSet";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
 //            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             Log.i("jsonParsing", "okOrNO: " + returnData);
@@ -524,9 +536,10 @@ public class MirrorNetworkHelper {
             belongingSetData.put("user_num", activationBelongingSetData.getUser_num());
             belongingSetData.put("belonging_id", activationBelongingSetData.getBelonging_id());
             String postJsonString = belongingSetData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/activationBelongingSet";
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/activationBelongingSet";
+            String funcString = "/activationBelongingSet";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
 //            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             Log.i("jsonParsing", "okOrNO: " + returnData);
@@ -547,9 +560,10 @@ public class MirrorNetworkHelper {
             JSONObject belongingSetData = new JSONObject();
             belongingSetData.put("belonging_id", delBelongingSetData.getBelonging_id());
             String postJsonString = belongingSetData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delBelongingSet";
+//            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delBelongingSet";
+            String funcString = "/delBelongingSet";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
+            String returnData = connectionAndReturnString(funcString, postJsonString);
 
 //            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
             Log.i("jsonParsing", "okOrNO: " + returnData);
@@ -575,10 +589,11 @@ public class MirrorNetworkHelper {
             JSONObject profileData = new JSONObject();
             profileData.put("serial_no", "1");
             String postJsonString = profileData.toString();
-            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/syncAllTable";
+//            String urlString = "http://"+"192.168.1.101"+":"+"8000"+"/syncAllTable";
+            String funcString = "/syncAllTable";
 
-            String returnData = connectionAndReturnString(urlString, postJsonString);
-
+            String returnData = connectionAndReturnString(funcString, postJsonString);
+            if(returnData=="") return null;
             object = (JSONObject) new JSONTokener(returnData).nextValue();
         }catch (JSONException jsonException){
             jsonException.printStackTrace();
@@ -592,187 +607,75 @@ public class MirrorNetworkHelper {
     }
     //---------------------------------------------------------------
 
-
-    public void httpMain() throws JSONException {
-        System.out.println("[HttpURLConnection 사용해  post body json 방식 데이터 요청 및 응답 값 확인 실시]");
-
-        /*[설 명]
-         * 1. HttpURLConnection은 http 통신을 수행할 객체입니다
-         * 2. URL 객체로 connection을 만듭니다
-         * 3. 응답받은 결과를 InputStream으로 받아서 버퍼에 순차적으로 쌓습니다
-         * */
-
-        //데이터 정의 실시
-        //포트 넘버뒤에 오는 URL을 통해 플라스크 서버에게 요청
-        String url = "http://192.168.0.6:8000/getData";
-
-        //하나하나 줄바꾸면서 쓰기 너무 어려워보임
-        //String data2 = "{ \"userId\" : \"1\", \"id\" : \"1\" }"; //json 형식 데이터
-
-
-
-
-        // JSONObject jsonObject = new JSONObject();
-
-        // jsonObject.put("SECR_KEY", "ktko.tistory.com");
-        // jsonObject.put("KEY", "ktko");
-
-        //json 객체 생성 및 데이터 입력
-//        org.json.simple.JSONObject data1 = new org.json.simple.JSONObject();
-        JSONObject data1 = new JSONObject();
-        data1.put("name", "이진규");
-        data1.put("serial_no", "1");
-
-//        org.json.simple.JSONObject data2 = new org.json.simple.JSONObject();
-        JSONObject data2 = new JSONObject();
-        data2.put("BANK_CD", "088");
-        data2.put("SEARCH_ACCT_NO", "1231231234");
-        data2.put("ACNM_NO", "123456");
-        data2.put("ICHE_AMT", "0");
-        data2.put("TRSC_SEQ_NO", "0000001");
-
-        //json 배열 객체 생성
-        JSONArray req_array = new JSONArray();
-        //json 어레이에 두가지 데이터 추가
-        req_array.put(data1);
-        req_array.put(data2);
-
-        // jsonObject.put("REQ_DATA", req_array);
-
-        //json 형식 string 으로 변환
-        String data3 = data1.toString();
-
-        //data3 은 POST 방식을 이용해 플라스크 서버로 전송
-        //메소드 호출 실시
-        httpPostBodyConnection(url, data3);
+    public boolean checkSerialFromServer(devData checkDevData){
+        try{
+            JSONObject serialData = new JSONObject();
+            serialData.put("serial_no", Integer.parseInt(checkDevData.getSerial_no()));
+            String postJsonString = serialData.toString();
+            String funcString = "/checkSerial";
+            String urlString = "http://"+checkDevData.getIp()+":"+String.valueOf(checkDevData.getPort())+funcString;
+            Log.i("chekcSerialFromServer", "urlString: "+urlString);
+            String returnData = connectionWithURL(urlString, postJsonString);
+            if(returnData.contains("ok")) return true;
+// 테스트용함수           if(checkDevData.getSerial_no().equals("101") && checkDevData.getIp().equals("192.168.1.102")){
+//                return true;
+//            }
+//            object = (JSONObject) new JSONTokener(returnData).nextValue();
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("getAllTableFromServer", "Json파싱오류");
+        }
+        catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("getAllTableFromServer", "커넥션 오류");
+        }
+        return false;
     }
-    public void httpPostBodyConnection(String UrlData, String ParamData) {
+    public String connectionWithURL(String urlString, String jsonString) throws IOException {
+//        String urlString = "http://"+IPString+":"+PortString+funcString;
+        URL url = new URL(urlString.trim().toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        //http 요청 시 필요한 url 주소를 변수 선언
-        String totalUrl = "";
-        totalUrl = UrlData.trim().toString();
+        //http 요청에 필요한 타입 정의 실시
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json; utf-8"); //post body json으로 던지기 위함
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setDoOutput(true); //OutputStream을 사용해서 post body 데이터 전송
+        try (OutputStream os = conn.getOutputStream()) {
+            byte request_data[] = jsonString.getBytes("utf-8");
+            os.write(request_data);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            conn.disconnect();
+            return "";
+        }
 
-        //http 통신을 하기위한 객체 선언 실시
-        URL url = null;
-        HttpURLConnection conn = null;
-
-        //http 통신 요청 후 응답 받은 데이터를 담기 위한 변수
-        String responseData = "";
-        BufferedReader br = null;
-        StringBuffer sb = null;
-
-        //메소드 호출 결과값을 반환하기 위한 변수
-        String returnData = "";
-
-        try {
-            //파라미터로 들어온 url을 사용해 connection 실시
-            url = new URL(totalUrl);
-            conn = (HttpURLConnection) url.openConnection();
-
-            //http 요청에 필요한 타입 정의 실시
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8"); //post body json으로 던지기 위함
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setDoOutput(true); //OutputStream을 사용해서 post body 데이터 전송
-            try (OutputStream os = conn.getOutputStream()) {
-                byte request_data[] = ParamData.getBytes("utf-8");
-                os.write(request_data);
-                os.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try{
 
             //http 요청 실시
             conn.connect();
-            Log.i("serverConnection", "요청주소: "+UrlData+", 보낸데이터: "+ParamData);
-
+            Log.i("serverConnection", "요청주소: "+urlString+", 보낸데이터: "+jsonString);
             //http 요청 후 응답 받은 데이터를 버퍼에 쌓는다
-            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-            sb = new StringBuffer();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            StringBuffer sb = new StringBuffer();
+            String responseData = "";
             while ((responseData = br.readLine()) != null) {
                 sb.append(responseData); //StringBuffer에 응답받은 데이터 순차적으로 저장 실시
             }
 
             //메소드 호출 완료 시 반환하는 변수에 버퍼 데이터 삽입 실시
             //sb에는 서버로부터 받은 json 형식 데이터가 저장되어 있음, 문자열로 변환하여 사용
-            returnData = sb.toString();
-
-            //http 요청 응답 코드 확인 실시
+            String returnData = sb.toString();
+            // 응답이 잘 왔는지 확인
             String responseCode = String.valueOf(conn.getResponseCode());
-            System.out.println("http 응답 코드 : " + responseCode);
-            System.out.println("http 응답 데이터 : " + returnData);
-
-            try {
-                JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
-                String user_num = object.getString("user_num");
-                Log.i("jsonParsing", "user_num: " + user_num);
-//                JSONArray deviceTable = object.getJSONArray("deviceTable");
-//                JSONObject j = (JSONObject) deviceTable.get(0);
-////                Log.i("jsonParsing", "row"+i+": "+j.toString());
-//                String serial_no = j.getString("serial_no");
-//                String ip = j.getString("ip");
-//                int port = j.getInt("port");
-//                String location = j.getString("location");
-//                String info = j.getString("info");
-//                Log.i("jsonParsing", "user_noL "+user_no+", serial_no: "+serial_no+", userName: "+userName+", user_image_pass: "+user_image_pass);
-//                userData newUser = new userData(user_num, );
-//                devData devData = new devData(serial_no, ip, port, location, info);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-//            //json 데이터 다루기, 파싱 작동 테스트
-//            JSONParser parser = new JSONParser();
-//            JSONTokener tokener = new JSONTokener();
-//            //json 서버에서 응답받은 데이터 어레이 객체로 파싱
-//            JSONArray arr = null;
-//            try {
-//                arr = (JSONArray)parser.parse(returnData);
-//            } catch (ParseException e) {
-//                System.out.println("변환에 실패");
-//                e.printStackTrace();
-//            }
-//
-//            //파싱한 json 배열 크기만큼 반복, json 배열을 json 단일 객채로 파싱하고 데이터 사용
-//            System.out.println(arr.size());
-//            for(int i = 0; i<arr.size(); i++){
-//                System.out.println(arr.get(i));
-//                org.json.simple.JSONObject jObject = null;
-//                try {
-//                    jObject = (org.json.simple.JSONObject)parser.parse(arr.get(i).toString());
-//                } catch (ParseException e) {
-//                    System.out.println("변환에 실패");
-//                    e.printStackTrace();
-//                }
-//                //json 객체 작동 테스트
-//                System.out.println("i:"+ jObject.get("i"));
-//                System.out.println("j:"+ jObject.get("j"));
-//
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            //http 요청 및 응답 완료 후 BufferedReader를 닫아줍니다
-//            try {
-//                if (br != null) {
-//                    br.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            //http 요청 및 응답 완료 후 BufferedReader, conn을 닫아줍니다
             conn.disconnect();
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Log.i("serverConnection","http 응답 코드 : " + responseCode+ "\nhttp 응답 데이터: "+returnData);
+            return returnData;
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return "";
     }
+
 }

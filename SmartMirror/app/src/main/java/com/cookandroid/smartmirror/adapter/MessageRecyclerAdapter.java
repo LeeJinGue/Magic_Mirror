@@ -31,7 +31,7 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.context = context;
         this.messageAndDateList = messageAndDateList;
         sqlDB = new MirrorDBHelper(context, 1);
-        networkHelper = new MirrorNetworkHelper();
+        networkHelper = sqlDB.getNetworkHelper();
     }
 
     // ArrayList 관리

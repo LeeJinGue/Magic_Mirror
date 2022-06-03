@@ -58,7 +58,7 @@ public class WindowSetupFragment extends Fragment implements WindowAdapter.OnLis
 //        initUI(rootView);
         // DB Init
         sqlDB = new MirrorDBHelper(rootView.getContext(),2);
-        networkHelper = new MirrorNetworkHelper();
+        networkHelper = sqlDB.getNetworkHelper();
         myApp = (MyApplication) getActivity().getApplicationContext();
         // 현재 선택된 유저
         selectedUser = myApp.getSelectedUser();

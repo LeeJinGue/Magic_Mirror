@@ -88,7 +88,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         belongingSetDataArrayList = dataList;
         belongingSetSwitchArrayList = new ArrayList<Switch>();
         this.sqlDB = sqlDB;
-        this.networkHelper = new MirrorNetworkHelper();
+        this.networkHelper = sqlDB.getNetworkHelper();
     }
 
     @NonNull
