@@ -55,12 +55,12 @@ public class BelongingSetAddActivity extends AppCompatActivity {
     ImageView belongingItemAddBtn;
     RecyclerView belongingItemRecyclerView;
     BelongingItemRecyclerAdapter belongingItemRecyclerAdapter;
-    boolean isActiavted;
+    boolean isActiavted, isAdd;
     // 수정할 / 추가할 소지품 세트의 인덱스
     int index;
     MyApplication myApp;
     ArrayList<String> belongingItemList;
-
+    belongingSetData forEditData;
     // 소지품 추가버튼 클릭시 생성되는 Dialog에 소지품 이름을 입력하는 EditText
     private EditText nameEditText;
 
@@ -94,17 +94,19 @@ public class BelongingSetAddActivity extends AppCompatActivity {
         // 소지품 리스트에 소지품아이템 하나를 추가하는 버튼
         belongingItemAddBtn = findViewById(R.id.belongingItemAddBtn);
         Intent intent = getIntent();
-        if(!intent.getBooleanExtra("isAdd", true)){
+        isAdd =intent.getBooleanExtra("isAdd", true);
+        if(!isAdd){
             // 수정모드일 때.
             // 인덱스랑 belongSet정보가 담겨져있음.
             index = intent.getIntExtra("index", -1);
-            belongingSetData forEditData = intent.getParcelableExtra("belongingSet");
+            forEditData = intent.getParcelableExtra("belongingSet");
 
             Log.i("BelongingSetAddActivity", "수정모드입니다. 수정할 소지품세트 정보:\n"+forEditData.toString());
             belongingItemList = Methods.getStuffArrayListFromString(forEditData.getStuff_list_str());
             belongingNameEditText.setText(forEditData.getSet_name());
             belongingInfoEditText.setText(forEditData.getSet_info());
             isActiavted = forEditData.isActiavted();
+            tvTitle.setText("소지품세트 수정");
         }else{
             // 추가 모드일 때. default값
             belongingItemList = new ArrayList<>();
@@ -155,15 +157,28 @@ public class BelongingSetAddActivity extends AppCompatActivity {
                 ArrayList<String> stuffList_arr = new ArrayList<>();
                 stuffList_arr = (ArrayList<String>) belongingItemRecyclerAdapter.getBelongingItemList().clone();
                 String stuff_list_str = Methods.getStringFromStuffArrayList(stuffList_arr);
-                belongingSetData newBelongingSet = new belongingSetData(++myApp.belongingId, myApp.getSelectedUser().getUser_num(), setName,"0", setInfo, stuff_list_str);
-                newBelongingSet.setActiavted(isActiavted);
+                if(isAdd){
+                    // 저장모드
+                    belongingSetData newBelongingSet = new belongingSetData(1, myApp.getSelectedUser().getUser_num(), setName,"0", setInfo, stuff_list_str);
+                    newBelongingSet.setActiavted(isActiavted);
 
-                Log.i("belongingSetAddActivity", newBelongingSet.toString()+"\n을 추가합니다.");
-                Intent intent = new Intent();
-                intent.putExtra("belongingSet", newBelongingSet);
-                intent.putExtra("index", index);
-                setResult(RESULT_OK, intent);
-                finish();
+                    Log.i("belongingSetAddActivity", newBelongingSet.toString()+"\n을 추가합니다.");
+                    Intent intent = new Intent();
+                    intent.putExtra("belongingSet", newBelongingSet);
+                    intent.putExtra("index", index);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }else{
+                    // 수정모드
+                    belongingSetData editBelongingSet = new belongingSetData(forEditData.getBelonging_id(), myApp.getSelectedUser().getUser_num(), setName,forEditData.getActivation(), setInfo, stuff_list_str);
+//                    newBelongingSet.setActiavted(isActiavted);
+                    Intent intent = new Intent();
+                    intent.putExtra("belongingSet", editBelongingSet);
+                    intent.putExtra("index", index);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
             }
         });
 

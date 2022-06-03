@@ -1,7 +1,5 @@
 package com.cookandroid.smartmirror.adapter;
 
-import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -35,7 +30,7 @@ public class BelongingItemRecyclerAdapter extends RecyclerView.Adapter<Belonging
     public BelongingItemRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.belonging_item, parent, false);
+        View view = inflater.inflate(R.layout.item_belonging, parent, false);
         BelongingItemRecyclerAdapter.ViewHolder vh = new BelongingItemRecyclerAdapter.ViewHolder(view);
         return vh;
     }

@@ -1,6 +1,5 @@
 package com.cookandroid.smartmirror.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,14 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.BelongingSetAddActivity;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
@@ -35,34 +32,63 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
     ActivityResultLauncher<Intent> mStartForResult;
     Context fragmentContext;
     MirrorDBHelper sqlDB;
+    MirrorNetworkHelper networkHelper;
     public void setFragmentContext(Context context){fragmentContext=context;}
     public void setmStartForResult(ActivityResultLauncher<Intent> activityResultLauncher){mStartForResult = activityResultLauncher;}
     public void addItem(belongingSetData item){
-        sqlDB.addBelongingSet(item);
-        belongingSetDataArrayList.add(item);
-        notifyItemInserted(belongingSetDataArrayList.size());
+        String belonging_id = networkHelper.addBelongingSetToServer(item);
+        try{
+            item.setBelonging_id(Integer.parseInt(belonging_id));
+            sqlDB.addBelongingSet(item);
+            belongingSetDataArrayList.add(item);
+            notifyItemInserted(belongingSetDataArrayList.size());
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            Log.i("BelongingSetRecyclerAdapter", "소지품세트 추가 실패");
+        }
     }
     public void editItem(int index, belongingSetData changeItem){
-        sqlDB.editBelongingSet(changeItem);
-        belongingSetDataArrayList.set(index, changeItem);
-        notifyItemChanged(index);
+        if(networkHelper.editBelongingSetToServer(changeItem)){
+            sqlDB.editBelongingSet(changeItem);
+            belongingSetDataArrayList.set(index, changeItem);
+            notifyItemChanged(index);
+        }else{
+            Log.i("BelongingSetRecyclerAdapter", "소지품세트 수정 실패");
+        }
     }
     public void removeAt(int index){
-        sqlDB.delBelongingSet(belongingSetDataArrayList.get(index));
-        belongingSetDataArrayList.remove(index);
-        notifyItemRemoved(index);
-//        notifyItemRangeChanged(index, belongingSetDataArrayList.size());
+        if(networkHelper.delBelongingSetToServer(belongingSetDataArrayList.get(index))){
+            sqlDB.delBelongingSet(belongingSetDataArrayList.get(index));
+            belongingSetDataArrayList.remove(index);
+            notifyItemRemoved(index);
+        }else{
+            Log.i("BelongingSetRecyclerAdapter", "소지품세트 제거 실패");
+        }
     }
     public void setSwitchAt(int index, boolean isActivted){
         Log.i("setSwitchAt", index+"번째 스위치를 "+isActivted+"한 상태로");
-        belongingSetDataArrayList.get(index).setActiavted(isActivted);
-        belongingSetSwitchArrayList.get(index).setChecked(isActivted);
-        sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
+        if(isActivted){
+            // 활성화 상태로 바꿀 시 나머지를 비활성화 시켜야 한다.
+            if(networkHelper.activationBelongingSetToServer(belongingSetDataArrayList.get(index))){
+                sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
+                belongingSetDataArrayList.get(index).setActiavted(isActivted);
+                belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+            }else{
+                Log.i("BelongingSetRecyclerAdapter", "소지품세트 활성화 실패");
+            }
+        }else{
+            // 비활성화 상태로 바꿀 시 하나만 비활성화 시키면 된다.
+            sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
+            belongingSetDataArrayList.get(index).setActiavted(isActivted);
+            belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+        }
+
     }
     public BelongingSetRecyclerAdapter(ArrayList<belongingSetData> dataList, MirrorDBHelper sqlDB){
         belongingSetDataArrayList = dataList;
         belongingSetSwitchArrayList = new ArrayList<Switch>();
         this.sqlDB = sqlDB;
+        this.networkHelper = new MirrorNetworkHelper();
     }
 
     @NonNull
@@ -70,7 +96,7 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
     public BelongingSetRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.belonging_set_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_belonging_set, parent, false);
         BelongingSetRecyclerAdapter.ViewHolder viewHolder = new BelongingSetRecyclerAdapter.ViewHolder(view);
         return viewHolder;
     }

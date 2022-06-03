@@ -98,16 +98,16 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         // viewType에 따라 다른 View를 리턴합니다.
         switch (viewType){
             case R.integer.TYPE_DATE:
-                view = inflater.inflate(R.layout.message_date_item, parent, false);
+                view = inflater.inflate(R.layout.item_message_date, parent, false);
                 MessageRecyclerAdapter.DateViewHolder dateViewHoldervh = new MessageRecyclerAdapter.DateViewHolder(view);
                 return dateViewHoldervh;
 
             case R.integer.TYPE_MESSAGE_LEFT:
-                view = inflater.inflate(R.layout.message_left_item, parent, false);
+                view = inflater.inflate(R.layout.item_message_left, parent, false);
                 MessageRecyclerAdapter.MessageLeftViewHolder messageLeftViewHolder = new MessageRecyclerAdapter.MessageLeftViewHolder(view);
                 return messageLeftViewHolder;
             case R.integer.TYPE_MESSAGE_RIGHT:
-                view = inflater.inflate(R.layout.message_right_item, parent, false);
+                view = inflater.inflate(R.layout.item_message_right, parent, false);
                 MessageRecyclerAdapter.MessageRightViewHolder messageRightViewHolder = new MessageRecyclerAdapter.MessageRightViewHolder(view);
                 return messageRightViewHolder;
             default:

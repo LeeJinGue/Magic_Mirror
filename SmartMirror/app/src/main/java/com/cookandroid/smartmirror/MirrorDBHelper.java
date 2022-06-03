@@ -731,7 +731,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
 
     public void addBelongingSet(belongingSetData newBelongingSet){
-        Log.i("addBelongingSetWithUser", "DB에 추가할 belongingSet 이름: "+newBelongingSet.getSet_name()+", 유저ID: "+newBelongingSet.getUser_num());
+        Log.i("addBelongingSet", "DB에 추가할 belongingSet 이름: "+newBelongingSet.getSet_name()+", 유저ID: "+newBelongingSet.getUser_num());
         ContentValues values = new ContentValues();
         values.put("belonging_id", newBelongingSet.getBelonging_id());
         values.put("set_name", newBelongingSet.getSet_name());
@@ -741,10 +741,10 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         values.put("stuff_list", newBelongingSet.getStuff_list_str());
         long result =db.insert("belongings", null, values);
         if(result != -1){
-            Log.i("addBelongingSetWithUser", newBelongingSet.toString() + ", id: "+ newBelongingSet.getBelonging_id()+" 소지품세트 추가");
+            Log.i("addBelongingSet", newBelongingSet.toString() + ", id: "+ newBelongingSet.getBelonging_id()+" 소지품세트 추가");
 //            newBelongingSet.setBelonging_id(set_belongingSet_id);
         }else{
-            Log.i("addBelongingSetWithUser", "db insert 오류");
+            Log.i("addBelongingSet", "db insert 오류");
         }
     }
     public void delBelongingSet(belongingSetData delBelongingSet){

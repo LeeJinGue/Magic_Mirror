@@ -3,6 +3,7 @@ package com.cookandroid.smartmirror;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.cookandroid.smartmirror.dataClass.belongingSetData;
 import com.cookandroid.smartmirror.dataClass.devData;
 import com.cookandroid.smartmirror.dataClass.interestedStockData;
 import com.cookandroid.smartmirror.dataClass.layoutData;
@@ -164,6 +165,7 @@ public class MirrorNetworkHelper {
         return "";
     }
 
+    //------------------------- 유저 테이블 --------------------------
     public String addUserToServer(userData newUserData) {
         // 서버에 새 유저를 추가하고 받아온 ID로 sqlDB에도 추가합니다.
         String user_num="";
@@ -238,6 +240,9 @@ public class MirrorNetworkHelper {
         }
         return false;
     }
+    //---------------------------------------------------------------
+
+    //------------------------- 화면설정 테이블 --------------------------
     public ArrayList<layoutData> layoutSetFromServer(ArrayList<layoutData> layoutArrayList){
         JSONArray objectArray = null;
         ArrayList<layoutData> returnLayoutList=new ArrayList<>();
@@ -273,7 +278,9 @@ public class MirrorNetworkHelper {
         }
         return returnLayoutList;
     }
+    //---------------------------------------------------------------
 
+    //------------------------- 메시지 테이블 --------------------------
     public String sendMessageToServer(messageData newMsgData){
         String message_id="";
         try{
@@ -324,6 +331,9 @@ public class MirrorNetworkHelper {
         }
         return false;
     }
+    //---------------------------------------------------------------
+
+    //------------------------- 일정 테이블 --------------------------
     public String addScheduleToServer(scheduleData addScheduleData){
         String schedule_id="";
         try{
@@ -353,7 +363,6 @@ public class MirrorNetworkHelper {
     }
     public boolean editScheduleToServer(scheduleData editScheduleData){
         try{
-
             JSONObject scheduleData = new JSONObject();
             scheduleData.put("schedule_id", editScheduleData.getSchedule_id());
             scheduleData.put("user_num", editScheduleData.getUser_num());
@@ -401,7 +410,9 @@ public class MirrorNetworkHelper {
         }
         return false;
     }
+    //---------------------------------------------------------------
 
+    //------------------------- 관심주식 테이블 --------------------------
     public String addStockToServer(interestedStockData addStockData){
         String stock_id="";
         try{
@@ -450,6 +461,113 @@ public class MirrorNetworkHelper {
         }
         return false;
     }
+    //---------------------------------------------------------------
+
+    //------------------------- 소지품 테이블 --------------------------
+    public String addBelongingSetToServer(belongingSetData addBelongingSetData){
+        String belonging_id="";
+        try{
+            JSONObject belongingSetData = new JSONObject();
+            belongingSetData.put("user_num", addBelongingSetData.getUser_num());
+            belongingSetData.put("set_name", addBelongingSetData.getSet_name());
+            belongingSetData.put("set_info", addBelongingSetData.getSet_info());
+            belongingSetData.put("stuff_list", addBelongingSetData.getStuff_list_str());
+            belongingSetData.put("activation", addBelongingSetData.getActivation());
+
+            String postJsonString = belongingSetData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/addBelongingSet";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            belonging_id = object.getString("belonging_id");
+            Log.i("jsonParsing", "belonging_id: " + belonging_id);
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("addBelongingSetToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("addBelongingSetToServer", "커넥션 오류");
+        }
+        return belonging_id;
+    }
+    public boolean editBelongingSetToServer(belongingSetData editBelongingSetData){
+        try{
+            JSONObject belongingSetData = new JSONObject();
+            belongingSetData.put("belonging_id", editBelongingSetData.getBelonging_id());
+            belongingSetData.put("set_name", editBelongingSetData.getSet_name());
+            belongingSetData.put("set_info", editBelongingSetData.getSet_info());
+            belongingSetData.put("stuff_list", editBelongingSetData.getStuff_list_str());
+            belongingSetData.put("activation", editBelongingSetData.getActivation());
+            String postJsonString = belongingSetData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/editBelongingSet";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+//            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            Log.i("jsonParsing", "okOrNO: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("editBelongingSetToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("editBelongingSetToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public boolean activationBelongingSetToServer(belongingSetData activationBelongingSetData){
+        try{
+            JSONObject belongingSetData = new JSONObject();
+            belongingSetData.put("user_num", activationBelongingSetData.getUser_num());
+            belongingSetData.put("belonging_id", activationBelongingSetData.getBelonging_id());
+            String postJsonString = belongingSetData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/activationBelongingSet";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+//            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            Log.i("jsonParsing", "okOrNO: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("editBelongingSetToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("editBelongingSetToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    public boolean delBelongingSetToServer(belongingSetData delBelongingSetData){
+        try{
+            JSONObject belongingSetData = new JSONObject();
+            belongingSetData.put("belonging_id", delBelongingSetData.getBelonging_id());
+            String postJsonString = belongingSetData.toString();
+            String urlString = "http://"+"192.168.0.6"+":"+"8000"+"/delBelongingSet";
+
+            String returnData = connectionAndReturnString(urlString, postJsonString);
+
+//            JSONObject object = (JSONObject) new JSONTokener(returnData).nextValue();
+            Log.i("jsonParsing", "okOrNO: " + returnData);
+            if(returnData.contains("ok")){
+                return true;
+            }
+        }catch (JSONException jsonException){
+            jsonException.printStackTrace();
+            Log.i("delBelongingSetToServer", "Json파싱오류");
+        }catch (IOException ioException){
+            ioException.printStackTrace();
+            Log.i("delBelongingSetToServer", "커넥션 오류");
+        }
+        return false;
+    }
+    //---------------------------------------------------------------
+
+    //-------------------------전체 테이블 받아오기 --------------------------
     public JSONObject getAllTableFromServer(SQLiteDatabase db){
         JSONObject object = null;
         try{
@@ -472,6 +590,7 @@ public class MirrorNetworkHelper {
             return object;
         }
     }
+    //---------------------------------------------------------------
 
 
     public void httpMain() throws JSONException {

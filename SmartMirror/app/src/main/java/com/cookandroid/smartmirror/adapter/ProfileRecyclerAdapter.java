@@ -17,7 +17,6 @@ import com.cookandroid.smartmirror.MirrorDBHelper;
 import com.cookandroid.smartmirror.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
-import com.cookandroid.smartmirror.activities.ProfileSelectActivity;
 import com.cookandroid.smartmirror.activities.ProfileSettingActivity;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
@@ -120,7 +119,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.profile_item, parent, false);
+        View view = inflater.inflate(R.layout.item_profile, parent, false);
         ProfileRecyclerAdapter.ViewHolder vh = new ProfileRecyclerAdapter.ViewHolder(view);
         
         return vh;

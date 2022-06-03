@@ -15,22 +15,6 @@
         android:layout_weight="9"
         android:id="@+id/messageRecyclerView"
         android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
-<!--    <LinearLayout-->
-<!--        android:id="@+id/messageListLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="9"-->
-<!--        android:orientation="vertical"-->
-<!--        android:layout_marginHorizontal="10dp"-->
-<!--        >-->
-<!--&lt;!&ndash;오늘 날짜&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:text="2022년 5월 4일 수요일"-->
-<!--            android:id="@+id/messageDay"></TextView>-->
-<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -24,10 +24,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name="com.cookandroid.smartmirror.activities.PutDevWifiAddress"
-            android:exported="true" >
-        </activity>
-        <activity
             android:name="com.cookandroid.smartmirror.activities.AddAndSearchStockActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
@@ -61,10 +57,6 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name="com.cookandroid.smartmirror.activities.LinkWifiActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name="com.cookandroid.smartmirror.activities.RegisterDevActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" >
@@ -73,18 +65,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.cookandroid.smartmirror.activities.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
 
         <provider

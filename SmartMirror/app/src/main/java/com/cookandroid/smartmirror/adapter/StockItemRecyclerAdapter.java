@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +35,7 @@ public class StockItemRecyclerAdapter extends RecyclerView.Adapter<StockItemRecy
     public StockItemRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.stock_item, parent, false);
+        View view = inflater.inflate(R.layout.item_stock, parent, false);
         StockItemRecyclerAdapter.ViewHolder vh = new StockItemRecyclerAdapter.ViewHolder(view);
         return vh;
     }

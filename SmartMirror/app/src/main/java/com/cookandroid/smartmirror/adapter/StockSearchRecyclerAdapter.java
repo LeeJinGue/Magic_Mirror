@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cookandroid.smartmirror.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -45,7 +44,7 @@ public class StockSearchRecyclerAdapter extends RecyclerView.Adapter<StockSearch
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.stock_search_item, parent, false);
+        View view = inflater.inflate(R.layout.item_stock_search, parent, false);
         StockSearchRecyclerAdapter.ViewHolder vh = new StockSearchRecyclerAdapter.ViewHolder(view);
         return vh;
     }
