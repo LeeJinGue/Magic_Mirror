@@ -270,7 +270,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     public void createUserTb(SQLiteDatabase db){
         // user 테이블 생성
         // 0: 유저아이디, 1: 시리얼넘버, 2: 이름, 3: 유저 이미지 경로
-        db.execSQL("DROP TABLE IF EXISTS user");
+//        db.execSQL("DROP TABLE IF EXISTS user");
         db.execSQL("CREATE TABLE IF NOT EXISTS user " +
                 "(user_num INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "serial_no INTEGER(11), " +
@@ -283,7 +283,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createLayoutSettingTb(SQLiteDatabase db){
         // layoutsetting 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS layoutsetting");
+//        db.execSQL("DROP TABLE IF EXISTS layoutsetting");
         db.execSQL("CREATE TABLE IF NOT EXISTS layoutsetting " +
                 "(layout_id INTEGER(11) PRIMARY KEY, " +
                 "user_num INTEGER(11) NOT NULL, " +
@@ -296,7 +296,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createBelongingsTb(SQLiteDatabase db){
         // belongings 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS belongings");
+//        db.execSQL("DROP TABLE IF EXISTS belongings");
         db.execSQL("CREATE TABLE IF NOT EXISTS belongings " +
                 "(belonging_id INT(11) PRIMARY KEY, " +
                 "user_num INTEGER(11), " +
@@ -311,7 +311,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createMessageTb(SQLiteDatabase db){
         // message 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS message");
+//        db.execSQL("DROP TABLE IF EXISTS message");
         db.execSQL("CREATE TABLE IF NOT EXISTS message " +
                 "(message_id INTEGER(11) PRIMARY KEY, " +
                 "user_num INTEGER(11), " +
@@ -327,7 +327,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createScheduleTb(SQLiteDatabase db){
         // schedule 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS schedule");
+//        db.execSQL("DROP TABLE IF EXISTS schedule");
         db.execSQL("CREATE TABLE IF NOT EXISTS schedule " +
                 "(schedule_id INTEGER(11) PRIMARY KEY, " +
                 "user_num INTEGER(11), " +
@@ -342,7 +342,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createStockTb(SQLiteDatabase db){
         // stock 테이블 생성
-        db.execSQL("DROP TABLE IF EXISTS stock");
+//        db.execSQL("DROP TABLE IF EXISTS stock");
         db.execSQL("CREATE TABLE IF NOT EXISTS stock " +
                 "(stock_id INTEGER(11) PRIMARY KEY, " +
                 "user_num INTEGER(11), " +

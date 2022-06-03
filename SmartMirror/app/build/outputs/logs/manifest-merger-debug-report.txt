@@ -94,9 +94,9 @@ MERGED from [androidx.startup:startup-runtime:1.0.0] C:\Users\hippo\.gradle\cach
 	android:label
 		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-41
 	android:roundIcon
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:9-54
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:9-61
 	android:icon
-		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-43
+		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-50
 	android:allowBackup
 		ADDED from C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:10:9-35
 	android:theme

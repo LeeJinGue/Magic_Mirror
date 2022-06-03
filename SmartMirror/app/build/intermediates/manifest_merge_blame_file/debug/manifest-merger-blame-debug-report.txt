@@ -24,12 +24,12 @@
 16-->[androidx.core:core:1.7.0] C:\Users\hippo\.gradle\caches\transforms-3\b9e4376e452ce4f1a2bbb1fc4b534124\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
 17        android:debuggable="true"
 18        android:extractNativeLibs="false"
-19        android:icon="@mipmap/ic_launcher"
-19-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-43
+19        android:icon="@mipmap/ic_launcher_mirror"
+19-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:11:9-50
 20        android:label="@string/app_name"
 20-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:12:9-41
-21        android:roundIcon="@mipmap/ic_launcher_round"
-21-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:9-54
+21        android:roundIcon="@mipmap/ic_launcher_mirror_round"
+21-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:13:9-61
 22        android:supportsRtl="true"
 22-->C:\Capstone1\copyFolder\SmartMirror\app\src\main\AndroidManifest.xml:14:9-35
 23        android:testOnly="true"

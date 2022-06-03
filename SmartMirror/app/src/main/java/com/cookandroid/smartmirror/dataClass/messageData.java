@@ -62,7 +62,7 @@ public class messageData implements Parcelable {
         this.day = Integer.parseInt(Methods.getDayFromDateString(date));
         this.hourString = Methods.getHourFromDateString(date);
         this.hour = Integer.parseInt(this.hourString);
-        this.minuteString = Methods.getMonthFromDateString(date);
+        this.minuteString = Methods.getMinuteFromDateString(date);
         this.minute = Integer.parseInt(minuteString);
 
         if(isReceived){ this.viewType = R.integer.TYPE_MESSAGE_LEFT;

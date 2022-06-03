@@ -1200,6 +1200,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color ic_launcher_mirror_background
 color light_gray
 color material_blue_grey_800
 color material_blue_grey_900
@@ -2769,6 +2770,9 @@ menu example_menu2
 menu menu_bottom
 menu menu_profile_select
 mipmap ic_launcher
+mipmap ic_launcher_mirror
+mipmap ic_launcher_mirror_foreground
+mipmap ic_launcher_mirror_round
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
 string abc_action_bar_home_description
