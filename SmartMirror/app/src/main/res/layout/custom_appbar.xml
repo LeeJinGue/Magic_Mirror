@@ -20,6 +20,7 @@
         android:textSize="14pt"
         android:textColor="#000"
         android:paddingLeft="10dp"
+
         android:fontFamily="@font/inter_black"
         ></TextView>
 

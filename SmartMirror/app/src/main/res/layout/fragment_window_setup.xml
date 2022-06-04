@@ -38,6 +38,7 @@
 
 
                     <ImageView
+                        android:tag="0"
                         android:id="@+id/imageView_topleft"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -55,6 +56,7 @@
 
                     <ImageView
                         android:id="@+id/imageView_bottomleft"
+                        android:tag="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <!-- app:srcCompat="@drawable/ic_message" -->
@@ -80,6 +82,7 @@
 
                     <ImageView
                         android:id="@+id/imageView_topright"
+                        android:tag="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_weather" -->
@@ -96,6 +99,7 @@
 
                     <ImageView
                         android:id="@+id/imageView_bottomright"
+                        android:tag="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_bus" -->
@@ -132,7 +136,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/windowsetupbutton"
+            android:id="@+id/windowSetupBtn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"

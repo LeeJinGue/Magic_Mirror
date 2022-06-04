@@ -1,0 +1,43 @@
+from pykrx import stock
+import os
+import sys
+import datetime
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from db import db_access
+
+#주식정보 호출 함수
+def get_stock(user_num):
+    result =[]
+    now = datetime.datetime.now()
+    if(now.weekday() == 5):
+        now = now - datetime.timedelta(days=1)
+    elif(now.weekday() == 6):
+        now = now - datetime.timedelta(days=2)
+    else:
+        if now.hour < 9:
+            if now.weekday() == 0:
+                now = now - datetime.timedelta(days=3)
+            else:
+                now = now - datetime.timedelta(days=1)
+    if now.weekday() == 0:
+        yd = now - datetime.timedelta(days=3)
+    else:
+        yd = now - datetime.timedelta(days=1)
+    mydate = str(now.year)+str(now.month).zfill(2)+ str(now.day).zfill(2)
+    #print(mydate)
+    r = db_access.get_stock(user_num)
+    #print(r)
+    for i in r:
+        for j in range(5):
+            data = stock.get_market_ohlcv_by_date(fromdate=yd, todate=mydate, ticker=i[2])
+            if(len(data)==2):
+                break
+            else:
+                 yd = yd - datetime.timedelta(days=1)
+    
+        result.append((data.iloc[0]['종가'],data.iloc[1]['종가'], i[3]))
+        #print(result)
+    return result
+
+
+#print(get_stock(1))

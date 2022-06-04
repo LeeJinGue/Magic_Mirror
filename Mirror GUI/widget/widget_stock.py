@@ -11,11 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from widget import stock_module
 
 class stock(QWidget):
   def __init__(self):
     super().__init__()
-  def setupUi(self, Form, x, y):
+  def setupUi(self, Form, x, y,user_id):
+        self.user_id = user_id
         self.widget_border = QtWidgets.QLabel(Form)
         self.widget_border.setGeometry(QtCore.QRect(x+20, y+60, 480, 250))
         self.widget_border.setFrameShape(QtWidgets.QFrame.Box)
@@ -27,42 +29,80 @@ class stock(QWidget):
         #self.listWidget.setStyleSheet("QListWidget::item { border: 0px solid red }")
         self.listWidget.setStyleSheet( "QListWidget{background: black;}")
         self.retranslatesStock(Form)
+    
+        self.get_stock()
+
+
         QtCore.QMetaObject.connectSlotsByName(Form)
-        self.addStock()
+        
 
 
   def retranslatesStock(self, Form):
       _translate = QtCore.QCoreApplication.translate
 
-  def addStock(self):
-   def get_item_wight():
+  def get_stock(self):
+    data = stock_module.get_stock(self.user_id)
+    for i in data:
+      self.addStock(i)
+    pass
 
+  def addStock(self,data):
+   print("아이템 추가")
+  #  print(data)
+   def get_item_wight():
     layout_main = QHBoxLayout()
     map1 = QLabel()
     map1.setStyleSheet( "QLabel{color: white;}")
     map1.setFixedWidth(150)
     map1.setFixedHeight(60)
-    map1.setFrameShape(QtWidgets.QFrame.Box)
-    map1.setText("AAAA")
+    map1.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
+    map1.setText(data[2])
     layout_main.addWidget(map1)
     
     map2 = QLabel()
     map2.setStyleSheet( "QLabel{color: white;}")
     map2.setFixedWidth(150)
     map2.setFixedHeight(60)
-    map2.setFrameShape(QtWidgets.QFrame.Box)
-    map2.setText("15000")
+    map2.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
+    map2.setText(str(data[1]))
     layout_main.addWidget(map2)
 
     map3 = QLabel()
     map3.setStyleSheet( "QLabel{color: white;}")
     map3.setFixedWidth(150)
     map3.setFixedHeight(60)
-    map3.setFrameShape(QtWidgets.QFrame.Box)
-    map3.setText("▲1500\n1.04%")
-    layout_main.addWidget(map3)
-    wight = QWidget()
-    wight.setLayout(layout_main)
+    map3.setStyleSheet("""color: #FFFFFF; 
+                                        background-color: #000000;
+                                        border-style: solid; 
+                                        border-width: 1px; 
+                                        border-color: #FFFFFF; 
+                                        border-radius: 0px;
+                                        font: 13pt """)
+    if data[0] <= data[1]:
+      p = round((data[1]-data[0])/data[1]*100,2)
+      map3.setText("▲"+str(data[1]-data[0]) + '\n'+ str(p) +'%')
+      layout_main.addWidget(map3)
+      wight = QWidget()
+      wight.setLayout(layout_main)
+    else:
+      p = round((data[0]-data[1])/data[0]*100,2)
+      map3.setText("▼"+str(data[0]-data[1]) + '\n'+ str(p) +'%')
+      layout_main.addWidget(map3)
+      wight = QWidget()
+      wight.setLayout(layout_main)
+      pass
     return wight #   wight
 
    item = QListWidgetItem() #   QListWidgetItem  

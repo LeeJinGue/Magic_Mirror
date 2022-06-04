@@ -29,4 +29,10 @@
         android:enabled="true"
         android:icon="@drawable/ic_stock"
         android:title="관심주설정" />
+    <item
+        android:id="@+id/tab5"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/ic_belonging"
+        android:title="소지품확인" />
 </menu>

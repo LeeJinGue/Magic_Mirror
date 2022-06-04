@@ -14,48 +14,32 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         ></CalendarView>
-<!--    <com.applikeysolutions.cosmocalendar.view.CalendarView-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:id="@+id/calendar_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:connectedDayIconPosition="top"-->
-<!--        app:currentDayTextColor="#f79256"-->
-<!--        app:firstDayOfTheWeek="sunday"-->
-<!--        app:orientation="horizontal"-->
-<!--        app:selectedDayBackgroundColor="@color/colorPrimary"-->
-<!--        app:selectedDayTextColor="#FFFFFF"-->
-<!--        app:selectionType="single"-->
-<!--        app:weekendDayTextColor="#ef4550" />-->
-<!--    <ListView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_marginHorizontal="10dp"-->
-<!--        android:layout_marginVertical="10dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/calendar_view"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:id="@+id/scheduleListView"-->
-<!--        android:background="@color/white"></ListView>-->
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scheduleRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
         android:layout_below="@+id/calendar_view"
         android:layout_centerHorizontal="true"
-        android:id="@+id/scheduleRecyclerView"
-        android:background="@color/white">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="@color/white"
         ></androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/scheduleAddBtn"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
         android:background="@drawable/radius"
         android:text="일정 추가"
         android:textAlignment="center"
         android:textAppearance="@style/btnStyle"></Button>
+
+
 </RelativeLayout>
