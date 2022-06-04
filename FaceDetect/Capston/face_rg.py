@@ -10,6 +10,7 @@ from facerecognize import cam
 import pymysql
 from PIL import Image
 import sys
+
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
 class FaceRecog():
@@ -23,12 +24,11 @@ class FaceRecog():
         self.process_this_frame = True
         self.dict_recog = dict()
 
-        #Initiallize Variables
+        # Initiallize Variables
         self.trainerset = list()
         self.picture_count = 0
-        
-        
-        #self.connDB()   #DB connect
+
+        # self.connDB()   #DB connect
         self.update()  # set initialize & update
 
     def __del__(self):
@@ -67,7 +67,7 @@ class FaceRecog():
                     for i in range(len(self.trainerset)):
                         id_conf[i] = llt[i].predict(face_in_img)
                     id, confidence = min(id_conf, key=lambda x: x[1])
-                    
+
                     if confidence < 70:
                         self.dict_recog[id] = self.dict_recog[id] + 1
                         id = self.dict_reverlabel[id]
@@ -87,12 +87,11 @@ class FaceRecog():
                 for id, count in self.dict_recog.items():
                     if count == 10:
                         return self.dict_reverlabel[id]
-                    
 
-                #cv2.imshow('camera', frame)
+                # cv2.imshow('camera', frame)
                 k = cv2.waitKey(1) & 0xff
                 # press "Q" to stop OR thread Process kill
-                if k == ord('q') or ps == 0:  
+                if k == ord('q') or ps == 0:
                     break
         except cv2.error as cve:
             print(cve)
@@ -136,7 +135,8 @@ class FaceRecog():
                     cv2.imwrite(self.faceimagepath + id + '/mask/' + id + '_' + str(captured_num) + '.jpg',
                                 face_in_img)
                 cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
-                cv2.putText(frame, str(confidence) + ' No' + str(captured_num), (startX + 5, endY - 5), self.font, 1, (255, 255, 0), 1)
+                cv2.putText(frame, str(confidence) + ' No' + str(captured_num), (startX + 5, endY - 5), self.font, 1,
+                            (255, 255, 0), 1)
 
             # display output
             cv2.imshow("captured frames", frame)
@@ -167,7 +167,7 @@ class FaceRecog():
             # detect face in image
             face, confidence = cv.detect_face(frame)
             interval_num += 1
-            
+
             # loop through detected faces
             for idx, f in enumerate(face):
                 (startX, startY) = f[0], f[1]
@@ -181,7 +181,8 @@ class FaceRecog():
                     cv2.imwrite(self.faceimagepath + id + '/nomask/' + id + '_' + str(captured_num) + '.jpg',
                                 face_in_img)
                 cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
-                cv2.putText(frame, str(confidence) + ' No' + str(captured_num), (startX + 5, endY - 5), self.font, 1, (255, 255, 0), 1)
+                cv2.putText(frame, str(confidence) + ' No' + str(captured_num), (startX + 5, endY - 5), self.font, 1,
+                            (255, 255, 0), 1)
 
             # display output
             cv2.imshow("captured frames", frame)
@@ -204,23 +205,22 @@ class FaceRecog():
         faceSamples = []
         ids = []
         id = int(id)
-        
+
         # mask
         for maskimagePath in maskimagePaths:
             img = cv2.imread(maskimagePath, cv2.IMREAD_GRAYSCALE)
-            #id = self.dict_label[os.path.split(maskimagePath)[1].split("_")[0]]
+            # id = self.dict_label[os.path.split(maskimagePath)[1].split("_")[0]]
             faceSamples.append(img)
             ids.append(id)
 
         # nomask
         for nomaskimagePath in nomaskimagePaths:
             img = cv2.imread(nomaskimagePath, cv2.IMREAD_GRAYSCALE)
-            #id = self.dict_label[os.path.split(nomaskimagePath)[1].split("_")[0]]
+            # id = self.dict_label[os.path.split(nomaskimagePath)[1].split("_")[0]]
             faceSamples.append(img)
             ids.append(id)
 
         return faceSamples, ids
-
 
     def addtrainModel(self, id):
         _faceimagepath = self.faceimagepath + id + '/'
@@ -246,29 +246,29 @@ class FaceRecog():
         except OSError:
             print('Error: Creating directory. ' + self.faceimagepath + id)
 
-    #if delete profile, first call deleteFolder, next step updateLabel(), updateModel()
+    # if delete profile, first call deleteFolder, next step updateLabel(), updateModel()
     def deleteFolder(self, id):
         try:
             if os.path.exists(self.faceimagepath + id):
                 shutil.rmtree(self.faceimagepath + id)
             if os.path.isfile(self.faceimagepath + id + '/' + id + '_trainer.yml'):
-                del(self.trainerset[self.faceimagepath + id + '/' + id + '_trainer.yml'])
+                del (self.trainerset[self.faceimagepath + id + '/' + id + '_trainer.yml'])
         except OSError:
             print('Error: delete directory. ' + self.faceimagepath + id)
-    
+
     def connDB(self):
         db = pymysql.connect(
             host='127.0.0.1',
             port=3306,
             user='root', passwd='1234',
-            #user='root', passwd='toor',
+            # user='root', passwd='toor',
             db='mirror_db', charset='utf8')
         return db
-    
+
     def update(self):
         # User Table data
         sql = 'SELECT user_num, name FROM user'
-        
+
         db = self.connDB()
         cur = db.cursor()
         cur.execute(sql)
@@ -283,17 +283,17 @@ class FaceRecog():
             self.dict_label[row[1]] = row[0]
             self.dict_reverlabel[row[0]] = row[1]
             self.dict_recog[row[0]] = 0
-            
+
         if not os.path.exists(self.faceimagepath):
             os.mkdir(self.faceimagepath)
-            
+
     def updateModel(self):
         self.trainerset = [self.faceimagepath + f + '/' + f + '_trainer.yml'
-                            for f in os.listdir(self.faceimagepath)]
+                           for f in os.listdir(self.faceimagepath)]
 
 
 if __name__ == "__main__":
     face_rg = FaceRecog()
 
-    #face_rg.facedetect_recogize()
+    # face_rg.facedetect_recogize()
 
