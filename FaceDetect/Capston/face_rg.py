@@ -295,5 +295,3 @@ class FaceRecog():
 if __name__ == "__main__":
     face_rg = FaceRecog()
 
-    #face_rg.facedetect_recogize()
-
