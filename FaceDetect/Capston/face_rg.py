@@ -223,6 +223,7 @@ class FaceRecog():
         return faceSamples, ids
 
     def addtrainModel(self, id):
+        self.update()
         _faceimagepath = self.faceimagepath + id + '/'
         print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
         faces, ids = self.getImagesAndLabels(id)
