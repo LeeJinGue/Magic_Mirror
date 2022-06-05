@@ -5,7 +5,7 @@ import numpy as np
 
 from window import Network_init , default_wait, default_wait_touch, Layout_generator
 import sys
-
+import cv2
 
 class Ui_Form(QMainWindow):
 
