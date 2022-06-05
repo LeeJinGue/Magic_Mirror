@@ -1,11 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import QTimer ,Qt
-import numpy as np
 
-from window import Network_init , default_wait, default_wait_touch, Layout_generator
+
+from window import Network_init , Default_Touch_wait, Default_Rg_wait, resist_face
 import sys
-import cv2
+#from facerecognize import face_rg
+
+#rg = face_rg.FaceRecog()
+
 
 class Ui_Form(QMainWindow):
 
@@ -17,7 +20,6 @@ class Ui_Form(QMainWindow):
     Form.setObjectName("Form")
     Form.resize(1024, 600)
     Form.setWindowFlags(Qt.FramelessWindowHint)
-
 
     self.form = Form
     palette = QtGui.QPalette()
@@ -240,8 +242,14 @@ class Ui_Form(QMainWindow):
     self.btn_regist.setText(_translate("Form", "얼굴등록"))
     self.btn_regist.clicked.connect(self.jump_to_regist)
 
+  #얼굴 등록 화면 이동
   def jump_to_regist(self):
-    pass
+    form1 = QtWidgets.QDialog()
+    ui = resist_face.Ui_Form()
+    ui.setupUi(form1)
+    form1.show()
+    form1.exec_()
+    self.form.show()
 
 
   #네트워크 설정 화면 이동
@@ -258,7 +266,7 @@ class Ui_Form(QMainWindow):
   def jump_to_default(self):         
    #self.form.hide()    
    form1 = QtWidgets.QDialog()
-   ui = default_wait.Ui_Form()
+   ui = Default_Touch_wait.Ui_Form()
    ui.setupUi(form1)
    form1.show()
    form1.exec_()
@@ -269,7 +277,7 @@ class Ui_Form(QMainWindow):
    #self.form.hide()    
    form1 = QtWidgets.QDialog()
    #ui = default_wait.Ui_Form()
-   ui = default_wait_touch.Ui_Form()
+   ui = Default_Touch_wait.Ui_Form()
    ui.setupUi(form1)
    form1.show()
    form1.exec_()
@@ -279,7 +287,7 @@ class Ui_Form(QMainWindow):
   def jump_to_user_UI(self):        
    #self.form.hide()    
    form1 = QtWidgets.QDialog()
-   ui = Layout_generator.Ui_Form()
+   ui = Default_Rg_wait.Ui_Form()
    ui.setupUi(form1)
    form1.show()
    form1.exec_()

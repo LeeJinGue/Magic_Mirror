@@ -150,6 +150,7 @@ class weather(object):
         pixmap = pixmap.scaled(161, 151, Qt.IgnoreAspectRatio) #아이콘 크기 설정
         self.weather_icon.setPixmap(pixmap)
         #예보 날씨 아이콘 설정
+        print(icon_path)
         pixmap = QPixmap(icon_path+ str(hour[1]['icon']) + ".png") #1시간뒤
         pixmap = pixmap.scaled(60, 60, Qt.IgnoreAspectRatio)
         self.icon1.setPixmap(pixmap)
@@ -183,19 +184,19 @@ class weather(object):
     
 
     def retranslateweather(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        #self.weather_icon.setText(_translate("Form", "image box"))
-        self.main_temperature.setText(_translate("Form", "X도")) # 온도
-        self.weather_text.setText(_translate("Form", "로딩중")) #현재 날씨
-        self.dust_text.setText(_translate("Form", ""))
-        self.location.setText(_translate("Form", ""))
-        #self.icon1.setText(_translate("Form", "TextLabel"))
-        #self.icon2.setText(_translate("Form", "TextLabel"))
-        #self.icon3.setText(_translate("Form", "TextLabel"))
-        #self.icon4.setText(_translate("Form", "TextLabel"))
-        #self.icon5.setText(_translate("Form", "TextLabel"))
-        self.time1.setText(_translate("Form", "도"))
-        self.time2.setText(_translate("Form", "도"))
-        self.time3.setText(_translate("Form", "도"))
-        self.time4.setText(_translate("Form", "도"))
-        self.time5.setText(_translate("Form", "도"))
+            _translate = QtCore.QCoreApplication.translate
+            #self.weather_icon.setText(_translate("Form", "image box"))
+            self.main_temperature.setText(_translate("Form", "X도")) # 온도
+            self.weather_text.setText(_translate("Form", "로딩중")) #현재 날씨
+            self.dust_text.setText(_translate("Form", ""))
+            self.location.setText(_translate("Form", ""))
+            #self.icon1.setText(_translate("Form", "TextLabel"))
+            #self.icon2.setText(_translate("Form", "TextLabel"))
+            #self.icon3.setText(_translate("Form", "TextLabel"))
+            #self.icon4.setText(_translate("Form", "TextLabel"))
+            #self.icon5.setText(_translate("Form", "TextLabel"))
+            self.time1.setText(_translate("Form", "도"))
+            self.time2.setText(_translate("Form", "도"))
+            self.time3.setText(_translate("Form", "도"))
+            self.time4.setText(_translate("Form", "도"))
+            self.time5.setText(_translate("Form", "도"))

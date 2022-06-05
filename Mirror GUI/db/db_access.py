@@ -1,6 +1,4 @@
-from matplotlib.pyplot import get
 import pymysql
-
 
 def db_connect():
   db = pymysql.connect(
@@ -107,6 +105,18 @@ def get_device_info():
         db.close()
 
     return result[0]
+
+def get_name_id():
+    db = db_connect()
+    try: 
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = 'SELECT * FROM user'
+            cursor.execute(sql)
+            result = cursor.fetchall()
+    finally:
+        db.close()
+
+    return result
 
 #print(get_device_info())
 
