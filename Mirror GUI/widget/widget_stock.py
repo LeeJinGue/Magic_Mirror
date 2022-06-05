@@ -24,7 +24,7 @@ class stock(QWidget):
         self.widget_border.setText("")
         self.widget_border.setObjectName("widget_border")
         self.listWidget = QtWidgets.QListWidget(Form)
-        self.listWidget.setGeometry(QtCore.QRect(x+20, y+60, 480, 250))
+        self.listWidget.setGeometry(QtCore.QRect(x+25, y+65, 470, 240))
         self.listWidget.setObjectName("listWidget")
         #self.listWidget.setStyleSheet("QListWidget::item { border: 0px solid red }")
         self.listWidget.setStyleSheet( "QListWidget{background: black;}")

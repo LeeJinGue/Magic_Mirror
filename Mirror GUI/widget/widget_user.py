@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import *
 from db import db_access
-from window import Layout_generator, Touch_Layout
+from window import Layout_Touch
 
 class user(QWidget):
   def __init__(self):
@@ -69,8 +69,9 @@ class user(QWidget):
   def name_list_click(self):
           s = self.name_view.currentItem()
           form1 = QtWidgets.QDialog()
-          ui = Touch_Layout.Ui_Form()
+          ui = Layout_Touch.Ui_Form()
           ui.setupUi(form1,self.data[s.text()][1])
+          print(self.data[s.text()][1])
           form1.show()
           form1.exec_()
           del form1
@@ -78,32 +79,3 @@ class user(QWidget):
   def adduser(self,str):
    #print(str)
    self.name_view.addItem(str)
-  #  def get_item_wight():
-  #   layout_main = QHBoxLayout()
-  #   map1 = QLabel()
-  #   map1.setStyleSheet( "QLabel{color: white;}")
-  #   map1.setFixedWidth(420)
-  #   map1.setFixedHeight(40)
-  #   map1.setFrameShape(QtWidgets.QFrame.Box)
-  #   map1.setText(str)
-  #   map1.setStyleSheet("""color: #FFFFFF; 
-  #                                       background-color: #000000;
-  #                                       border-style: solid; 
-  #                                       border-width: 1px; 
-  #                                       border-color: #FFFFFF; 
-  #                                       border-radius: 0px;
-  #                                       font: 15pt """)
-  #   layout_main.addWidget(map1)
-
-  #   wight = QWidget()
-  #   wight.setLayout(layout_main)
-  #   return wight #   wight
-
-  #  item = QListWidgetItem() #   QListWidgetItem  
-  #  item.setSizeHint(QSize(420, 50)) #   QListWidgetItem 
-  #  brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-  #  item.setBackground(brush)
-   
-  #  widget = get_item_wight() #            
-  #  self.name_view.addItem(item) #   item
-  #  self.name_view.setItemWidget(item, widget) #  item  widget
