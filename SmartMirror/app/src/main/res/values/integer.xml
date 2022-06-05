@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    MessageAdapter에서 해당 View가 날짜를 위한 View인지 메시지를 위한 View인지-->
+<!--    왼쪽 메시지(받은 메시지)인지 오른쪽 메시지(보낸 메시지)인지-->
+    <integer name="TYPE_DATE">0</integer>
+    <integer name="TYPE_MESSAGE_LEFT">1</integer>
+    <integer name="TYPE_MESSAGE_RIGHT">2</integer>
+</resources>

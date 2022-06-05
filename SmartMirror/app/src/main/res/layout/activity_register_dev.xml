@@ -15,24 +15,40 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="6"
         android:src="@drawable/ic_mirror"></ImageView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
+        android:id="@+id/editTest"
         android:textAppearance="@style/guideStyle"
-        android:text="기기를 등록해주세요."
+        android:text="기기정보를 입력해주세요."
         android:textAlignment="center"
         ></TextView>
 
     <com.cookandroid.smartmirror.custom.customEditText
         android:id="@+id/editSerial"
-        android:layout_width="wrap_content"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rectangle"
+        android:layout_marginHorizontal="20dp"
         android:hint="시리얼 넘버 입력"
-        android:paddingVertical="10dp"
+        android:paddingHorizontal="30dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="10dp"
+        android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>
+    <com.cookandroid.smartmirror.custom.customEditText
+        android:id="@+id/editWifi"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/rectangle"
+        android:hint="IP:Port 입력"
         android:paddingHorizontal="30dp"
         android:layout_weight="1"
         android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>

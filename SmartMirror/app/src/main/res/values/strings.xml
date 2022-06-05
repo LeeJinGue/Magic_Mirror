@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SmartMirror</string>
+    <string name="portstring">8000</string>
 </resources>

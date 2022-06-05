@@ -1,15 +1,16 @@
+import sys
 from matplotlib.pyplot import get
 import pymysql
 import time
 
-from sympy import re
+# from sympy import re
 
 #데이터 베이스 연결 함수
 def db_connect():
   db = pymysql.connect(
   host='127.0.0.1', 
   port=3306, 
-  user='root', passwd='1234', 
+  user='root', passwd='wlsdn153', 
   db='mirror_db', charset='utf8')
   print(db)
   return db
@@ -43,8 +44,27 @@ def get_all_table():
     finally:
         db.close()
 
-    #print(all_table_json)
+    # print(all_table_json)
     return all_table_json
+
+#print(get_all_table())
+
+#시리얼넘버 체크 함수
+def checkSerial(input):
+    db = db_connect()
+    try:
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = "SELECT serial_no FROM device;"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            for i in range(len(result)):
+                print(result[i])
+                print(input)
+                if(result[i]['serial_no'] == input['serial_no']):
+                    return 0
+    finally:
+        db.close()
+    return 1
 
 #프로필 추가 함수
 def add_profile(input):
@@ -104,7 +124,7 @@ def del_profile(input):
 def layout_set(input):
     db = db_connect()
     layout_del_sql = "DELETE FROM layoutsetting where user_num = %s"
-    layout_set_sql = "INSERT INTO layoutsetting(user_num, type, loc) VALUES (%s, %s, %s);"
+    layout_set_sql = "INSERT INTO layoutsetting(user_num, loc, type) VALUES (%s, %s, %s);"
     get_layout_id_sql = 'SELECT layout_id FROM layoutsetting WHERE user_num = %s'
     
     try: 

@@ -1,3 +1,5 @@
 안드로이드8.1(API 27 level)
-Python 3.6~
+Python 3.7~
 Raspbian 최신버전 
+opencv 4.5.5
+pymysql - mariadb

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/test1"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
                 <LinearLayout
@@ -37,11 +38,37 @@
 
 
                     <ImageView
+                        android:tag="0"
                         android:id="@+id/imageView_topleft"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_calendar" -->
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottomleft"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageView_bottomleft"
+                        android:tag="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <!-- app:srcCompat="@drawable/ic_message" -->
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
 
                 <LinearLayout
                     android:id="@+id/topright"
@@ -52,33 +79,10 @@
                     android:orientation="vertical"
                     android:padding="5dp">
 
+
                     <ImageView
                         android:id="@+id/imageView_topright"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <!-- app:srcCompat="@drawable/ic_message" -->
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:id="@+id/bottmleft"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/border"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-
-                    <ImageView
-                        android:id="@+id/imageView_bottomleft"
+                        android:tag="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_weather" -->
@@ -95,6 +99,7 @@
 
                     <ImageView
                         android:id="@+id/imageView_bottomright"
+                        android:tag="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                         <!-- app:srcCompat="@drawable/ic_bus" -->
@@ -131,7 +136,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/windowsetupbutton"
+            android:id="@+id/windowSetupBtn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"

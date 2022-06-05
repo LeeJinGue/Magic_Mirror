@@ -47,12 +47,13 @@
 
     <com.cookandroid.smartmirror.custom.customEditText
         android:id="@+id/editSerial2"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="60dp"
-        android:layout_weight="0.5"
         android:background="@drawable/rectangle"
         android:gravity="start"
         android:hint="사용자 이름"
@@ -62,15 +63,6 @@
         android:textAppearance="@style/hintStyle"
         android:textSize="9pt"></com.cookandroid.smartmirror.custom.customEditText>
 
-    <ImageView
-        android:id="@+id/pictureAdd"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="90dp"
-        android:layout_weight="0.4"
-        app:srcCompat="@drawable/ic_pictureadd" />
 
     <Button
         android:layout_width="110dp"
@@ -81,6 +73,19 @@
         android:textAppearance="@style/btnStyle"
         android:background="@drawable/radius"
 
-        android:id="@+id/profileRegisterBtn"></Button>
+        android:id="@+id/profileRegisterBtn"
+        ></Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="프로필 삭제"
+        android:textAppearance="@style/delBtnStyle"
+        android:paddingHorizontal="20dp"
+        android:background="@drawable/radius"
+        android:visibility="invisible"
+        android:id="@+id/profileDelBtn"
+        ></Button>
 
 </LinearLayout>
