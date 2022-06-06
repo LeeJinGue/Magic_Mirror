@@ -507,6 +507,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         self.set_info()
+        self.net_list_set()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def set_info(self):
@@ -530,7 +531,11 @@ class Ui_Form(object):
                         border-radius: 0px; 
                         font: 25pt """)
             pass
-
+    def net_list_set(self):
+           self.NetListView.clear()
+           self.NetListView.addItem("Park 5.0GHz")
+     
+                
     def net_list_click(self):
             s = self.NetListView.currentItem()
             form1 = QtWidgets.QDialog()

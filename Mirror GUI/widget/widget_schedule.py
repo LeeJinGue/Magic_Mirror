@@ -40,11 +40,7 @@ class schedule(QWidget):
         self.label.setFont(font)
         self.label.setFrameShape(QtWidgets.QFrame.Box)
         self.label.setObjectName("label")
-        self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(x+350, y+80, 75, 23))
-        self.pushButton.setObjectName("pushButton")
 
-        self.pushButton.clicked.connect(self.addSchedule)
         self.retranslateschedule(Form)
         self.setSchedule(user_id)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -53,7 +49,6 @@ class schedule(QWidget):
       _translate = QtCore.QCoreApplication.translate
       Form.setWindowTitle(_translate("Form", "Form"))
       self.label.setText(_translate("Form", self.getDate()))
-      self.pushButton.setText(_translate("Form", "PushButton"))
     
   def setSchedule(self,user_id): #데이터 베이스에서 스케쥴 호출
     data = db_access.get_schedule(user_id)
