@@ -58,8 +58,6 @@ def checkSerial(input):
             cursor.execute(sql)
             result = cursor.fetchall()
             for i in range(len(result)):
-                print(result[i])
-                print(input)
                 if(result[i]['serial_no'] == input['serial_no']):
                     return 0
     finally:
@@ -313,6 +311,22 @@ def activation_belongings(input):
         db.close()
     return 0
 
+#소지품 비활성화 함수
+def deactivation_belongings(input):
+    db = db_connect()
+    deactivation_edit_sql = 'UPDATE belongings SET activation = 0 WHERE belonging_id = %s'
+    
+    try: 
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            cursor.execute(deactivation_edit_sql,input['belonging_id'])
+            db.commit()
+            
+    except:
+        return 1
+
+    finally:
+        db.close()
+    return 0
 
 #소지품 삭제 함수
 def del_belongings(input):

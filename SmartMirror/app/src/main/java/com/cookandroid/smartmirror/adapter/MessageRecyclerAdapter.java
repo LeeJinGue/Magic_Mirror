@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.Methods;
-import com.cookandroid.smartmirror.MirrorDBHelper;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.messageData;
 
@@ -48,8 +48,8 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             messageData firstMsgDate = new messageData(newMsgData.getDate());
             messageAndDateList.add(0, firstMsgDate);
             notifyItemRangeInserted(0,2);
-        }else if(!Methods.getDateFromDateString(messageAndDateList.get(lastIndex).getDate())
-                .equals(Methods.getDateFromDateString(messageAndDateList.get(lastIndex-1).getDate())) ){
+        }else if(!MethodsHelper.getDateFromDateString(messageAndDateList.get(lastIndex).getDate())
+                .equals(MethodsHelper.getDateFromDateString(messageAndDateList.get(lastIndex-1).getDate())) ){
             Log.i("errorTest", "lastIndex: "+lastIndex+", get(lastindex).getDate(): "+messageAndDateList.get(lastIndex).getDate()+", get(lastindex-1).getDate(): "+messageAndDateList.get(lastIndex-1).getDate());
             // 추가한 메시지의 날짜가 이전 메시지의 날짜와 같지 않다면 날짜객체를 추가해준다.
             messageData newMsgDateTime = new messageData(messageAndDateList.get(lastIndex).getDate());

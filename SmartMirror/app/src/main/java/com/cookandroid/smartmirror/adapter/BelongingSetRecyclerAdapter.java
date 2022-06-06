@@ -18,8 +18,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.BelongingSetAddActivity;
 import com.cookandroid.smartmirror.dataClass.belongingSetData;
@@ -70,17 +70,21 @@ public class BelongingSetRecyclerAdapter extends RecyclerView.Adapter<BelongingS
         if(isActivted){
             // 활성화 상태로 바꿀 시 나머지를 비활성화 시켜야 한다.
             if(networkHelper.activationBelongingSetToServer(belongingSetDataArrayList.get(index))){
-                sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
                 belongingSetDataArrayList.get(index).setActiavted(isActivted);
                 belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+                sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
             }else{
                 Log.i("BelongingSetRecyclerAdapter", "소지품세트 활성화 실패");
             }
         }else{
             // 비활성화 상태로 바꿀 시 하나만 비활성화 시키면 된다.
-            sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
-            belongingSetDataArrayList.get(index).setActiavted(isActivted);
-            belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+            if(networkHelper.deactivationBelongingSetToServer(belongingSetDataArrayList.get(index))){
+                belongingSetDataArrayList.get(index).setActiavted(isActivted);
+                belongingSetSwitchArrayList.get(index).setChecked(isActivted);
+                sqlDB.setBelongingSetActiavted(belongingSetDataArrayList.get(index));
+            }else{
+                Log.i("BelongingSetRecyclerAdapter", "소지품세트 비활성화 실패");
+            }
         }
 
     }

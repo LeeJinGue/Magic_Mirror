@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
@@ -23,54 +22,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONException;
-import org.json.simple.*;
-
-import com.cookandroid.smartmirror.ExcelHelper;
-import com.cookandroid.smartmirror.Methods;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.customEditText;
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.devData;
-import com.cookandroid.smartmirror.dataClass.stockData;
 
 import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.Socket;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RegisterDevActivity extends AppCompatActivity {
     customEditText editSerial, editIP;
@@ -84,10 +45,6 @@ public class RegisterDevActivity extends AppCompatActivity {
     JSONObject obj;
     Handler handler = new Handler();
     devData nowDevData;
-
-    private static final String dongIp = "192.168.43.180";
-    private static final String myIp = "192.168.0.6";
-
 
     public void checkIPandSerial(String IPAddress, String SerialNo){
 
@@ -181,8 +138,8 @@ public class RegisterDevActivity extends AppCompatActivity {
         // Add Coustom AppBar & Set Title Color Gradient
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvTitle = toolbar.findViewById(R.id.toolbarTv);
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
@@ -209,10 +166,10 @@ public class RegisterDevActivity extends AppCompatActivity {
                 try{
                     String serialNo = editSerial.getText().toString();
                     String IPAddress = editIP.getText().toString();
-                    if(!Methods.isInteger(serialNo)){
+                    if(!MethodsHelper.isInteger(serialNo)){
                         Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
-                    }else if(!Methods.isIP(IPAddress)){
+                    }else if(!MethodsHelper.isIP(IPAddress)){
                         Toast.makeText(getApplicationContext(), "아이피 주소를 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }

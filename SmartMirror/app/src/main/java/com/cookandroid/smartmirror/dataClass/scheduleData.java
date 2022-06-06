@@ -3,9 +3,7 @@ package com.cookandroid.smartmirror.dataClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cookandroid.smartmirror.Methods;
-
-import java.time.LocalDateTime;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 
 public class scheduleData implements Parcelable {
     private String title;
@@ -62,11 +60,11 @@ public class scheduleData implements Parcelable {
         this.startTime = start_time;
         this.endTime = end_time;
         this.title = title;
-        this.date = Methods.getDateFromDateString(start_time);
-        this.startHour=Methods.getHourFromDateString(start_time);
-        this.startMinute = Methods.getMinuteFromDateString(start_time);
-        this.endHour=Methods.getHourFromDateString(end_time);
-        this.endMinute = Methods.getMinuteFromDateString(end_time);
+        this.date = MethodsHelper.getDateFromDateString(start_time);
+        this.startHour= MethodsHelper.getHourFromDateString(start_time);
+        this.startMinute = MethodsHelper.getMinuteFromDateString(start_time);
+        this.endHour= MethodsHelper.getHourFromDateString(end_time);
+        this.endMinute = MethodsHelper.getMinuteFromDateString(end_time);
 
         // 0000-00-00 00:00:00에서 가져와야 합니다.
 

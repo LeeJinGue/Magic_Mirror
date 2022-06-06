@@ -13,8 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
 import com.cookandroid.smartmirror.activities.ProfileSettingActivity;

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,8 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.Methods;
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.ScheduleRecyclerAdapter;
 import com.cookandroid.smartmirror.custom.ScheduleTypeDialog;
@@ -56,16 +55,16 @@ public class ScheduleFragment extends Fragment implements ScheduleTypeDialog.Edi
         selectedUser = myApp.getSelectedUser();
         sqlDB = new MirrorDBHelper(context, 2);
         mList = new ArrayList<>();
-        nowDate = Methods.getNowDate();
+        nowDate = MethodsHelper.getNowDate();
         mList = getScheduleDataList(nowDate);
-        selectedDate = Methods.getNowDate(); // 처음엔 현재시간을 갖고온다.
+        selectedDate = MethodsHelper.getNowDate(); // 처음엔 현재시간을 갖고온다.
         scheduleAddBtn = rootView.findViewById(R.id.scheduleAddBtn);
         calendarView = rootView.findViewById(R.id.calendar_view);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 //                Log.i("일정관리", year+"년 "+(month+1)+"월 "+dayOfMonth+"일이 선택되었습니다.");
-                selectedDate =Methods.getDateStringFromInteger(year, month+1, dayOfMonth);
+                selectedDate = MethodsHelper.getDateStringFromInteger(year, month+1, dayOfMonth);
                 Log.i("ScheduleFragment", "getDateStringFromInteger: "+selectedDate);
 
                 mList = getScheduleDataList(selectedDate);

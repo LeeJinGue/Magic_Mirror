@@ -3,10 +3,6 @@ package com.cookandroid.smartmirror.dataClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cookandroid.smartmirror.Methods;
-
-import java.util.ArrayList;
-
 public class belongingSetData implements Parcelable {
     private int belonging_id; // 소지품세트 아이디
     private int user_num;       // 소지품세트를 보유한 유저의 아이디

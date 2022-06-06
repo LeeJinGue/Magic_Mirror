@@ -17,12 +17,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cookandroid.smartmirror.Methods;
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.StockSearchRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -63,8 +62,8 @@ public class AddAndSearchStockActivity extends AppCompatActivity implements Stoc
         Toolbar toolbar = (Toolbar) findViewById(R.id.stockAddAppBar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
         tvTitle.setText("관심주 추가");
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);

@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rectangle"
-        android:hint="IP:Port 입력"
+        android:hint="IP주소 입력"
         android:paddingHorizontal="30dp"
         android:layout_weight="1"
         android:textAppearance="@style/hintStyle"></com.cookandroid.smartmirror.custom.customEditText>

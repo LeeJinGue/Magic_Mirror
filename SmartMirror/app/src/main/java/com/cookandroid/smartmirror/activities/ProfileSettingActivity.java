@@ -6,39 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Random;
 
 public class ProfileSettingActivity extends AppCompatActivity {
     EditText name;
@@ -85,8 +69,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
         // Add Coustom AppBar & Set Title Color Gradient
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);

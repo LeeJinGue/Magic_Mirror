@@ -34,5 +34,5 @@
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:icon="@drawable/ic_belonging"
-        android:title="소지품확인" />
+        android:title="소지품세트" />
 </menu>

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,20 +13,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.scheduleData;
 import com.cookandroid.smartmirror.dataClass.userData;
-
-import java.time.LocalDate;
 
 public class ScheduleTypeDialog extends DialogFragment implements DialogInterface.OnClickListener{
     private Context context;
@@ -54,13 +50,13 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                 EditScheduleDialogListener listener = (EditScheduleDialogListener) getParentFragment();
                 // 스케줄아이디, 유저아이디, 시작시간, 종료시간, 제목, 아이콘
 //                LocalDate nowDate = LocalDate.now();
-                String date = Methods.getNowDate();
+                String date = MethodsHelper.getNowDate();
 //                String dateTime = Methods.getNowDateTime();
                 // 시:분:초. 초까지 붙여줘야 한다.
-                String startHourString = Methods.checkHour(startHourEditText.getText().toString());
-                String startMinuteString = Methods.checkMinute(startMinuteEditText.getText().toString());
-                String endHourString = Methods.checkHour(endHourEditText.getText().toString());
-                String endMinuteString = Methods.checkMinute(endMinuteEditText.getText().toString());
+                String startHourString = MethodsHelper.checkHour(startHourEditText.getText().toString());
+                String startMinuteString = MethodsHelper.checkMinute(startMinuteEditText.getText().toString());
+                String endHourString = MethodsHelper.checkHour(endHourEditText.getText().toString());
+                String endMinuteString = MethodsHelper.checkMinute(endMinuteEditText.getText().toString());
                 if(startHourString.equals("") || startHourString.equals("over") || startMinuteString.equals("") || startMinuteString.equals("over")){
                     Toast.makeText(getActivity(), "시작시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
                     Log.i("ScheduleTypeDialog", "시작시간 오류");
@@ -151,13 +147,13 @@ public class ScheduleTypeDialog extends DialogFragment implements DialogInterfac
                 // 스케줄아이디, 유저아이디, 시작시간, 종료시간, 제목, 아이콘
 //                LocalDate nowDate = LocalDate.now();
 
-                String date = Methods.getNowDate();
+                String date = MethodsHelper.getNowDate();
 //                String dateTime = Methods.getNowDateTime();
                 // 시:분:초. 초까지 붙여줘야 한다.
-                String startHourString = Methods.checkHour(startHourEditText.getText().toString());
-                String startMinuteString = Methods.checkMinute(startMinuteEditText.getText().toString());
-                String endHourString = Methods.checkHour(endHourEditText.getText().toString());
-                String endMinuteString = Methods.checkMinute(endMinuteEditText.getText().toString());
+                String startHourString = MethodsHelper.checkHour(startHourEditText.getText().toString());
+                String startMinuteString = MethodsHelper.checkMinute(startMinuteEditText.getText().toString());
+                String endHourString = MethodsHelper.checkHour(endHourEditText.getText().toString());
+                String endMinuteString = MethodsHelper.checkMinute(endMinuteEditText.getText().toString());
                 Log.i("ScheduleTypeDialog", "중간체크\n"+"startHourString: "+startHourString+", startMinuteString: "+startMinuteString+", endHourString: "+endHourString+", endMinuteString: "+endMinuteString);
                 if(startHourString.equals("") || startHourString.equals("over") || startMinuteString.equals("") || startMinuteString.equals("over")){
                     Toast.makeText(getActivity(), "시작시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();

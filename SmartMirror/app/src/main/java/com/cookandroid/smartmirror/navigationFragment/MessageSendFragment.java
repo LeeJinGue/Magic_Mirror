@@ -2,9 +2,7 @@ package com.cookandroid.smartmirror.navigationFragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,18 +14,14 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.MainScreenActivity;
 import com.cookandroid.smartmirror.activities.MessageCheckActivity;
-import com.cookandroid.smartmirror.activities.ProfileSelectActivity;
-import com.cookandroid.smartmirror.activities.ProfileSettingActivity;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
 
