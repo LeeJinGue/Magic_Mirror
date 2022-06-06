@@ -3,11 +3,10 @@ package com.cookandroid.smartmirror.dataClass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class messageData implements Parcelable {
     private int message_id, user_num, sender_num, year, month, day, hour, minute;
@@ -57,12 +56,12 @@ public class messageData implements Parcelable {
         this.sender_num = sender_num;
         this.text = text;
         this.date = date;
-        this.year = Integer.parseInt(Methods.getYearFromDateString(date));
-        this.month = Integer.parseInt(Methods.getMonthFromDateString(date));
-        this.day = Integer.parseInt(Methods.getDayFromDateString(date));
-        this.hourString = Methods.getHourFromDateString(date);
+        this.year = Integer.parseInt(MethodsHelper.getYearFromDateString(date));
+        this.month = Integer.parseInt(MethodsHelper.getMonthFromDateString(date));
+        this.day = Integer.parseInt(MethodsHelper.getDayFromDateString(date));
+        this.hourString = MethodsHelper.getHourFromDateString(date);
         this.hour = Integer.parseInt(this.hourString);
-        this.minuteString = Methods.getMinuteFromDateString(date);
+        this.minuteString = MethodsHelper.getMinuteFromDateString(date);
         this.minute = Integer.parseInt(minuteString);
 
         if(isReceived){ this.viewType = R.integer.TYPE_MESSAGE_LEFT;
@@ -71,9 +70,9 @@ public class messageData implements Parcelable {
     }
     // 날짜용
     public messageData(String datetTime){
-        this.year = Integer.parseInt(Methods.getYearFromDateString(datetTime));
-        this.month = Integer.parseInt(Methods.getMonthFromDateString(datetTime));
-        this.day = Integer.parseInt(Methods.getDayFromDateString(datetTime));
+        this.year = Integer.parseInt(MethodsHelper.getYearFromDateString(datetTime));
+        this.month = Integer.parseInt(MethodsHelper.getMonthFromDateString(datetTime));
+        this.day = Integer.parseInt(MethodsHelper.getDayFromDateString(datetTime));
         this.viewType = R.integer.TYPE_DATE;
     }
 

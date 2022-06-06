@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.custom.ScheduleTypeDialog;
 import com.cookandroid.smartmirror.dataClass.MyApplication;

@@ -39,7 +39,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.4"
         android:gravity="center"
         android:text="프로필을 등록합니다."
         android:id="@+id/profileSettingTextView"

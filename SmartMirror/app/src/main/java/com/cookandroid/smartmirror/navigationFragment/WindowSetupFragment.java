@@ -23,8 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
-import com.cookandroid.smartmirror.MirrorNetworkHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorNetworkHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.WindowAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;

@@ -4,7 +4,7 @@ package com.cookandroid.smartmirror.dataClass;
 import android.app.Application;
 import android.util.Log;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class MyApplication extends Application {
     private String IPString, PortString, SerialString;
     public void setAddress(String IPString){
         this.IPString=IPString;
-        this.PortString= Methods.DEFAULT_PORT;
+        this.PortString= MethodsHelper.DEFAULT_PORT;
     }
     public void setSerialString(String serialString) { SerialString = serialString; }
     public String getIPString(){return IPString;}
