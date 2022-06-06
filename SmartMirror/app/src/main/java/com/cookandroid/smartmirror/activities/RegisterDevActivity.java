@@ -46,10 +46,6 @@ public class RegisterDevActivity extends AppCompatActivity {
     Handler handler = new Handler();
     devData nowDevData;
 
-    private static final String dongIp = "192.168.43.180";
-    private static final String myIp = "192.168.0.6";
-
-
     public void checkIPandSerial(String IPAddress, String SerialNo){
 
     }

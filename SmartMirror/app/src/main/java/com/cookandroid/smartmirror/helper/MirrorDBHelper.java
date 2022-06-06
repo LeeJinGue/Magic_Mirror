@@ -83,12 +83,6 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
 
     public void initDB(){
 
-
-        networkHelper.getUserTable();
-
-        // 테스트를 위해 userData를 미리 넣어둡니다.
-        addUser(networkHelper.getUserData());
-        addMessage(networkHelper.getMessageDate());
         messageData send = new messageData(1, 0, 2, "내가 보낸 메시지", "2022-05-20 11:30:00", true);
         messageData receive = new messageData(2, 2, 0, "상대가 보낸메세지", "2022-05-20 10:30:00",true);
         // 상대메시지 내매시지 잘나오나 확인
@@ -111,11 +105,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS groupTBL ( gName CHAR(20) PRIMARY KEY, gNumber INTEGER);");
 
     }
-    public void getDevData(){
-        createDeviceTb(db);
-        // dev데이터를 미리 넣어둡니다.
-        addDevData(networkHelper.getDevData());
-    }
+//    public void getDevData(){
+//        createDeviceTb(db);
+//        // dev데이터를 미리 넣어둡니다.
+//        addDevData(networkHelper.getDevData());
+//    }
 
     // Mirror로부터 모든 Data를 받아옵니다.
     public void addAllTable(){
@@ -473,11 +467,11 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public devData getDBDevData(){
         Cursor cs = db.rawQuery("SELECT serial_no, ip, port FROM device;", null);
-        System.out.println("cs.moveToNext: "+cs.moveToNext());
-
+        cs.moveToFirst();
         if(cs.getCount()==0){
             return null;
         }else{
+            System.out.println(cs.getCount());
             devData DBDevData = new devData(cs.getString(0), cs.getString(1));
             cs.close();
             return DBDevData;
