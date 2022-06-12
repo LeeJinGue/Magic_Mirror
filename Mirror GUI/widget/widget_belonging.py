@@ -24,7 +24,7 @@ class belonging(QWidget):
         self.frame.setText("")
         self.frame.setObjectName("frame")
         self.belonging_label = QtWidgets.QLabel(Form)
-        self.belonging_label.setGeometry(QtCore.QRect(x+30, y+65, 121, 31))
+        self.belonging_label.setGeometry(QtCore.QRect(x+30, y+65, 450, 31))
         font = QtGui.QFont()
         font.setFamily("Adobe 고딕 Std B")
         font.setPointSize(15)
@@ -47,14 +47,17 @@ class belonging(QWidget):
   def retranslatesBelonging(self, Form):
       _translate = QtCore.QCoreApplication.translate
       Form.setWindowTitle(_translate("Form", "Form"))
-      self.belonging_label.setText(_translate("Form", "소지품 확인"))
+      self.belonging_label.setText(_translate("Form", "소지품 세트:"))
 
   def setBelogings(self, user_id):
     #print("소지품 추가")
     data = db_access.get_belongings(user_id)
-    blist = data[0][0].split(',')
-    for i in blist:
-      self.addBelonging(i)
+    
+    if(len(data)!=0):
+      self.belonging_label.setText("소지품 세트:"+data[0]['set_name'])
+      blist = data[0]['stuff_list'].split(',')
+      for i in blist:
+        self.addBelonging(i)
     
   def addBelonging(self,str):
    print(str)

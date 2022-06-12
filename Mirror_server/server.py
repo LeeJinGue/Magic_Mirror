@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask import request
-from pytest import param
 import json
 import server_db_access
 app = Flask(__name__)
@@ -175,7 +174,6 @@ def deactivationBelongingSet():
         return 'ok'
     else:
         return 'no'
-
 #소지품 삭제
 @app.route('/delBelongingSet', methods=['GET','POST'])
 def delBelongingSet():
@@ -185,9 +183,9 @@ def delBelongingSet():
         return 'ok'
     else:
         return 'no'
-#시리얼넘버 체크
 @app.route('/checkSerial', methods=['GET', 'POST'])
 def checkSerial():
+    print(json.loads(request.get_data()))
     params = json.loads(request.get_data())
     data = server_db_access.checkSerial(params)
     if data == 0:

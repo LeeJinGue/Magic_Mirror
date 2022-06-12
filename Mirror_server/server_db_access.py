@@ -10,7 +10,7 @@ def db_connect():
   db = pymysql.connect(
   host='127.0.0.1', 
   port=3306, 
-  user='root', passwd='wlsdn153', 
+  user='root', passwd='1234', 
   db='mirror_db', charset='utf8')
   print(db)
   return db
@@ -58,7 +58,9 @@ def checkSerial(input):
             cursor.execute(sql)
             result = cursor.fetchall()
             for i in range(len(result)):
-                if(result[i]['serial_no'] == input['serial_no']):
+                #print(result[i])
+                #print(input)
+                if(result[i]['serial_no'] == str(input['serial_no'])):
                     return 0
     finally:
         db.close()
@@ -132,7 +134,7 @@ def layout_set(input):
             db.commit()
             #신규설정 등록
             for s in input:
-                cursor.execute(layout_set_sql, [s['user_num'],s['type'], s['loc']])
+                cursor.execute(layout_set_sql, [s['user_num'],s['loc'], s['type']])
                 db.commit()
             #id 요청
             cursor.execute(get_layout_id_sql, input[0]['user_num'])            
@@ -327,7 +329,7 @@ def deactivation_belongings(input):
     finally:
         db.close()
     return 0
-
+    
 #소지품 삭제 함수
 def del_belongings(input):
     db = db_connect()

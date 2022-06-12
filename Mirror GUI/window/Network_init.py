@@ -14,6 +14,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QSize
 from window import Network_subclass
 import os
+import nmcli
 from db import db_access
 os.environ["QT_IM_MODULE"] = "qtvirtualkeyboard"
 
@@ -497,20 +498,14 @@ class Ui_Form(object):
         self.icon1.setIcon(icon)
         self.icon1.setIconSize(QSize(50, 45))
         
-        font = QFont()
-        font.setPixelSize(28)
-        self.NetListView.setFont(font)
-        self.NetListView.addItem("Park 2.4GHz")
-        self.NetListView.setFont(font)
-        self.NetListView.addItem("Park 5.0GHz")
-        
 
         self.retranslateUi(Form)
-        self.set_info()
+        self.set_sn()
         self.net_list_set()
+        self.set_ip()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def set_info(self):
+    def set_sn(self):
             info = db_access.get_device_info()
             self.SerialNo.setText('S/N: '+ info['serial_no'])
             self.SerialNo.setStyleSheet("""color: #FFFFFF; 
@@ -522,27 +517,52 @@ class Ui_Form(object):
                         font: 25pt """)
 
 
-            self.ip.setText('IP: ' + info['ip'])
-            self.ip.setStyleSheet("""color: #FFFFFF; 
-                        background-color: #000000;
-                        border-style: solid; 
-                        border-width: 0px; 
-                        border-color: #FFFFFF; 
-                        border-radius: 0px; 
-                        font: 25pt """)
+           
+            pass
+
+    def set_ip(self):
+            status = nmcli.device.status()
+            if(status[0].state == 'connected'):
+                info = nmcli.connection.show(status[0].connection)
+                info = info['DHCP4.OPTION[5]'].split(' ')
+                db_access.edit_ip(info[2])
+                self.ip.setText('IP: ' + info[2])
+                self.ip.setStyleSheet("""color: #FFFFFF; 
+                                background-color: #000000;
+                                border-style: solid; 
+                                border-width: 0px; 
+                                border-color: #FFFFFF; 
+                                border-radius: 0px; 
+                                font: 25pt """)
+            else:
+                self.ip.setText('IP: 연결안됨')
+                self.ip.setStyleSheet("""color: #FFFFFF; 
+                                background-color: #000000;
+                                border-style: solid; 
+                                border-width: 0px; 
+                                border-color: #FFFFFF; 
+                                border-radius: 0px; 
+                                font: 25pt """)
             pass
     def net_list_set(self):
            self.NetListView.clear()
-           self.NetListView.addItem("Park 5.0GHz")
+           list = nmcli.device.wifi()
+           for i in list:
+                   self.NetListView.addItem(i.ssid)
+
+           font = QFont()
+           font.setPixelSize(28)
+           self.NetListView.setFont(font)
      
                 
     def net_list_click(self):
             s = self.NetListView.currentItem()
             form1 = QtWidgets.QDialog()
             ui = Network_subclass.Ui_Form()
-            ui.setupUi(form1,s.text())
+            ui.setupUi(form1,self.ip,s.text())
             form1.show()
             form1.exec_()
+            self.set_ip()
             #print(s.text())
 
     def exit_fun(self):

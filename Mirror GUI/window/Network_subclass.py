@@ -11,10 +11,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QLineEdit
+import nmcli
 
 
 class Ui_Form():
-    def setupUi(self, Form,ssid):
+    def setupUi(self, Form ,ip, ssid):
+        self.ip = ip
         Form.setObjectName("Form")
         Form.resize(512, 300)
         palette = QtGui.QPalette()
@@ -199,15 +201,23 @@ class Ui_Form():
         self.id_lable.setAlignment(QtCore.Qt.AlignCenter)
         self.id_lable.setObjectName("location")
 
+
     def ok(self):        
-       print("비밀번호 입력 완료")
+       #print("비밀번호 입력 완료")
        pw = self.line_edit.text()
        self.WifiConnect(self.ssid,pw)
        self.form.close()
 
     def WifiConnect(self, wifi_id, wifi_pw):
-        print(wifi_id)
-        print(wifi_pw)
+        try: 
+            nmcli.device.wifi_connect(wifi_id,wifi_pw,None,None)
+            self.set_ip()
+            return 0
+        except:
+            return -1
+
+
+
         pass
 
 
