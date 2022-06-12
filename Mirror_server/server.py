@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask import request
-from pytest import param
 import json
 import server_db_access
 app = Flask(__name__)
@@ -166,7 +165,15 @@ def activationBelongingSet():
         return 'ok'
     else:
         return 'no'
-
+#소지품 비활성화
+@app.route('/deactivationBelongingSet', methods=['GET','POST'])
+def deactivationBelongingSet():
+    params = json.loads(request.get_data())
+    data = server_db_access.deactivation_belongings(params)
+    if data == 0:
+        return 'ok'
+    else:
+        return 'no'
 #소지품 삭제
 @app.route('/delBelongingSet', methods=['GET','POST'])
 def delBelongingSet():
@@ -178,6 +185,7 @@ def delBelongingSet():
         return 'no'
 @app.route('/checkSerial', methods=['GET', 'POST'])
 def checkSerial():
+    print(json.loads(request.get_data()))
     params = json.loads(request.get_data())
     data = server_db_access.checkSerial(params)
     if data == 0:

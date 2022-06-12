@@ -20,7 +20,7 @@ class Ui_Form(QMainWindow):
     Form.setObjectName("Form")
     Form.resize(1024, 600)
     Form.setWindowFlags(Qt.FramelessWindowHint)
-
+    self.lock1 = 0
     self.form = Form
     palette = QtGui.QPalette()
     brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
@@ -275,13 +275,16 @@ class Ui_Form(QMainWindow):
   #터치모드로 작동 시작
   def jump_to_default_touch(self):         
    #self.form.hide()    
-   form1 = QtWidgets.QDialog()
-   #ui = default_wait.Ui_Form()
-   ui = Default_Touch_wait.Ui_Form()
-   ui.setupUi(form1)
-   form1.show()
-   form1.exec_()
-   self.form.show()
+   if(self.lock1 == 0):
+    self.lock1 = 1
+    form1 = QtWidgets.QDialog()
+    #ui = default_wait.Ui_Form()
+    ui = Default_Touch_wait.Ui_Form()
+    ui.setupUi(form1)
+    form1.show()
+    form1.exec_()
+    self.lock1 = 0
+    self.form.show()
 
   #안면인식 모드로 작동 시작
   def jump_to_user_UI(self):        
