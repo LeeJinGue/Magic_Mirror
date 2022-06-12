@@ -228,7 +228,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         });
         if(nowDevData!=null){
             editIP.setText(nowDevData.getIp());
-            editSerial.setText(nowDevData.getSerial_no());
+            editSerial.setText(String.valueOf(nowDevData.getSerial_no()));
         }
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
 
