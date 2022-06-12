@@ -60,7 +60,7 @@ def checkSerial(input):
             for i in range(len(result)):
                 #print(result[i])
                 #print(input)
-                if(result[i]['serial_no'] == str(input['serial_no'])):
+                if(result[i]['serial_no'] == input['serial_no']):
                     return 0
     finally:
         db.close()

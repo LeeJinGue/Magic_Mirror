@@ -164,15 +164,16 @@ public class RegisterDevActivity extends AppCompatActivity {
                 // 입력받은 시리얼넘버, 아이피주소로 로그인
                 // 테스트값은 시리얼넘버1, 아이피주소1
                 try{
-                    String serialNo = editSerial.getText().toString();
+                    String serialNoString = editSerial.getText().toString();
                     String IPAddress = editIP.getText().toString();
-                    if(!MethodsHelper.isInteger(serialNo)){
+                    if(!MethodsHelper.isInteger(serialNoString)){
                         Toast.makeText(getApplicationContext(), "시리얼넘버를 숫자로 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }else if(!MethodsHelper.isIP(IPAddress)){
                         Toast.makeText(getApplicationContext(), "아이피 주소를 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    int serialNo = Integer.parseInt(serialNoString);
                     nowDevData = new devData(serialNo, IPAddress);
 
                     // IP주소, 시리얼넘버가 맞는지 확인합니다.
@@ -227,7 +228,7 @@ public class RegisterDevActivity extends AppCompatActivity {
         });
         if(nowDevData!=null){
             editIP.setText(nowDevData.getIp());
-            editSerial.setText(nowDevData.getSerial_no());
+            editSerial.setText(String.valueOf(nowDevData.getSerial_no()));
         }
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
 

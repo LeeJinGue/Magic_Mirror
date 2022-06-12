@@ -4,7 +4,7 @@ import com.cookandroid.smartmirror.R;
 
 // 디바이스 정보 객체
 public class devData {
-    private String serial_no;
+    private int serial_no;
     private String ip;
     private int port;
     private String location;
@@ -12,7 +12,7 @@ public class devData {
     public String toString(){
         return  "dev 정보:\nserial_no: "+serial_no+", ip: "+ip+", port: "+port+", location: "+location+", info: "+info;
     }
-    public devData(String serial_no, String ip, int port, String location, String info){
+    public devData(int serial_no, String ip, int port, String location, String info){
         this.serial_no = serial_no;
         this.ip = ip;
         this.port = port;
@@ -20,7 +20,7 @@ public class devData {
         this.info = info;
 
     }
-    public devData(String serial_no, String ip){
+    public devData(int serial_no, String ip){
         this.serial_no = serial_no;
         this.ip = ip;
         this.port = 8000;
@@ -28,7 +28,7 @@ public class devData {
         this.info="";
     }
 
-    public String getSerial_no() {
+    public int getSerial_no() {
         return serial_no;
     }
 

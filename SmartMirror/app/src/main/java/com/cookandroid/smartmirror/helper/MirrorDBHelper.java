@@ -251,7 +251,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         // device 테이블 생성
 //        db.execSQL("DROP TABLE IF EXISTS device");
         db.execSQL("CREATE TABLE IF NOT EXISTS device " +
-                "(serial_no VARCHAR(50) PRIMARY KEY, " +
+                "(serial_no INTEGER PRIMARY KEY, " +
                 "ip VARCHAR(20) DEFAULT NULL, " +
                 "port INTEGER(11) DEFAULT NULL, " +
                 "location VARCHAR(255) DEFAULT NULL, " +
@@ -471,16 +471,12 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
         if(cs.getCount()==0){
             return null;
         }else{
-            System.out.println(cs.getCount());
-            devData DBDevData = new devData(cs.getString(0), cs.getString(1));
+            devData DBDevData = new devData(cs.getInt(0), cs.getString(1));
             cs.close();
             return DBDevData;
         }
     }
-    public void check(){
-        Cursor cs = db.rawQuery("SELECT serial_no, ip, port FROM device;", null);
-        System.out.println(cs.toString());
-    }
+
 //    public boolean checkDevDataDBandServer(){
 //
 //        networkHelper.checkSerialFromServer(getDBDevData());
