@@ -550,7 +550,7 @@ public class MirrorNetworkHelper {
     public boolean checkSerialFromServer(devData checkDevData){
         try{
             JSONObject serialData = new JSONObject();
-            serialData.put("serial_no", Integer.parseInt(checkDevData.getSerial_no()));
+            serialData.put("serial_no", checkDevData.getSerial_no());
             String postJsonString = serialData.toString();
             String funcString = "/checkSerial";
             String urlString = "http://"+checkDevData.getIp()+":"+String.valueOf(checkDevData.getPort())+funcString;

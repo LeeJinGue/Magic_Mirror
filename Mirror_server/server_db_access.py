@@ -10,7 +10,7 @@ def db_connect():
   db = pymysql.connect(
   host='127.0.0.1', 
   port=3306, 
-  user='root', passwd='1234', 
+  user='root', passwd='wlsdn153', 
   db='mirror_db', charset='utf8')
   print(db)
   return db
@@ -60,7 +60,7 @@ def checkSerial(input):
             for i in range(len(result)):
                 #print(result[i])
                 #print(input)
-                if(result[i]['serial_no'] == str(input['serial_no'])):
+                if(result[i]['serial_no'] == input['serial_no']):
                     return 0
     finally:
         db.close()
