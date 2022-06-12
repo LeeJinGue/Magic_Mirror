@@ -12,19 +12,28 @@
         <entry key="..\:/Capstone1/Magic-mirror/SmartMirror/app/src/main/res/layout/activity_register_dev.xml" value="0.5" />
         <entry key="..\:/Capstone1/Magic-mirror/SmartMirror/app/src/main/res/layout/custom_appbar.xml" value="0.5" />
         <entry key="..\:/Capstone1/Magic-mirror/SmartMirror/app/src/main/res/layout/wift_list_view.xml" value="0.29739583333333336" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2595" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/border.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/canclebtnshape.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/deletebtnshape.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/dialogbtnshape.xml" value="0.1" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_add_24.xml" value="0.3" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_add_circle_24.xml" value="0.3" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_add_photo_alternate_24.xml" value="0.129" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_bluetooth_24.xml" value="0.1335" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.129" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_offline_pin_24.xml" value="0.129" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_schedule_24.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.129" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.3" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_wifi_24.xml" value="0.3" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_baseline_wifi_lock_24.xml" value="0.1335" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_launcher_background.xml" value="0.174" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_remove_24.xml" value="0.2595" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_save_24.xml" value="0.2595" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_black.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_blue.xml" value="0.2765" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_green.xml" value="0.2595" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_orange.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_schedule_purple.xml" value="0.2765" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/drawable/ic_watch_later_24.xml" value="0.144" />
@@ -39,12 +48,13 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_belonging_set_add.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_link_wifi.xml" value="0.2" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_main.xml" value="0.1421875" />
-        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_mainscreen.xml" value="0.22" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_mainscreen.xml" value="0.2109704641350211" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_message_check.xml" value="0.2" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_profile_select.xml" value="0.3278008298755187" />
-        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_profile_setting.xml" value="0.21851851851851853" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_profile_setting.xml" value="0.21739130434782608" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_put_dev_wifi_address.xml" value="0.19429347826086957" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_register_dev.xml" value="0.25" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/activity_splash.xml" value="0.18" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_item.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_list_item.xml" value="0.23867753623188406" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/belonging_preset_item.xml" value="0.3918722786647315" />
@@ -57,6 +67,8 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_schedule.xml" value="0.22" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_stock_setup.xml" value="0.2140625" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/fragment_window_setup.xml" value="0.25" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/item_schedule.xml" value="0.25416666666666665" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/item_window.xml" value="0.16510416666666666" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/message_date_item.xml" value="0.2109375" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/message_item.xml" value="0.22" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/message_left_item.xml" value="0.22" />
@@ -72,6 +84,8 @@
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/layout/window_item.xml" value="0.25" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/menu/menu_bottom.xml" value="0.18333333333333332" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/menu/menu_main.xml" value="0.1" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/menu/menu_profile_select.xml" value="0.3619791666666667" />
+        <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Capstone1/copyFolder/SmartMirror/app/src/main/res/xml/searchable.xml" value="0.25181159420289856" />
       </map>
     </option>

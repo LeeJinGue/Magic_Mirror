@@ -1,11 +1,7 @@
 package com.cookandroid.smartmirror.activities;
 
-import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
+import static com.cookandroid.smartmirror.helper.MethodsHelper.ConvertDPtoPX;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,23 +10,20 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.BelongingItemRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
@@ -73,8 +66,8 @@ public class BelongingSetAddActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.belongingSetAddAppBar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
         tvTitle.setText("소지품세트 추가");
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
@@ -102,7 +95,7 @@ public class BelongingSetAddActivity extends AppCompatActivity {
             forEditData = intent.getParcelableExtra("belongingSet");
 
             Log.i("BelongingSetAddActivity", "수정모드입니다. 수정할 소지품세트 정보:\n"+forEditData.toString());
-            belongingItemList = Methods.getStuffArrayListFromString(forEditData.getStuff_list_str());
+            belongingItemList = MethodsHelper.getStuffArrayListFromString(forEditData.getStuff_list_str());
             belongingNameEditText.setText(forEditData.getSet_name());
             belongingInfoEditText.setText(forEditData.getSet_info());
             isActiavted = forEditData.isActiavted();
@@ -156,7 +149,7 @@ public class BelongingSetAddActivity extends AppCompatActivity {
                 String setInfo = belongingInfoEditText.getText().toString();
                 ArrayList<String> stuffList_arr = new ArrayList<>();
                 stuffList_arr = (ArrayList<String>) belongingItemRecyclerAdapter.getBelongingItemList().clone();
-                String stuff_list_str = Methods.getStringFromStuffArrayList(stuffList_arr);
+                String stuff_list_str = MethodsHelper.getStringFromStuffArrayList(stuffList_arr);
                 if(isAdd){
                     // 저장모드
                     belongingSetData newBelongingSet = new belongingSetData(1, myApp.getSelectedUser().getUser_num(), setName,"0", setInfo, stuff_list_str);

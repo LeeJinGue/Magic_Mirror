@@ -1,19 +1,15 @@
 package com.cookandroid.smartmirror.activities;
 
-import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,21 +19,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cookandroid.smartmirror.Methods;
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.adapter.MessageRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.messageData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 
 public class MessageCheckActivity extends AppCompatActivity {
     ImageView sendMessageBtn;
@@ -103,8 +96,8 @@ public class MessageCheckActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbarTv);
         tvTitle.setText(messageReceiverUser.getName()+"님의 메시지");
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);

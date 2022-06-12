@@ -1200,6 +1200,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color ic_launcher_mirror_background
 color light_gray
 color material_blue_grey_800
 color material_blue_grey_900
@@ -1856,14 +1857,11 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
-drawable canclebtnshape
-drawable deletebtnshape
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
-drawable dialogbtnshape
 drawable ic_add_24
 drawable ic_add_circle_24
 drawable ic_baseline_add_photo_alternate_24
@@ -1872,20 +1870,14 @@ drawable ic_baseline_image_24
 drawable ic_baseline_offline_pin_24
 drawable ic_baseline_search_24
 drawable ic_baseline_settings_24
-drawable ic_baseline_wifi_24
-drawable ic_baseline_wifi_lock_24
 drawable ic_belonging
-drawable ic_bus
 drawable ic_calendar
 drawable ic_chevron_left_gray
 drawable ic_chevron_right_gray
 drawable ic_clock_black_24dp
 drawable ic_close_gray
 drawable ic_done_gray
-drawable ic_enroll
 drawable ic_keyboard_black_24dp
-drawable ic_launcher_background
-drawable ic_launcher_foreground
 drawable ic_menu_settings
 drawable ic_message
 drawable ic_mirror
@@ -1893,15 +1885,14 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
-drawable ic_pictureadd
 drawable ic_remove_24
-drawable ic_save_24
 drawable ic_schedule_black
 drawable ic_schedule_blue
 drawable ic_schedule_green
 drawable ic_schedule_orange
 drawable ic_schedule_purple
 drawable ic_send_24
+drawable ic_splash
 drawable ic_stock
 drawable ic_trash_can
 drawable ic_triangle_green
@@ -1945,12 +1936,10 @@ drawable notify_panel_notification_icon_bg
 drawable radius
 drawable rectangle
 drawable rectangle_bgcolor
-drawable savebtnshape
 drawable selected_bg
 drawable selector
 drawable test_custom_background
 drawable test_level_drawable
-drawable text_gradient
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 font inter
@@ -2267,7 +2256,6 @@ id material_timepicker_ok_button
 id material_timepicker_view
 id material_value_index
 id media_actions
-id menu_settings
 id mesaageDateTextView
 id message
 id messageChecksendMessage
@@ -2644,6 +2632,7 @@ layout activity_message_check
 layout activity_profile_select
 layout activity_profile_setting
 layout activity_register_dev
+layout activity_splash
 layout calendar_navigation_buttons
 layout custom_appbar
 layout custom_dialog
@@ -2767,9 +2756,9 @@ layout view_selection_bar_range
 menu example_menu
 menu example_menu2
 menu menu_bottom
-menu menu_profile_select
-mipmap ic_launcher
-mipmap ic_launcher_round
+mipmap ic_launcher_mirror
+mipmap ic_launcher_mirror_foreground
+mipmap ic_launcher_mirror_round
 plurals mtrl_badge_content_description
 string abc_action_bar_home_description
 string abc_action_bar_up_description
@@ -3172,6 +3161,7 @@ style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Year
 style ShapeAppearanceOverlay_MaterialComponents_TextInputLayout_FilledBox
 style ShapeAppearanceOverlay_TopLeftCut
 style ShapeAppearanceOverlay_TopRightDifferentCornerSize
+style SplashTheme
 style Test_ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day
 style Test_Theme_MaterialComponents_MaterialCalendar
 style Test_Widget_MaterialComponents_MaterialCalendar
@@ -3614,6 +3604,7 @@ style hintStyle
 style scheduleDetail
 style scheduleTime
 style scheduleTitle
+style splashText
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -3762,7 +3753,6 @@ styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable customEditText text
 styleable include constraintSet
-xml searchable
 xml standalone_badge
 xml standalone_badge_gravity_bottom_end
 xml standalone_badge_gravity_bottom_start

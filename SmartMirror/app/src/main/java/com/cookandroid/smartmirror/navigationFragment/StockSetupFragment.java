@@ -1,21 +1,15 @@
 package com.cookandroid.smartmirror.navigationFragment;
 
-import static com.cookandroid.smartmirror.Methods.ConvertDPtoPX;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -26,17 +20,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cookandroid.smartmirror.MirrorDBHelper;
+import com.cookandroid.smartmirror.helper.MirrorDBHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.activities.AddAndSearchStockActivity;
-import com.cookandroid.smartmirror.adapter.BelongingSetRecyclerAdapter;
 import com.cookandroid.smartmirror.adapter.StockItemRecyclerAdapter;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
-import com.cookandroid.smartmirror.dataClass.belongingSetData;
 import com.cookandroid.smartmirror.dataClass.interestedStockData;
 import com.cookandroid.smartmirror.dataClass.userData;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class StockSetupFragment extends Fragment {

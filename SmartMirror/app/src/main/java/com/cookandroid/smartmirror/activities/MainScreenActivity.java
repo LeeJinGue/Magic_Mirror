@@ -2,21 +2,19 @@ package com.cookandroid.smartmirror.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.cookandroid.smartmirror.Methods;
+import com.cookandroid.smartmirror.helper.MethodsHelper;
 import com.cookandroid.smartmirror.R;
 import com.cookandroid.smartmirror.dataClass.MyApplication;
 import com.cookandroid.smartmirror.dataClass.userData;
-import com.cookandroid.smartmirror.navigationFragment.CheckBelongingsFragment;
+import com.cookandroid.smartmirror.navigationFragment.CheckBelongingSetFragment;
 import com.cookandroid.smartmirror.navigationFragment.MessageSendFragment;
 import com.cookandroid.smartmirror.navigationFragment.ScheduleFragment;
 import com.cookandroid.smartmirror.navigationFragment.StockSetupFragment;
@@ -30,7 +28,7 @@ public class MainScreenActivity extends AppCompatActivity {
     MessageSendFragment messageSendFragment_frag;
     ScheduleFragment scheduleFragment_frag;
     StockSetupFragment stockSetupFragment_frag;
-    CheckBelongingsFragment checkBelongingsFragment_frag;
+    CheckBelongingSetFragment checkBelongingsFragment_frag;
     Toolbar toolbar;
     TextView tvTitle;
     userData selectedUser;
@@ -51,8 +49,8 @@ public class MainScreenActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.mainAppbar);
 
         tvTitle = (TextView) toolbar.findViewById(R.id.toolbarTv);
-        Methods methods = new Methods();
-        methods.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
+        MethodsHelper methodsHelper = new MethodsHelper();
+        methodsHelper.setGradient(getColor(R.color.titleStart), getColor(R.color.titleEnd), tvTitle);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(false);
@@ -66,7 +64,7 @@ public class MainScreenActivity extends AppCompatActivity {
         messageSendFragment_frag = new MessageSendFragment();
         scheduleFragment_frag = new ScheduleFragment();
         stockSetupFragment_frag = new StockSetupFragment();
-        checkBelongingsFragment_frag = new CheckBelongingsFragment();
+        checkBelongingsFragment_frag = new CheckBelongingSetFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, windowSetupFragment_frag).commit();
 
