@@ -335,7 +335,7 @@ public class MirrorDBHelper extends SQLiteOpenHelper {
     }
     public void createStockTb(SQLiteDatabase db){
         // stock 테이블 생성
-//        db.execSQL("DROP TABLE IF EXISTS stock");
+        db.execSQL("DROP TABLE IF EXISTS stock");
         db.execSQL("CREATE TABLE IF NOT EXISTS stock " +
                 "(stock_id INTEGER(11) PRIMARY KEY, " +
                 "user_num INTEGER(11), " +
