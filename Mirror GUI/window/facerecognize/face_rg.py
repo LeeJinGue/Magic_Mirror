@@ -87,10 +87,10 @@ class FaceRecog():
 
                 for id, count in self.dict_recog.items():
                     if count == 10:
-                        return self.dict_reverlabel[id]
+                        print(self.dict_reverlabel[id])
                     
 
-                #cv2.imshow('camera', frame)
+                cv2.imshow('camera', frame)
                 k = cv2.waitKey(1) & 0xff
                 if k == ord('q'):  # press "Q" to stop
                     break
@@ -128,7 +128,7 @@ class FaceRecog():
                 (startX, startY) = f[0], f[1]
                 (endX, endY) = f[2], f[3]
 
-                if interval_num % 4 == 0:
+                if True:
                     captured_num += 1
                     face_in_img = frame[startY:endY, startX:endX, :]
                     face_in_img = cv2.resize(face_in_img, dsize=(224, 224), interpolation=cv2.INTER_AREA)
@@ -173,7 +173,8 @@ class FaceRecog():
                 (startX, startY) = f[0], f[1]
                 (endX, endY) = f[2], f[3]
 
-                if interval_num % 4 == 0:
+                #if interval_num % 4 == 0:
+                if True:
                     captured_num += 1
                     face_in_img = frame[startY:endY, startX:endX, :]
                     face_in_img = cv2.resize(face_in_img, dsize=(224, 224), interpolation=cv2.INTER_AREA)
@@ -357,9 +358,41 @@ class FaceRecog():
 
 if __name__ == "__main__":
     face_rg = FaceRecog()
+    a = 0
+    print('start')
+    while(a != -1):
+        a = input()
+        a = int(a)
+        if(a == 1): #나 노마스크
+            face_rg.collectnomaskFace('1')
+            pass
+        elif(a == 2):# 나 마스크
+            face_rg.collectmaskFace('1')
+            pass
+        elif(a==3): #진규 노마스크
+            face_rg.collectnomaskFace('2')
+            pass
+        
+        elif(a == 4): #진규 마스크
+            face_rg.collectmaskFace('2')
+            pass
+
+        elif(a==5): #나 학습
+            face_rg.addtrainModel('1')
+            pass
+        elif(a==6): #진규 학습
+            face_rg.addtrainModel('2')
+            pass
+
+        elif(a==7): #안면인식 작동
+            face_rg.facedetect_recogize()
+            pass
+        else:
+            print('out7')
+
 
     #face_rg.collectnomaskFace('2')
     #face_rg.collectmaskFace('2')
     #face_rg.addtrainModel('2')
-    face_rg.facedetect_recogize()
+    #face_rg.facedetect_recogize()
 

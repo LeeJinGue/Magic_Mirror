@@ -42,9 +42,10 @@ class stock(QWidget):
 
   def get_stock(self):
     data = stock_module.get_stock(self.user_id)
-    for i in data:
-      self.addStock(i)
-    pass
+    if(len(data)!=0):
+      for i in data:
+        self.addStock(i)
+      
 
   def addStock(self,data):
    print("아이템 추가")

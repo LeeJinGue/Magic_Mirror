@@ -41,8 +41,8 @@ def get_schedule(user_id):
 def get_belongings(user_id):
     db = db_connect()
     try: 
-        with db.cursor() as cursor:
-            sql = 'SELECT stuff_list FROM belongings where user_num = %s AND activation = %s'
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = 'SELECT set_name,stuff_list FROM belongings where user_num = %s AND activation = %s'
             cursor.execute(sql,[user_id,1])
             result = cursor.fetchall()
             #print(result)
@@ -50,6 +50,7 @@ def get_belongings(user_id):
         db.close()
 
     return result
+#print(get_belongings(1))
 
 #메시지 호출 함수
 def get_message(user_id):
@@ -117,6 +118,22 @@ def get_name_id():
         db.close()
 
     return result
+
+def edit_ip(input):
+    db = db_connect()
+    ip_edit_sql = 'UPDATE device SET ip = %s'
+    
+    try: 
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            cursor.execute(ip_edit_sql,input)
+            db.commit()
+    except:
+        return 1
+
+    finally:
+        db.close()
+
+    return 0
 
 #print(get_device_info())
 
